@@ -6,7 +6,7 @@ var gulp        = require('gulp');
 var browserSync = require('browser-sync').create();
 var watch = require('gulp-watch');
 var jade = require('gulp-jade');
-
+var concat = require('gulp-concat');
 
 gulp.task('html', function() {
     return gulp.src('src/index.html')
@@ -22,8 +22,8 @@ gulp.task('templates', function() {
 
 
 gulp.task('js', function() {
-    gulp.src('src/*.js')
-        .pipe(gulp.dest('dist'));
+    gulp.src('src/js/*.js')
+        .pipe(gulp.dest('dist/js/'));
 
 });
 
@@ -37,13 +37,13 @@ gulp.task('watch', function() {
         gulp.run('js');
     });
 
-
-
     gulp.watch('src/index.html', function() {
         gulp.run('html');
     });
 
-
+    gulp.watch('src/**/*.jade', function() {
+        gulp.run('templates');
+    });
 
     browserSync.init({
         server: {
