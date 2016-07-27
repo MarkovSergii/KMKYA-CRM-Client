@@ -2,7 +2,7 @@
  * Created by user on 24.07.2016.
  */
 
-var kmkya_client = angular.module('kmkya_client',['ui.router']);
+var kmkya_client = angular.module('kmkya_client',['ui.router','btford.socket-io']);
 
 
 kmkya_client.config(function($stateProvider,$urlRouterProvider) {
@@ -31,19 +31,21 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $stateProvider.state(mainState);
 });
 
-var authCtrl = function($scope,$state){
-    $scope.gg = 'JJJ1';
+
+kmkya_client.factory('SocketIO', function (socketFactory) {
+    return socketFactory();
+})
+/**
+ * Created by user on 26.07.2016.
+ */
+kmkya_client.controller('authCtrl',function($scope,$state){
+    $scope.hh = 'auth';
 
     $scope.go_main = function()
     {
         $state.go('main');
     }
-};
-
-
-kmkya_client.controller('authCtrl',authCtrl);
-
-
+});
 /**
  * Created by user on 26.07.2016.
  */

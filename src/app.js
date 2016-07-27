@@ -2,7 +2,7 @@
  * Created by user on 24.07.2016.
  */
 
-var kmkya_client = angular.module('kmkya_client',['ui.router']);
+var kmkya_client = angular.module('kmkya_client',['ui.router','btford.socket-io']);
 
 
 kmkya_client.config(function($stateProvider,$urlRouterProvider) {
@@ -30,3 +30,8 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $stateProvider.state(authState);
     $stateProvider.state(mainState);
 });
+
+
+kmkya_client.factory('SocketIO', function (socketFactory) {
+    return socketFactory();
+})
