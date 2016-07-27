@@ -4,10 +4,29 @@
     <script src="js/angular.min.js"></script>
     <script src="js/angular-ui-router.min.js"></script>
     <script src="app.js"></script>
+    <link href="css/main.css" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body ng-app="kmkya_client">
-111zvsv
+<!-- NAVIGATION -->
+<nav class="navbar navbar-inverse" role="navigation">
+    <div class="navbar-header">
+        <a class="navbar-brand" ui-sref="#">AngularUI Router</a>
+    </div>
+    <ul class="nav navbar-nav">
+        <li><a class="menuItem" ui-sref="auth" ui-sref-active="active_menuItem">Auth</a></li>
+        <li><a class="menuItem" ui-sref="main" ui-sref-active="active_menuItem">Main</a></li>
+    </ul>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+    <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
+    <div ui-view></div>
+
+</div>
+
 </body>
 </html>

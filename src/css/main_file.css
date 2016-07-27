@@ -1,0 +1,17 @@
+.menuItem:hover
+{
+    cursor: pointer;
+}
+
+.active
+{
+    color: red;!important;
+}
+.active a:hover
+{
+    color:white;!important;
+}
+.active a:focus
+{
+    color:white;!important;
+}
