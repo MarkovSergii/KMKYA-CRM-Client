@@ -2,7 +2,13 @@
  * Created by user on 24.07.2016.
  */
 
-var kmkya_client = angular.module('kmkya_client',['ui.router','btford.socket-io']);
+var kmkya_client = angular.module('kmkya_client',[
+    'ui.router',
+    'btford.socket-io',
+    'ngAnimate',
+    'toastr',
+    '19degrees.ngSweetAlert2'
+    ]);
 
 
 kmkya_client.config(function($stateProvider,$urlRouterProvider) {
@@ -49,9 +55,11 @@ kmkya_client.controller('authCtrl',function($scope,$state){
 /**
  * Created by user on 26.07.2016.
  */
-kmkya_client.controller('mainCtrl',function($scope,$state){
+kmkya_client.controller('mainCtrl',function($scope,$state,toastr,sweetAlert){
     $scope.hh = 'DDD';
 
+    toastr.success('Hello world!', 'Toastr fun!');
+    sweetAlert.swal("Here's a message");
     $scope.go_auth = function()
     {
         $state.go('auth');

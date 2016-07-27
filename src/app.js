@@ -2,7 +2,13 @@
  * Created by user on 24.07.2016.
  */
 
-var kmkya_client = angular.module('kmkya_client',['ui.router','btford.socket-io']);
+var kmkya_client = angular.module('kmkya_client',[
+    'ui.router',
+    'btford.socket-io',
+    'ngAnimate',
+    'toastr',
+    '19degrees.ngSweetAlert2'
+    ]);
 
 
 kmkya_client.config(function($stateProvider,$urlRouterProvider) {
