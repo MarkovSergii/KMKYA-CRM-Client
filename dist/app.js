@@ -38,9 +38,13 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
 });
 
 
+/**
+ * Created by user on 28.07.2016.
+ */
+
 kmkya_client.factory('SocketIO', function (socketFactory) {
     return socketFactory();
-})
+});
 /**
  * Created by user on 26.07.2016.
  */

@@ -37,7 +37,3 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $stateProvider.state(mainState);
 });
 
-
-kmkya_client.factory('SocketIO', function (socketFactory) {
-    return socketFactory();
-})
