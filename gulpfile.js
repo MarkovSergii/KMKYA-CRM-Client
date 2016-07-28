@@ -34,8 +34,7 @@ gulp.task('css', function() {
 
 gulp.task('templates', function() {
 
-    gulp.src('src/**/*.jade')
-        .pipe(jade())
+    gulp.src(['src/**/*.html','!src/index.html'])
         .pipe(gulp.dest(dist.templates))
 });
 
@@ -82,7 +81,7 @@ gulp.task('watch', function() {
         gulp.run('html');
     });
 
-    gulp.watch('src/**/*.jade', function() {
+    gulp.watch(['src/**/*.html','!src/index.html'], function() {
         gulp.run('templates');
     });
 
