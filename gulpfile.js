@@ -50,7 +50,7 @@ gulp.task('vendorjs', function() {
 });
 
 gulp.task('app', function() {
-    gulp.src(['src/app.js','src/services/*.js','src/directives/*.js','src/app_parts/**/*.js'])
+    gulp.src(['src/app.js','src/app_config/*.js','src/services/*.js','src/directives/*.js','src/app_parts/**/*.js'])
         .pipe(concat('app.js'))
         .pipe(gulp.dest(dist.main));
 
