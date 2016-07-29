@@ -1,7 +1,6 @@
 {
   "name": "kmkya-crm-client",
   "version": "1.0.0",
-  "description": "",
   "main": "gulpfile.js",
   "dependencies": {
     "browser-sync": "^2.13.0",
@@ -14,7 +13,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start":"gulp watch",
+    "start": "gulp watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,5 +25,6 @@
   "bugs": {
     "url": "https://github.com/MarkovSergii/KMKYA-CRM-Client/issues"
   },
-  "homepage": "https://github.com/MarkovSergii/KMKYA-CRM-Client#readme"
+  "homepage": "https://github.com/MarkovSergii/KMKYA-CRM-Client#readme",
+  "description": ""
 }

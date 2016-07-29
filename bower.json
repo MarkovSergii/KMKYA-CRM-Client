@@ -1,0 +1,22 @@
+{
+  "name": "kmkya-crm-client",
+  "description": "",
+  "main": "gulpfile.js",
+  "authors": [
+    "Markov Sergii"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/MarkovSergii/KMKYA-CRM-Client",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-grid": "^3.2.1",
+    "ng-dialog": "^0.6.2",
+    "ng-file-upload": "^12.0.4"
+  }
+}
