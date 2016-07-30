@@ -70,7 +70,7 @@ gulp.task('watch', function() {
         gulp.run('vendorjs');
     });
 
-    gulp.watch(['src/app.js','src/services/*.js','src/directives/*.js','src/app_parts/**/*.js'], function() {
+    gulp.watch(['src/app.js','src/app_config/*.js','src/services/*.js','src/directives/*.js','src/app_parts/**/*.js'], function() {
         gulp.run('app');
     });
 

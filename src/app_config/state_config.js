@@ -20,11 +20,21 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
 
     };
 
+    var adminState = {
+        name: 'main.admin',
+        url: '/admin',
+        cached:false,
+        templateUrl: '/app_parts/main.admin/admin.html',
+        controller: 'adminCtrl'
+
+    };
+
     $urlRouterProvider.when('', '/auth');
     $urlRouterProvider.otherwise('/auth');
 
 
     $stateProvider.state(authState);
     $stateProvider.state(mainState);
+    $stateProvider.state(adminState);
 });
 
