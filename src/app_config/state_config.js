@@ -22,7 +22,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
 
     var dashboardState = {
         name: 'main.dashboard',
-        url: '/main.dashboard',
+        url: '/dashboard',
         cached:false,
         templateUrl: '/app_parts/main.dashboard/dashboard.html',
         controller: 'dashboardCtrl'

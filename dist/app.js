@@ -62,7 +62,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
 
     var dashboardState = {
         name: 'main.dashboard',
-        url: '/main.dashboard',
+        url: '/dashboard',
         cached:false,
         templateUrl: '/app_parts/main.dashboard/dashboard.html',
         controller: 'dashboardCtrl'
@@ -230,7 +230,18 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
         $scope.go_auth = function()
         {
             $state.go('auth');
-        }*/ $state.go('main.dashboard');
+        }*/
+        $rootScope.$on('$stateChangeStart',
+            function(event, toState, toParams, fromState, fromParams, options){
+
+                if (toState.name == 'main.admin')
+                {
+                    event.preventDefault();
+                    sweetAlert.swal("Error", "У вас нет доступа к этому разделу" ,"error");
+                }
+            });
+
+        $state.go('main.dashboard');
     };
 
     if (!$cookies.get('token'))

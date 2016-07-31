@@ -1,12 +1,17 @@
-hello its main
 
-<button ng-click="openDialog()">openDialog</button>
-
-<button ng-click="goadmin()">goadmin</button>
-
-<button ng-click="gomain()">gomain</button>
+    <div class="main main-container">
 
 
 
+        <ul>
+            <li><a ui-sref="main.dashboard">Dashboard</a></li>
+            <li><a ui-sref="main.database">Database</a></li>
+            <li><a ui-sref="main.reports">Reports</a></li>
+            <li><a ui-sref="main.admin">Admin Area</a></li>
+        </ul>
 
-<div ui-view></div>
+
+        <div ui-view></div>
+
+
+    </div>
