@@ -14,6 +14,7 @@ var dist = {
     css : "dist/css",
     main : "dist",
     js : "dist/js",
+    fonts : "dist/fonts",
     templates : "dist"
     
 };
@@ -37,6 +38,12 @@ gulp.task('templates', function() {
 
     gulp.src(['src/**/*.html','!src/index.html'])
         .pipe(gulp.dest(dist.templates))
+});
+
+gulp.task('fonts', function() {
+    gulp.src('src/fonts/*.*')
+        .pipe(gulp.dest(dist.fonts));
+
 });
 
 gulp.task('vendorjs', function() {
@@ -64,6 +71,7 @@ gulp.task('watch', function() {
     gulp.run('templates');
     gulp.run('html');
     gulp.run('css');
+    gulp.run('fonts');
     gulp.run('app');
 
     gulp.watch('src/*.js', function() {
@@ -76,6 +84,10 @@ gulp.task('watch', function() {
 
     gulp.watch('src/css/*.css', function() {
         gulp.run('css');
+    });
+
+    gulp.watch('src/fonts/*.*', function() {
+        gulp.run('fonts');
     });
     
     gulp.watch('src/index.html', function() {

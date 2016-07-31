@@ -1,17 +1,22 @@
 
     <div class="main main-container">
 
-
-
-        <ul>
-            <li><a ui-sref="main.dashboard">Dashboard</a></li>
-            <li><a ui-sref="main.database">Database</a></li>
-            <li><a ui-sref="main.reports">Reports</a></li>
-            <li><a ui-sref="main.admin">Admin Area</a></li>
-        </ul>
-
+        <div class="main-button-panel">
+            <a ui-sref="main.dashboard">
+                <button type="button" class="btn btn-default"><i class="fa fa-tachometer" aria-hidden="true"></i>&nbsp;Панель управления</button>
+            </a>
+            <a ui-sref="main.database">
+                <button type="button" class="btn btn-default"><i class="fa fa-database" aria-hidden="true"></i>&nbsp;Базы данных</button>
+            </a>
+            <a ui-sref="main.reports">
+                <button type="button" class="btn btn-default"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;Финансовые отчеты</button>
+            </a>
+            <a ui-sref="main.admin">
+                <button type="button" class="btn btn-default"><i class="fa fa-wrench" aria-hidden="true"></i>&nbsp;Панель администратора</button>
+            </a>
+            <button type="button" class="btn btn-default"><i class="fa fa-sign-out" aria-hidden="true" ng-click="logout()"></i>&nbsp;Выход</button>
+        </div>
 
         <div ui-view></div>
-
 
     </div>

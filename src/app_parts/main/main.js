@@ -4,6 +4,14 @@
 
 var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig) {
 
+    $scope.logout = function()
+    {
+        $cookies.remove('token');
+        //$state.go('auth');
+        console.log("ggg");
+    };
+
+   // $scope.logout();
 
     $scope.controllerBody = function()
     {
