@@ -60,6 +60,15 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
 
     };
 
+    var dashboardState = {
+        name: 'main.dashboard',
+        url: '/main.dashboard',
+        cached:false,
+        templateUrl: '/app_parts/main.dashboard/dashboard.html',
+        controller: 'dashboardCtrl'
+
+    };
+    
     var adminState = {
         name: 'main.admin',
         url: '/admin',
@@ -69,6 +78,29 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
 
     };
 
+    var databaseState = {
+        name: 'main.database',
+        url: '/database',
+        cached:false,
+        templateUrl: '/app_parts/main.database/database.html',
+        controller: 'databaseCtrl'
+
+    };
+
+    var reportsState = {
+        name: 'main.reports',
+        url: '/reports',
+        cached:false,
+        templateUrl: '/app_parts/main.reports/reports.html',
+        controller: 'reportsCtrl'
+
+    };    
+    
+    
+    
+    
+    
+
     $urlRouterProvider.when('', '/auth');
     $urlRouterProvider.otherwise('/auth');
 
@@ -76,6 +108,9 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $stateProvider.state(authState);
     $stateProvider.state(mainState);
     $stateProvider.state(adminState);
+    $stateProvider.state(databaseState);
+    $stateProvider.state(reportsState);
+    $stateProvider.state(dashboardState);
 });
 
 
@@ -167,7 +202,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
 
     $scope.controllerBody = function()
     {
-        toastr.success('Hello world!', 'Toastr fun!');
+     /*   toastr.success('Hello world!', 'Toastr fun!');
         sweetAlert.swal("Here's a message");
         $scope.hh = 'main';
 
@@ -195,7 +230,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
         $scope.go_auth = function()
         {
             $state.go('auth');
-        }
+        }*/ $state.go('main.dashboard');
     };
 
     if (!$cookies.get('token'))
@@ -256,3 +291,27 @@ var adminCtrl = function($scope,$state) {
 };
 
 kmkya_client.controller('adminCtrl',adminCtrl);
+/**
+ * Created by user on 31.07.2016.
+ */
+var dashboardCtrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('dashboardCtrl',dashboardCtrl);
+/**
+ * Created by user on 31.07.2016.
+ */
+var databaseCtrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('databaseCtrl',databaseCtrl);
+/**
+ * Created by user on 31.07.2016.
+ */
+var reportsCtrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('reportsCtrl',reportsCtrl);

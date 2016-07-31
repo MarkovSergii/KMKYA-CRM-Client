@@ -7,7 +7,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
 
     $scope.controllerBody = function()
     {
-        toastr.success('Hello world!', 'Toastr fun!');
+     /*   toastr.success('Hello world!', 'Toastr fun!');
         sweetAlert.swal("Here's a message");
         $scope.hh = 'main';
 
@@ -35,7 +35,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
         $scope.go_auth = function()
         {
             $state.go('auth');
-        }
+        }*/ $state.go('main.dashboard');
     };
 
     if (!$cookies.get('token'))
