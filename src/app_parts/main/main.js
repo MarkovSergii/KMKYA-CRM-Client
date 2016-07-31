@@ -4,18 +4,16 @@
 
 var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig) {
 
-    $scope.logout = function()
-    {
-        $cookies.remove('token');
-        //$state.go('auth');
-        console.log("ggg");
-    };
-
-   // $scope.logout();
 
     $scope.controllerBody = function()
     {
-     /*   toastr.success('Hello world!', 'Toastr fun!');
+        $scope.logout = function()
+        {
+            $cookies.remove('token');
+            $state.go('auth');
+        };
+
+    /*    toastr.success('Hello world!', 'Toastr fun!');
         sweetAlert.swal("Here's a message");
         $scope.hh = 'main';
 
@@ -44,6 +42,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
         {
             $state.go('auth');
         }*/
+
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams, options){
 
@@ -76,9 +75,6 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                     else
                     {
                         //save cookie and go to main
-                        var now = new Date();
-                        var exp = new Date(now.getFullYear()+1, now.getMonth(), now.getDate());
-
                         $rootScope.user = response.data.user;
                         $rootScope.token = $cookies.get('token');
                         $scope.controllerBody();
@@ -98,11 +94,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
 };
 
 
-var SomeController = function($scope){
-    $scope.hhgg = 'super';
-};
 
 kmkya_client.controller('mainCtrl',mainCtrl);
-kmkya_client.controller('SomeController',SomeController);
 
 
