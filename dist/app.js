@@ -28,10 +28,10 @@ kmkya_client.config(['$httpProvider',function($httpProvider) {
     //Remove the header used to identify ajax call  that would prevent CORS from working
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
-    $httpProvider.interceptors.push(function($rootScope) {
+    $httpProvider.interceptors.push(function($rootScope,$cookies) {
         return {
             'request': function(config) {
-                config.headers['authorization'] = $rootScope.token;     //TODO: заменить на подстановку токена из куков
+                config.headers['authorization'] = $cookies.get('token');
                 return config;
             }
         };
@@ -43,6 +43,7 @@ kmkya_client.config(['$httpProvider',function($httpProvider) {
  */
 
 kmkya_client.config(function($stateProvider,$urlRouterProvider) {
+// AUTH ------------------------------------------------------------------------    
     var authState = {
         name: 'auth',
         url: '/auth',
@@ -50,48 +51,64 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         templateUrl: '/app_parts/auth/auth.html',
         controller: 'authCtrl'
     };
-
+    
+// MAIN ------------------------------------------------------------------------
     var mainState = {
         name: 'main',
         url: '/main',
         cached:false,
         templateUrl: '/app_parts/main/main.html',
         controller: 'mainCtrl'
-
     };
-
+    
+// dashboard -------------------------------------------------------------------
     var dashboardState = {
         name: 'main.dashboard',
         url: '/dashboard',
         cached:false,
-        templateUrl: '/app_parts/main.dashboard/dashboard.html',
+        templateUrl: '/app_parts/main/dashboard/dashboard.html',
         controller: 'dashboardCtrl'
-
     };
     
+// admin -----------------------------------------------------------------------    
     var adminState = {
         name: 'main.admin',
         url: '/admin',
         cached:false,
-        templateUrl: '/app_parts/main.admin/admin.html',
+        templateUrl: '/app_parts/main/admin/admin.html',
         controller: 'adminCtrl'
-
     };
-
+    var adminCategoryState = {
+        name: 'main.admin.direction_category',
+        url: '/direction_category',
+        cached:false,
+        templateUrl: '/app_parts/main/admin/direction_category/direction_category.html',
+        controller: 'admin_direction_categoryCtrl'
+    };
+    var adminExhibitionsState = {
+        name: 'main.admin.exhibitions',
+        url: '/exhibitions',
+        cached:false,
+        templateUrl: '/app_parts/main/admin/exhibitions/exhibitions.html',
+        controller: 'admin_exhibitionsCtrl'
+    };    
+    
+// database --------------------------------------------------------------------
     var databaseState = {
         name: 'main.database',
         url: '/database',
         cached:false,
-        templateUrl: '/app_parts/main.database/database.html',
+        templateUrl: '/app_parts/main/database/database.html',
         controller: 'databaseCtrl'
 
     };
-
+    
+// reports ---------------------------------------------------------------------
     var reportsState = {
         name: 'main.reports',
         url: '/reports',
         cached:false,
-        templateUrl: '/app_parts/main.reports/reports.html',
+        templateUrl: '/app_parts/main/reports/reports.html',
         controller: 'reportsCtrl'
 
     };    
@@ -107,8 +124,10 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
 
     $stateProvider.state(authState);
     $stateProvider.state(mainState);
-    $stateProvider.state(adminState);
+    $stateProvider.state(adminState);  
     $stateProvider.state(databaseState);
+    $stateProvider.state(adminCategoryState);
+    $stateProvider.state(adminExhibitionsState);
     $stateProvider.state(reportsState);
     $stateProvider.state(dashboardState);
 });
@@ -119,9 +138,47 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
  */
 
 kmkya_client.constant('UrlConfig', {
-    serverUrl : '93.171.158.114',
+    serverUrl : 'http://93.171.158.114',
     serverPort : '3000'
 });
+/**
+ * Created by user on 03.08.2016.
+ */
+
+kmkya_client.service('direction_category_service', function ($http,UrlConfig) {
+
+    this.selectAll = function()
+    {
+        return $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/direction_category');
+    };
+
+    this.selectById = function()
+    {
+        alert('selectById');
+    };
+
+    this.save = function()
+    {
+        alert('save');
+    };
+
+    this.add = function()
+    {
+        alert('add');
+    };
+    
+    this.delete = function()
+    {
+        alert('delete');
+    };    
+    
+    
+
+
+        return this;
+});
+
+
 /**
  * Created by user on 28.07.2016.
  */
@@ -151,7 +208,7 @@ var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope
             else
             {
 
-                $http.post('http://'+UrlConfig.serverUrl+":"+UrlConfig.serverPort+'/api/login',auth)
+                $http.post(UrlConfig.serverUrl+":"+UrlConfig.serverPort+'/api/login',auth)
                     .then(function(response){
                         if (response.status == 200)
                         {
@@ -241,14 +298,14 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams, options){
 
-                if (toState.name == 'main.admin')
+                if ((toState.name == 'main.admin') && ($rootScope.user.type != 'admin'))
                 {
                     event.preventDefault();
                     sweetAlert.swal("Error", "У вас нет доступа к этому разделу" ,"error");
                 }
             });
 
-        $state.go('main.dashboard');
+        //$state.go('main.dashboard');
     };
 
     if (!$cookies.get('token'))
@@ -260,7 +317,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
         if (!$rootScope.user)
         {
             // get user by token
-            $http.post('http://'+UrlConfig.serverUrl+":"+UrlConfig.serverPort+'/api/token',{token:$cookies.get('token')})
+            $http.post(UrlConfig.serverUrl+":"+UrlConfig.serverPort+'/api/token',{token:$cookies.get('token')})
                 .then(function(response){
                     if (response.data.error)
                     {
@@ -326,3 +383,35 @@ var reportsCtrl = function($scope,$state) {
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
+
+var admin_direction_categoryCtrl = function($scope,$state,direction_category_service) {
+
+    
+
+    direction_category_service.selectAll()
+        .then(function(response){
+            console.log(response);
+            if (response.status == 200)
+            {
+                $scope.direction_category_list =response.data;
+            }
+            else
+            {
+                alert(response.statusText);
+            }
+        })
+        .catch(function(error){
+            alert(error.statusText);
+        });
+    
+};
+
+kmkya_client.controller('admin_direction_categoryCtrl',admin_direction_categoryCtrl);
+/**
+ * Created by user on 03.08.2016.
+ */
+var admin_exhibitionsCtrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);

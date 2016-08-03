@@ -46,14 +46,14 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams, options){
 
-                if (toState.name == 'main.admin')
+                if ((toState.name == 'main.admin') && ($rootScope.user.type != 'admin'))
                 {
                     event.preventDefault();
                     sweetAlert.swal("Error", "У вас нет доступа к этому разделу" ,"error");
                 }
             });
 
-        $state.go('main.dashboard');
+        //$state.go('main.dashboard');
     };
 
     if (!$cookies.get('token'))
@@ -65,7 +65,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
         if (!$rootScope.user)
         {
             // get user by token
-            $http.post('http://'+UrlConfig.serverUrl+":"+UrlConfig.serverPort+'/api/token',{token:$cookies.get('token')})
+            $http.post(UrlConfig.serverUrl+":"+UrlConfig.serverPort+'/api/token',{token:$cookies.get('token')})
                 .then(function(response){
                     if (response.data.error)
                     {

@@ -3,6 +3,6 @@
  */
 
 kmkya_client.constant('UrlConfig', {
-    serverUrl : '93.171.158.114',
+    serverUrl : 'http://93.171.158.114',
     serverPort : '3000'
 });

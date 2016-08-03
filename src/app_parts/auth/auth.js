@@ -20,7 +20,7 @@ var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope
             else
             {
 
-                $http.post('http://'+UrlConfig.serverUrl+":"+UrlConfig.serverPort+'/api/login',auth)
+                $http.post(UrlConfig.serverUrl+":"+UrlConfig.serverPort+'/api/login',auth)
                     .then(function(response){
                         if (response.status == 200)
                         {
