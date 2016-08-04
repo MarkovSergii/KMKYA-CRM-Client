@@ -13,36 +13,6 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
             $state.go('auth');
         };
 
-    /*    toastr.success('Hello world!', 'Toastr fun!');
-        sweetAlert.swal("Here's a message");
-        $scope.hh = 'main';
-
-        $scope.openDialog = function()
-        {
-            ngDialog.open(
-                {
-                    template: 'app_parts/main/dialog/popupTmpl.html',
-                    className: 'ngdialog-theme-default',
-                    controller: 'SomeController'
-                });
-        };
-
-
-        $scope.goadmin = function()
-        {
-            $state.go('main.admin');
-        };
-
-        $scope.gomain = function()
-        {
-            $state.go('main');
-        };
-
-        $scope.go_auth = function()
-        {
-            $state.go('auth');
-        }*/
-
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams, options){
 
@@ -53,7 +23,8 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                 }
             });
 
-        //$state.go('main.dashboard');
+         $state.go('main.dashboard');
+
     };
 
     if (!$cookies.get('token'))

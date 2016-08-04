@@ -1,8 +1,57 @@
 /**
  * Created by user on 31.07.2016.
  */
-var databaseCtrl = function($scope,$state) {
-
+var databaseCtrl = function($scope,$state,$rootScope) {
+    $rootScope.mainMenu = [ // TODO: заменить на генерирование меню из таблицы дирекций
+        {
+            title:"AGRO",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard",
+            have_subitems:true,
+            subitems:[
+                {
+                    title:"БД1",
+                    link:"main.db",
+                    icon:"fa-dashboard"
+                },
+                {
+                    title:"БД2",
+                    link:"main.db",
+                    icon:"fa-dashboard"
+                },
+                {
+                    title:"БД3",
+                    link:"main.db",
+                    icon:"fa-dashboard"
+                }
+            ]
+        },
+        {
+            title:"FASHION",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"BUILD",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"MEBEL",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"RESTORAN/IFFIP",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"JEWEL",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        }
+    ];
 };
 
 kmkya_client.controller('databaseCtrl',databaseCtrl);

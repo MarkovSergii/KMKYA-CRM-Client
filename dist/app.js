@@ -265,36 +265,6 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
             $state.go('auth');
         };
 
-    /*    toastr.success('Hello world!', 'Toastr fun!');
-        sweetAlert.swal("Here's a message");
-        $scope.hh = 'main';
-
-        $scope.openDialog = function()
-        {
-            ngDialog.open(
-                {
-                    template: 'app_parts/main/dialog/popupTmpl.html',
-                    className: 'ngdialog-theme-default',
-                    controller: 'SomeController'
-                });
-        };
-
-
-        $scope.goadmin = function()
-        {
-            $state.go('main.admin');
-        };
-
-        $scope.gomain = function()
-        {
-            $state.go('main');
-        };
-
-        $scope.go_auth = function()
-        {
-            $state.go('auth');
-        }*/
-
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams, options){
 
@@ -305,7 +275,8 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                 }
             });
 
-        //$state.go('main.dashboard');
+         $state.go('main.dashboard');
+
     };
 
     if (!$cookies.get('token'))
@@ -354,32 +325,114 @@ kmkya_client.controller('mainCtrl',mainCtrl);
 /**
  * Created by user on 30.07.2016.
  */
-var adminCtrl = function($scope,$state) {
-
+var adminCtrl = function($scope,$state,$rootScope) {
+    $rootScope.mainMenu = [
+        {
+            title:"Дирекции (Категории)",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Выставки",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        }
+    ];
 };
 
 kmkya_client.controller('adminCtrl',adminCtrl);
 /**
  * Created by user on 31.07.2016.
  */
-var dashboardCtrl = function($scope,$state) {
-
+var dashboardCtrl = function($scope,$state,$rootScope) {
+    $rootScope.mainMenu = [
+        {
+            title:"Статистика",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Еще что-то ",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        }
+    ];
 };
 
 kmkya_client.controller('dashboardCtrl',dashboardCtrl);
 /**
  * Created by user on 31.07.2016.
  */
-var databaseCtrl = function($scope,$state) {
-
+var databaseCtrl = function($scope,$state,$rootScope) {
+    $rootScope.mainMenu = [ // TODO: заменить на генерирование меню из таблицы дирекций
+        {
+            title:"AGRO",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard",
+            have_subitems:true,
+            subitems:[
+                {
+                    title:"БД1",
+                    link:"main.db",
+                    icon:"fa-dashboard"
+                },
+                {
+                    title:"БД2",
+                    link:"main.db",
+                    icon:"fa-dashboard"
+                },
+                {
+                    title:"БД3",
+                    link:"main.db",
+                    icon:"fa-dashboard"
+                }
+            ]
+        },
+        {
+            title:"FASHION",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"BUILD",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"MEBEL",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"RESTORAN/IFFIP",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"JEWEL",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        }
+    ];
 };
 
 kmkya_client.controller('databaseCtrl',databaseCtrl);
 /**
  * Created by user on 31.07.2016.
  */
-var reportsCtrl = function($scope,$state) {
-
+var reportsCtrl = function($scope,$state,$rootScope) {
+    $rootScope.mainMenu = [
+        {
+            title:"Отчет 1",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Отчет 2",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        }
+    ];
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);

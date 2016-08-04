@@ -1,0 +1,21 @@
+body.boxed {
+  background: url("../img/pattern/arches.png") repeat;
+}
+#top > .navbar {
+  border-top: 3px solid #4a5b7d;
+}
+#top > .navbar .dropdown-menu > li > a:hover,
+#top > .navbar .dropdown-menu > li > a:focus {
+  background-color: #4a5b7d;
+  color: #ffffff;
+}
+#menu {
+  background-color: #4a5b7d !important;
+}
+#menu > li > a {
+  color: #ffffff;
+  text-shadow: none !important;
+}
+.sidebar-left-mini #menu > li > a > .link-title {
+  background-color: #425270 !important;
+}
