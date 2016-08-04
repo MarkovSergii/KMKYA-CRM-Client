@@ -6,26 +6,30 @@ kmkya_client.service('direction_category_service', function ($http,UrlConfig) {
 
     this.selectAll = function()
     {
-        return $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/direction_category');
+        return $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/all');
     };
 
     this.selectById = function()
     {
+        //        /api/dictionary/exhibitionCategory/:id/select
         alert('selectById');
     };
 
-    this.save = function()
+    this.update = function()
     {
-        alert('save');
+        // /api/dictionary/exhibitionCategory/:id/update
+        alert('update');
     };
 
     this.add = function()
     {
+        // /api/dictionary/exhibitionCategory/insert
         alert('add');
     };
     
     this.delete = function()
     {
+        // /api/dictionary/exhibitionCategory/:id/delete
         alert('delete');
     };    
     
