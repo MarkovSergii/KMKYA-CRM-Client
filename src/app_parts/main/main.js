@@ -23,7 +23,8 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                 }
             });
 
-         $state.go('main.dashboard');
+        $rootScope.UrlConfig = UrlConfig;
+        // $state.go('main.dashboard');
 
     };
 

@@ -1,23 +1,28 @@
 
 var admin_direction_categoryCtrl = function($scope,$state,direction_category_service) {
 
-    
 
+        
+    // get all direction_category
     direction_category_service.selectAll()
-        .then(function(response){
-            console.log(response);
-            if (response.status == 200)
+        .then(function(list){
+            if (list.error)
             {
-                $scope.direction_category_list =response.data;
+                alert(list.message)
             }
             else
             {
-                alert(response.statusText);
+                $scope.direction_category_list = list.data;
+                console.log($scope.direction_category_list );
             }
         })
         .catch(function(error){
-            alert(error.statusText);
+            alert(error.message)
         });
+
+
+
+    
     
 };
 
