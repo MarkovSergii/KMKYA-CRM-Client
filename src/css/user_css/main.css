@@ -10,3 +10,22 @@
 {
     color:white; !important;
 }
+
+.userAvatar
+{
+    display: inline-block
+}
+.userAvatar:hover
+{
+    cursor: pointer;
+}
+
+.userAvatar div
+{
+    display: inline-block
+}
+
+.userAvatar img
+{
+    width:25px
+}
