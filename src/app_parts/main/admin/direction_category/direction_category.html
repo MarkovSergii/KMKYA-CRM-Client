@@ -26,10 +26,10 @@
                 <td>
                     <div class="toolbar">
                         <div class="btn-group">
-                            <a class="btn btn-sm btn-default">
+                            <a class="btn btn-sm btn-default" ng-click="editDirection_category(direction)">
                                 <i class="fa fa-pencil-square-o"></i>
                             </a>
-                            <a class="btn btn-danger btn-sm">
+                            <a class="btn btn-danger btn-sm" ng-click="deleteDirection_category(direction)">
                                 <i class="fa fa-trash-o"></i>
                             </a>
                         </div>
@@ -38,7 +38,7 @@
             </tr>
             </tbody>
         </table>
-        <button class="btn btn-metis-2 btn-grad">Добавить</button>
+        <button class="btn btn-metis-2 btn-grad" ng-click="addDirection_category()">Добавить</button>
     </div>
 </div>
 

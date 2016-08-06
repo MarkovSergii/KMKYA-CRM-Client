@@ -15,14 +15,16 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
 
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams, options){
-
+                
                 if ((toState.name == 'main.admin') && ($rootScope.user.type != 'admin'))
                 {
                     event.preventDefault();
                     sweetAlert.swal("Error", "У вас нет доступа к этому разделу" ,"error");
                 }
-            });
 
+                $rootScope.curentUserState = toState.name;
+            });
+        $rootScope.curentUserState = 'main';
         $rootScope.UrlConfig = UrlConfig;
         // $state.go('main.dashboard');
 

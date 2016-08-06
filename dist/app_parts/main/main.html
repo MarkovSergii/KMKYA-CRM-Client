@@ -93,6 +93,11 @@
             <div class="inner bg-light lter">
                 <div class="col-lg-12">
 
+
+                    <div ng-if="curentUserState == 'main'">
+                        <!-- Show content only on main page-->
+                        Main Page
+                    </div>
                     <div ui-view></div>
 
 

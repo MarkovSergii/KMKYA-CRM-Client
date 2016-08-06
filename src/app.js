@@ -12,6 +12,7 @@ var kmkya_client = angular.module('kmkya_client',[
     'ngCookies',
     'ngFileUpload',
     'ui.grid',
-    'ui.grid.selection'
+    'ui.grid.selection',
+    'underscore'
     ]);
 

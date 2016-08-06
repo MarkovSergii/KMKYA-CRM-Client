@@ -16,8 +16,7 @@ var dist = {
     js : "dist/js",
     fonts : "dist/fonts",
     img : "dist/img",
-    templates : "dist"
-    
+    templates : "dist"    
 };
 
 
@@ -54,8 +53,6 @@ gulp.task('img', function() {
 });
 
 gulp.task('vendorjs', function() {
-
-  
     gulp.src('src/js/*.js')
      //   .pipe(uglify({mangle: false}))
      //   .pipe(concat('vendors.js'))
@@ -64,7 +61,7 @@ gulp.task('vendorjs', function() {
 });
 
 gulp.task('app', function() {
-    gulp.src(['src/app.js','src/app_config/*.js','src/services/*.js','src/directives/*.js','src/app_parts/**/*.js'])
+    gulp.src(['src/modules/*.js','src/app.js','src/app_config/*.js','src/services/*.js','src/directives/*.js','src/app_parts/**/*.js'])
         .pipe(concat('app.js'))
         .pipe(gulp.dest(dist.main));
 
@@ -86,7 +83,7 @@ gulp.task('watch', function() {
         gulp.run('vendorjs');
     });
 
-    gulp.watch(['src/app.js','src/app_config/*.js','src/services/*.js','src/directives/*.js','src/app_parts/**/*.js'], function() {
+    gulp.watch(['src/modules/*.js','src/app.js','src/app_config/*.js','src/services/*.js','src/directives/*.js','src/app_parts/**/*.js'], function() {
         gulp.run('app');
     });
 
