@@ -465,14 +465,6 @@ var reportsCtrl = function($scope,$state,$rootScope) {
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
-/**
- * Created by user on 03.08.2016.
- */
-var admin_exhibitionsCtrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);
 
 var addDirectionCategoryCtrl = function($scope)
 {
@@ -520,6 +512,8 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
         $scope.addDialog = ngDialog.open({
             template: '/app_parts/main/admin/direction_category/dialog/add.html',
             controller: 'addDirectionCategoryCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
             overlay: false
         });
     };
@@ -528,6 +522,8 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
         $scope.addDialog = ngDialog.open({
             template: '/app_parts/main/admin/direction_category/dialog/edit.html',
             controller: 'editDirectionCategoryCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
             overlay: false
         });
     };
@@ -586,3 +582,12 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
 kmkya_client.controller('admin_direction_categoryCtrl',admin_direction_categoryCtrl);
 kmkya_client.controller('addDirectionCategoryCtrl',addDirectionCategoryCtrl);
 kmkya_client.controller('editDirectionCategoryCtrl',editDirectionCategoryCtrl);
+
+/**
+ * Created by user on 03.08.2016.
+ */
+var admin_exhibitionsCtrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);

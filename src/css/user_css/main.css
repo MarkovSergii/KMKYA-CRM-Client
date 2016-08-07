@@ -6,6 +6,31 @@
     padding-left: 0px;
 }
 
+.ngdialog.ngdialog-theme-default.custom-width-1000 .ngdialog-content {
+    width: 1000px;
+}
+
+.ngdialog.ngdialog-theme-default.custom-width-900 .ngdialog-content {
+    width: 900px;
+}
+
+.ngdialog.ngdialog-theme-default.custom-width-800 .ngdialog-content {
+    width: 800px;
+}
+
+.ngdialog.ngdialog-theme-default.custom-width-700 .ngdialog-content {
+    width: 700px;
+}
+
+.ngdialog.ngdialog-theme-default.custom-width-600 .ngdialog-content {
+    width: 600px;
+}
+
+.ngdialog.ngdialog-theme-default.custom-width-950 .ngdialog-content {
+    width: 600px;
+}
+
+
 .menu_item_selected
 {
     color:white; !important;

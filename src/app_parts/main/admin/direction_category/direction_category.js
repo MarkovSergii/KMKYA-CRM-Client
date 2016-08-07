@@ -45,6 +45,8 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
         $scope.addDialog = ngDialog.open({
             template: '/app_parts/main/admin/direction_category/dialog/add.html',
             controller: 'addDirectionCategoryCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
             overlay: false
         });
     };
@@ -53,6 +55,8 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
         $scope.addDialog = ngDialog.open({
             template: '/app_parts/main/admin/direction_category/dialog/edit.html',
             controller: 'editDirectionCategoryCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
             overlay: false
         });
     };
