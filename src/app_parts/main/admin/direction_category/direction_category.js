@@ -1,21 +1,31 @@
 
-var addDirectionCategoryCtrl = function($scope)
+var addDirectionCategoryCtrl = function($scope,direction_category_service)
 {
     
     $scope.addCategory = function()
     {
-
-        alert('add');
-        $scope.closeThisDialog();
+        direction_category_service.add($scope.category)
+            .then(function (newRecorc){
+                if (newRecorc.error)
+                {
+                    alert(newRecorc.message)
+                }
+                else
+                {
+                    $scope.direction_category_list.push(newRecorc.data);
+                    $scope.closeThisDialog();
+                }
+            })
+            .catch(function(error){
+            alert(error.message)
+            });
     }   
 };
 
-var editDirectionCategoryCtrl = function($scope)
+var editDirectionCategoryCtrl = function($scope,Upload,direction_category_service)
 {
-
     $scope.saveCategory = function()
     {
-
         alert('save');
         $scope.closeThisDialog();
     }
@@ -24,6 +34,9 @@ var editDirectionCategoryCtrl = function($scope)
 
 
 var admin_direction_categoryCtrl = function($scope,$state,direction_category_service,ngDialog,sweetAlert,_) {
+
+    $scope.direction_category = {};
+
     // get all direction_category
     direction_category_service.selectAll()
         .then(function(list){
@@ -42,22 +55,26 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
 
     $scope.addDirection_category = function(new_direction_category)
     {
-        $scope.addDialog = ngDialog.open({
+        $scope.addDialog = ngDialog.openConfirm({
             template: '/app_parts/main/admin/direction_category/dialog/add.html',
             controller: 'addDirectionCategoryCtrl',
             className: 'ngdialog-theme-default custom-width-600',
             showClose: false,
-            overlay: false
+            scope:$scope,
+            closeByDocument:false,
+            overlay: true
         });
     };
     $scope.editDirection_category = function(direction_category)
     {
-        $scope.addDialog = ngDialog.open({
+        $scope.addDialog = ngDialog.openConfirm({
             template: '/app_parts/main/admin/direction_category/dialog/edit.html',
             controller: 'editDirectionCategoryCtrl',
             className: 'ngdialog-theme-default custom-width-600',
             showClose: false,
-            overlay: false
+            scope:$scope,
+            closeByDocument:false,
+            overlay: true
         });
     };
     $scope.deleteDirection_category = function(direction_category)

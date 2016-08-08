@@ -2,7 +2,7 @@
  * Created by user on 03.08.2016.
  */
 
-kmkya_client.service('direction_category_service', function ($http,UrlConfig,$q) {
+kmkya_client.service('direction_category_service', function ($http,UrlConfig,$q,Upload) {
 
     this.selectAll = function()
     {
@@ -41,7 +41,25 @@ kmkya_client.service('direction_category_service', function ($http,UrlConfig,$q)
 
     this.add = function(direction_category)
     {
-        return $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/insert',direction_category);
+        return $q(function(resolve, reject) {
+                Upload.upload({
+                    url: UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/insert',
+                    data: {name: direction_category.name, file: direction_category.logo}
+                })
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                   return reject({error:true,message:error.statusText} );
+                });            
+        });        
     };
     
     this.delete = function(id)

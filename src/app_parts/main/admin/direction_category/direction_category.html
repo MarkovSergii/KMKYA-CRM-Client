@@ -21,8 +21,8 @@
                 <td><img width="30px" height="30px" ng-src="{{UrlConfig.serverUrl+':'+UrlConfig.serverPort}}{{direction.logo}}"></td>
                 <td>{{direction.name}}</td>
                 <td>{{direction.order_by}}</td>
-                <td>{{direction.createdAt}}</td>
-                <td>{{direction.updatedAt}}</td>
+                <td>{{direction.createdAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>{{direction.updatedAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
                 <td>
                     <div class="toolbar">
                         <div class="btn-group">

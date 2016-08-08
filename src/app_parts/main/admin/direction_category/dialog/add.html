@@ -2,10 +2,39 @@
 <div style="background-color: white">
     <div class="modal-header">
 
-        <h4 class="modal-title">Modal title</h4>
+        <h4 class="modal-title">Добавления категории(дирекции)</h4>
     </div>
     <div class="modal-body">
-        <p>One fine body&hellip;</p>
+        <form class="form-horizontal">
+            <fieldset>
+
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="input_name">Название</label>
+                    <div class="col-md-8">
+                        <input id="input_name" name="input_name" type="text" placeholder="Название" class="form-control input-md" required="" ng-model="category.name">
+
+                    </div>
+                </div>
+
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="btn_logo">Загрузить лого</label>
+                    <div class="col-md-4">
+                        <button id="btn_logo" name="btn_logo" class="btn btn-primary" ng-model="category.logo" ngf-select>Выбрать файл</button>
+                    </div>
+                    <div class="col-md-4">
+                        <img width="30" ngf-thumbnail="category.logo" class="thumb">
+                        <button class="btn btn-danger" ng-click="category.logo = null" ng-show="category.logo">Удалить</button>
+                    </div>
+
+                </div>
+
+            </fieldset>
+        </form>
+
     </div>
     <div class="modal-footer">
         <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть </button>
