@@ -36,7 +36,49 @@ kmkya_client.service('direction_category_service', function ($http,UrlConfig,$q,
 
     this.update = function(direction_category)
     {
-        return $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+direction_category.id+'/update',direction_category);
+        return $q(function(resolve, reject) {
+
+            if (direction_category.new_logo)
+            {
+                direction_category.logo = direction_category.new_logo;
+                Upload.upload({
+                    url: UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+direction_category.id+'/update',
+                    data: {name: direction_category.name, file: direction_category.logo}
+                })
+                    .then(function(response){
+                        if (response.status == 200)
+                        {
+                            return resolve( {error:false,message:"",data:response.data.data} );
+                        }
+                        else
+                        {
+                            return reject( {error:true,message:response.statusText} );
+                        }
+                    })
+                    .catch(function(error){
+                        return reject({error:true,message:error.statusText} );
+                    });
+            }
+            else
+            {
+                $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+direction_category.id+'/update',direction_category)
+                    .then(function(response){
+                        if (response.status == 200)
+                        {
+                            return resolve( {error:false,message:"",data:response.data.data} );
+                        }
+                        else
+                        {
+                            return reject( {error:true,message:response.statusText} );
+                        }
+                    })
+                    .catch(function(error){
+                        return reject({error:true,message:error.statusText} );
+                    });
+            }
+
+
+        });
     };
 
     this.add = function(direction_category)

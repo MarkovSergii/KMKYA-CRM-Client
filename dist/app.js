@@ -185,7 +185,49 @@ kmkya_client.service('direction_category_service', function ($http,UrlConfig,$q,
 
     this.update = function(direction_category)
     {
-        return $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+direction_category.id+'/update',direction_category);
+        return $q(function(resolve, reject) {
+
+            if (direction_category.new_logo)
+            {
+                direction_category.logo = direction_category.new_logo;
+                Upload.upload({
+                    url: UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+direction_category.id+'/update',
+                    data: {name: direction_category.name, file: direction_category.logo}
+                })
+                    .then(function(response){
+                        if (response.status == 200)
+                        {
+                            return resolve( {error:false,message:"",data:response.data.data} );
+                        }
+                        else
+                        {
+                            return reject( {error:true,message:response.statusText} );
+                        }
+                    })
+                    .catch(function(error){
+                        return reject({error:true,message:error.statusText} );
+                    });
+            }
+            else
+            {
+                $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+direction_category.id+'/update',direction_category)
+                    .then(function(response){
+                        if (response.status == 200)
+                        {
+                            return resolve( {error:false,message:"",data:response.data.data} );
+                        }
+                        else
+                        {
+                            return reject( {error:true,message:response.statusText} );
+                        }
+                    })
+                    .catch(function(error){
+                        return reject({error:true,message:error.statusText} );
+                    });
+            }
+
+
+        });
     };
 
     this.add = function(direction_category)
@@ -498,14 +540,14 @@ var addDirectionCategoryCtrl = function($scope,direction_category_service)
     $scope.addCategory = function()
     {
         direction_category_service.add($scope.category)
-            .then(function (newRecorc){
-                if (newRecorc.error)
+            .then(function (newRecorcd){
+                if (newRecorcd.error)
                 {
-                    alert(newRecorc.message)
+                    alert(newRecorcd.message)
                 }
                 else
                 {
-                    $scope.direction_category_list.push(newRecorc.data);
+                    $scope.direction_category_list.push(newRecorcd.data);
                     $scope.closeThisDialog();
                 }
             })
@@ -515,12 +557,35 @@ var addDirectionCategoryCtrl = function($scope,direction_category_service)
     }   
 };
 
-var editDirectionCategoryCtrl = function($scope,Upload,direction_category_service)
+var editDirectionCategoryCtrl = function($scope,direction_category_service)
 {
-    $scope.saveCategory = function()
+    $scope.saveCategory = function(direction_category)
     {
-        alert('save');
-        $scope.closeThisDialog();
+        direction_category_service.update(direction_category)
+            .then(function (updatedRecorcd){
+                if (updatedRecorcd.error)
+                {
+                    alert(updatedRecorcd.message)
+                }
+                else
+                {
+                    // найти в списке и перезаписать
+                    for (var i =0;i<$scope.direction_category_list.length;i++)
+                    {
+                        if ($scope.direction_category_list[i].id == updatedRecorcd.data.id)
+                        {
+                            $scope.direction_category_list[i] = updatedRecorcd.data;
+                            $scope.closeThisDialog();
+                            break;
+                        }
+                    }
+                    //$scope.direction_category_list.  push(newRecorcd.data);
+
+                }
+            })
+            .catch(function(error){
+                alert(error.message)
+            });
     }
 };
 
@@ -546,7 +611,7 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
             alert(error.message)
         });
 
-    $scope.addDirection_category = function(new_direction_category)
+    $scope.addDirection_category = function()
     {
         $scope.addDialog = ngDialog.openConfirm({
             template: '/app_parts/main/admin/direction_category/dialog/add.html',
@@ -566,6 +631,7 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
             className: 'ngdialog-theme-default custom-width-600',
             showClose: false,
             scope:$scope,
+            data : angular.copy(direction_category),
             closeByDocument:false,
             overlay: true
         });
