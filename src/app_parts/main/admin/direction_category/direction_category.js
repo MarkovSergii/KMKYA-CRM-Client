@@ -135,14 +135,24 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
 
                 // TODO: delete category and link all it exhibition to result
 
-                sweetAlert.swal(
-                    {
-                        title: 'Успешно',
-                        text: "Категория(дирекция) удалена"+result,
-                        type: 'success',
-                        timer:2000
-                    }
-                ).done();
+
+
+                direction_category_service.delete(direction_category.id,result)
+                    .then(function () {
+                        $scope.direction_category_list.splice(R.findIndex(R.propEq('id', direction_category.id))($scope.direction_category_list),1);
+                        sweetAlert.swal(
+                            {
+                                title: 'Успешно',
+                                text: "Категория(дирекция) удалена",
+                                type: 'success',
+                                timer:2000
+                            }
+                        ).done();
+                    })
+                    .catch(function(error){
+                        alert(error.message)
+                    });
+
             }).done();
         }).done();
     };

@@ -253,9 +253,25 @@ kmkya_client.service('direction_category_service', function ($http,UrlConfig,$q,
         });        
     };
     
-    this.delete = function(id)
+    this.delete = function(id,direction_category_id)
     {
-        return $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+id+'/delete');
+        return $q(function(resolve, reject) {
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+id+'/delete',{direction_category_id:direction_category_id})
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false});
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+        });
+        
     };    
     
     
@@ -525,14 +541,6 @@ var reportsCtrl = function($scope,$state,$rootScope) {
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
-/**
- * Created by user on 03.08.2016.
- */
-var admin_exhibitionsCtrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);
 
 var addDirectionCategoryCtrl = function($scope,direction_category_service)
 {
@@ -670,14 +678,24 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
 
                 // TODO: delete category and link all it exhibition to result
 
-                sweetAlert.swal(
-                    {
-                        title: 'Успешно',
-                        text: "Категория(дирекция) удалена"+result,
-                        type: 'success',
-                        timer:2000
-                    }
-                ).done();
+
+
+                direction_category_service.delete(direction_category.id,result)
+                    .then(function () {
+                        $scope.direction_category_list.splice(R.findIndex(R.propEq('id', direction_category.id))($scope.direction_category_list),1);
+                        sweetAlert.swal(
+                            {
+                                title: 'Успешно',
+                                text: "Категория(дирекция) удалена",
+                                type: 'success',
+                                timer:2000
+                            }
+                        ).done();
+                    })
+                    .catch(function(error){
+                        alert(error.message)
+                    });
+
             }).done();
         }).done();
     };
@@ -691,3 +709,12 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
 kmkya_client.controller('admin_direction_categoryCtrl',admin_direction_categoryCtrl);
 kmkya_client.controller('addDirectionCategoryCtrl',addDirectionCategoryCtrl);
 kmkya_client.controller('editDirectionCategoryCtrl',editDirectionCategoryCtrl);
+
+/**
+ * Created by user on 03.08.2016.
+ */
+var admin_exhibitionsCtrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);

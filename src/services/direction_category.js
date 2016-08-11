@@ -104,9 +104,25 @@ kmkya_client.service('direction_category_service', function ($http,UrlConfig,$q,
         });        
     };
     
-    this.delete = function(id)
+    this.delete = function(id,direction_category_id)
     {
-        return $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+id+'/delete');
+        return $q(function(resolve, reject) {
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+id+'/delete',{direction_category_id:direction_category_id})
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false});
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+        });
+        
     };    
     
     
