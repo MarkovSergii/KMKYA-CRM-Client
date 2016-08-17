@@ -1,0 +1,44 @@
+<div class="box ui-sortable-handle">
+    <header>
+       <h5>Категории (Дирекции)</h5>
+    </header>
+    <div id="stripedTable" class="body collapse in">
+        <table class="table table-striped responsive-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Лого</th>
+                <th>Название</th>
+                <th>Сортировка</th>
+                <th>Дата создания</th>
+                <th>Дата редактирования</th>
+                <th>Действие</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="direction in direction_category_list">
+            <tr>
+                <td>{{direction.id}}</td>
+                <td><img width="30px" height="30px" ng-src="{{UrlConfig.serverUrl+':'+UrlConfig.serverPort}}{{direction.logo}}"></td>
+                <td>{{direction.name}}</td>
+                <td>{{direction.order_by}}</td>
+                <td>{{direction.createdAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>{{direction.updatedAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>
+                    <div class="toolbar">
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-default" ng-click="editDirection_category(direction)">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                            <a class="btn btn-danger btn-sm" ng-click="deleteDirection_category(direction)">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button class="btn btn-metis-2 btn-grad" ng-click="addDirection_category()">Добавить</button>
+    </div>
+</div>
+
