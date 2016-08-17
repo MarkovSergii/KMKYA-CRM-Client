@@ -9,6 +9,11 @@ var adminCtrl = function($scope,$state,$rootScope) {
             icon:"fa-dashboard"
         },
         {
+            title:"Сезоны",
+            link:"main.admin.seasons",
+            icon:"fa-dashboard"
+        },
+        {
             title:"Выставки",
             link:"main.admin.exhibitions",
             icon:"fa-dashboard"

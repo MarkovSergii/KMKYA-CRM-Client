@@ -38,6 +38,13 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         templateUrl: '/app_parts/main/admin/admin.html',
         controller: 'adminCtrl'
     };
+    var admin_seasonsCtrl = {
+        name: 'main.admin.seasons',
+        url: '/seasons',
+        cached:false,
+        templateUrl: '/app_parts/main/admin/seasons/seasons.html',
+        controller: 'admin_seasonsCtrl'
+    };
     var adminCategoryState = {
         name: 'main.admin.direction_category',
         url: '/direction_category',
@@ -83,12 +90,19 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
 
 
     $stateProvider.state(authState);
+//-------------------------------------------------------------------------------
     $stateProvider.state(mainState);
-    $stateProvider.state(adminState);  
-    $stateProvider.state(databaseState);
+//-------------------------------------------------------------------------------
+    $stateProvider.state(adminState);
+    $stateProvider.state(admin_seasonsCtrl);
     $stateProvider.state(adminCategoryState);
     $stateProvider.state(adminExhibitionsState);
+//-------------------------------------------------------------------------------
+    $stateProvider.state(databaseState);
+//-------------------------------------------------------------------------------
     $stateProvider.state(reportsState);
+//-------------------------------------------------------------------------------
     $stateProvider.state(dashboardState);
+//-------------------------------------------------------------------------------
 });
 
