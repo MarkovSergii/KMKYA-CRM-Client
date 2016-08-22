@@ -8,7 +8,6 @@ underscore.factory('_', function() {
 
 var kmkya_client = angular.module('kmkya_client',[
     'ui.router',
-    'btford.socket-io',
     'ngAnimate',
     'toastr',
     '19degrees.ngSweetAlert2',
@@ -158,7 +157,12 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
 
 kmkya_client.constant('UrlConfig', {
     //serverUrl : 'http://93.171.158.114',
+    //socketUrl : 'http://93.171.158.114',
+    
+    socketUrl:'http://127.0.0.1',
     serverUrl : 'http://127.0.0.1',
+    
+    socketPort:'3001',    
     serverPort : '3000'
 });
 /**
@@ -299,8 +303,11 @@ kmkya_client.service('direction_category_service', function ($http,UrlConfig,$q,
  * Created by user on 28.07.2016.
  */
 
-kmkya_client.factory('SocketIO', function (socketFactory) {
-    return socketFactory();
+kmkya_client.factory('SocketIO', function ($rootScope,UrlConfig) {
+
+    var socket = io.connect(UrlConfig.socketUrl+':'+UrlConfig.socketPort);
+    return socket;
+
 });
 /**
  * Created by user on 26.07.2016.
@@ -370,8 +377,15 @@ kmkya_client.controller('authCtrl',authCtrl);
  * Created by user on 28.07.2016.
  */
 
-var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig) {
+var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig,SocketIO) {
 
+
+    
+    SocketIO.emit('join','hello');
+
+    SocketIO.on('join',function(msg){
+        console.log(msg);
+    });
 
     $scope.controllerBody = function()
     {

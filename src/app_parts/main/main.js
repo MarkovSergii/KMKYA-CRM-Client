@@ -2,8 +2,15 @@
  * Created by user on 28.07.2016.
  */
 
-var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig) {
+var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig,SocketIO) {
 
+
+    
+    SocketIO.emit('join','hello');
+
+    SocketIO.on('join',function(msg){
+        console.log(msg);
+    });
 
     $scope.controllerBody = function()
     {

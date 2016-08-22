@@ -4,7 +4,6 @@
 
 var kmkya_client = angular.module('kmkya_client',[
     'ui.router',
-    'btford.socket-io',
     'ngAnimate',
     'toastr',
     '19degrees.ngSweetAlert2',
