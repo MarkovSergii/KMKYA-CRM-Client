@@ -52,7 +52,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'auth',
         url: '/auth',
         cached:false,
-        templateUrl: '/app_parts/auth/auth.html',
+        templateUrl: 'app_parts/auth/auth.html',
         controller: 'authCtrl'
     };
     
@@ -61,7 +61,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'main',
         url: '/main',
         cached:false,
-        templateUrl: '/app_parts/main/main.html',
+        templateUrl: 'app_parts/main/main.html',
         controller: 'mainCtrl'
     };
     
@@ -70,7 +70,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'main.dashboard',
         url: '/dashboard',
         cached:false,
-        templateUrl: '/app_parts/main/dashboard/dashboard.html',
+        templateUrl: 'app_parts/main/dashboard/dashboard.html',
         controller: 'dashboardCtrl'
     };
     
@@ -79,28 +79,28 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'main.admin',
         url: '/admin',
         cached:false,
-        templateUrl: '/app_parts/main/admin/admin.html',
+        templateUrl: 'app_parts/main/admin/admin.html',
         controller: 'adminCtrl'
     };
     var admin_seasonsCtrl = {
         name: 'main.admin.seasons',
         url: '/seasons',
         cached:false,
-        templateUrl: '/app_parts/main/admin/seasons/seasons.html',
+        templateUrl: 'app_parts/main/admin/seasons/seasons.html',
         controller: 'admin_seasonsCtrl'
     };
     var adminCategoryState = {
         name: 'main.admin.direction_category',
         url: '/direction_category',
         cached:false,
-        templateUrl: '/app_parts/main/admin/direction_category/direction_category.html',
+        templateUrl: 'app_parts/main/admin/direction_category/direction_category.html',
         controller: 'admin_direction_categoryCtrl'
     };
     var adminExhibitionsState = {
         name: 'main.admin.exhibitions',
         url: '/exhibitions',
         cached:false,
-        templateUrl: '/app_parts/main/admin/exhibitions/exhibitions.html',
+        templateUrl: 'app_parts/main/admin/exhibitions/exhibitions.html',
         controller: 'admin_exhibitionsCtrl'
     };    
     
@@ -109,7 +109,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'main.database',
         url: '/database',
         cached:false,
-        templateUrl: '/app_parts/main/database/database.html',
+        templateUrl: 'app_parts/main/database/database.html',
         controller: 'databaseCtrl'
 
     };
@@ -119,7 +119,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'main.reports',
         url: '/reports',
         cached:false,
-        templateUrl: '/app_parts/main/reports/reports.html',
+        templateUrl: 'app_parts/main/reports/reports.html',
         controller: 'reportsCtrl'
 
     };    
@@ -579,6 +579,14 @@ var reportsCtrl = function($scope,$state,$rootScope) {
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
+/**
+ * Created by user on 03.08.2016.
+ */
+var admin_exhibitionsCtrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);
 
 var addDirectionCategoryCtrl = function($scope,direction_category_service)
 {
@@ -660,7 +668,7 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
     $scope.addDirection_category = function()
     {
         $scope.addDialog = ngDialog.openConfirm({
-            template: '/app_parts/main/admin/direction_category/dialog/add.html',
+            template: 'app_parts/main/admin/direction_category/dialog/add.html',
             controller: 'addDirectionCategoryCtrl',
             className: 'ngdialog-theme-default custom-width-600',
             showClose: false,
@@ -672,7 +680,7 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
     $scope.editDirection_category = function(direction_category)
     {
         $scope.addDialog = ngDialog.openConfirm({
-            template: '/app_parts/main/admin/direction_category/dialog/edit.html',
+            template: 'app_parts/main/admin/direction_category/dialog/edit.html',
             controller: 'editDirectionCategoryCtrl',
             className: 'ngdialog-theme-default custom-width-600',
             showClose: false,
@@ -748,14 +756,6 @@ kmkya_client.controller('admin_direction_categoryCtrl',admin_direction_categoryC
 kmkya_client.controller('addDirectionCategoryCtrl',addDirectionCategoryCtrl);
 kmkya_client.controller('editDirectionCategoryCtrl',editDirectionCategoryCtrl);
 
-/**
- * Created by user on 03.08.2016.
- */
-var admin_exhibitionsCtrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);
 /**
  * Created by user on 03.08.2016.
  */
