@@ -8,7 +8,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'auth',
         url: '/auth',
         cached:false,
-        templateUrl: '/app_parts/auth/auth.html',
+        templateUrl: 'app_parts/auth/auth.html',
         controller: 'authCtrl'
     };
     
@@ -17,7 +17,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'main',
         url: '/main',
         cached:false,
-        templateUrl: '/app_parts/main/main.html',
+        templateUrl: 'app_parts/main/main.html',
         controller: 'mainCtrl'
     };
     
@@ -26,7 +26,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'main.dashboard',
         url: '/dashboard',
         cached:false,
-        templateUrl: '/app_parts/main/dashboard/dashboard.html',
+        templateUrl: 'app_parts/main/dashboard/dashboard.html',
         controller: 'dashboardCtrl'
     };
     
@@ -35,28 +35,28 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'main.admin',
         url: '/admin',
         cached:false,
-        templateUrl: '/app_parts/main/admin/admin.html',
+        templateUrl: 'app_parts/main/admin/admin.html',
         controller: 'adminCtrl'
     };
     var admin_seasonsCtrl = {
         name: 'main.admin.seasons',
         url: '/seasons',
         cached:false,
-        templateUrl: '/app_parts/main/admin/seasons/seasons.html',
+        templateUrl: 'app_parts/main/admin/seasons/seasons.html',
         controller: 'admin_seasonsCtrl'
     };
     var adminCategoryState = {
         name: 'main.admin.direction_category',
         url: '/direction_category',
         cached:false,
-        templateUrl: '/app_parts/main/admin/direction_category/direction_category.html',
+        templateUrl: 'app_parts/main/admin/direction_category/direction_category.html',
         controller: 'admin_direction_categoryCtrl'
     };
     var adminExhibitionsState = {
         name: 'main.admin.exhibitions',
         url: '/exhibitions',
         cached:false,
-        templateUrl: '/app_parts/main/admin/exhibitions/exhibitions.html',
+        templateUrl: 'app_parts/main/admin/exhibitions/exhibitions.html',
         controller: 'admin_exhibitionsCtrl'
     };    
     
@@ -65,7 +65,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'main.database',
         url: '/database',
         cached:false,
-        templateUrl: '/app_parts/main/database/database.html',
+        templateUrl: 'app_parts/main/database/database.html',
         controller: 'databaseCtrl'
 
     };
@@ -75,7 +75,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         name: 'main.reports',
         url: '/reports',
         cached:false,
-        templateUrl: '/app_parts/main/reports/reports.html',
+        templateUrl: 'app_parts/main/reports/reports.html',
         controller: 'reportsCtrl'
 
     };    

@@ -79,7 +79,7 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
     $scope.addDirection_category = function()
     {
         $scope.addDialog = ngDialog.openConfirm({
-            template: '/app_parts/main/admin/direction_category/dialog/add.html',
+            template: 'app_parts/main/admin/direction_category/dialog/add.html',
             controller: 'addDirectionCategoryCtrl',
             className: 'ngdialog-theme-default custom-width-600',
             showClose: false,
@@ -91,7 +91,7 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
     $scope.editDirection_category = function(direction_category)
     {
         $scope.addDialog = ngDialog.openConfirm({
-            template: '/app_parts/main/admin/direction_category/dialog/edit.html',
+            template: 'app_parts/main/admin/direction_category/dialog/edit.html',
             controller: 'editDirectionCategoryCtrl',
             className: 'ngdialog-theme-default custom-width-600',
             showClose: false,
