@@ -67,6 +67,16 @@ gulp.task('app', function() {
 
 });
 
+gulp.task('build', function() {
+    gulp.run('vendorjs');
+    gulp.run('templates');
+    gulp.run('img');
+    gulp.run('html');
+    gulp.run('css');
+    gulp.run('fonts');
+    gulp.run('app');
+});
+
 
 
 gulp.task('watch', function() {

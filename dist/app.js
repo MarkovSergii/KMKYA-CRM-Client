@@ -255,11 +255,11 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
  */
 
 kmkya_client.constant('UrlConfig', {
-    //serverUrl : 'http://93.171.158.114',
-    //socketUrl : 'http://93.171.158.114',
+    serverUrl : 'http://93.171.158.114',
+    socketUrl : 'http://93.171.158.114',
     
-    socketUrl:'http://127.0.0.1',
-    serverUrl : 'http://127.0.0.1',
+    //socketUrl:'http://127.0.0.1',
+    //serverUrl : 'http://127.0.0.1',
     
     socketPort:'3001',    
     serverPort : '3000'
@@ -809,6 +809,74 @@ kmkya_client.controller('mainCtrl',mainCtrl);
 
 
 /**
+ * Created by user on 30.07.2016.
+ */
+var adminCtrl = function($scope,$state,$rootScope) {
+    $rootScope.mainMenu = [
+        {
+            title:"Дирекции (Категории)",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Сезоны",
+            link:"main.admin.seasons",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Выставки",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Виды доступа",
+            link:"main.admin.access_type",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Пользователи",
+            link:"main.admin.users",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Категории БД",
+            link:"main.admin.database_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Базы данных",
+            link:"main.admin.databases",
+            icon:"fa-dashboard"
+        },
+        {
+            title: "Адреса",
+            link: "main.admin.address",
+            icon: "fa-dashboard",
+            have_subitems: true,
+            subitems: [
+                {
+                    title:"Страны",
+                    link:"main.admin.country",
+                    icon:"fa-dashboard"
+                },
+                {
+                    title:"Области",
+                    link:"main.admin.oblast",
+                    icon:"fa-dashboard"
+                },
+                {
+                    title:"Города",
+                    link:"main.admin.city",
+                    icon:"fa-dashboard"
+                }
+            ]
+        }
+        
+    ];
+};
+
+kmkya_client.controller('adminCtrl',adminCtrl);
+/**
  * Created by user on 31.07.2016.
  */
 var dashboardCtrl = function($scope,$state,$rootScope) {
@@ -928,92 +996,6 @@ var reportsCtrl = function($scope,$state,$rootScope,sweetAlert) {
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
-
-var reports1Ctrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('reports1Ctrl',reports1Ctrl);
-
-var reports2Ctrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('reports2Ctrl',reports2Ctrl);
-
-var reports3Ctrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('reports3Ctrl',reports3Ctrl);
-/**
- * Created by user on 30.07.2016.
- */
-var adminCtrl = function($scope,$state,$rootScope) {
-    $rootScope.mainMenu = [
-        {
-            title:"Дирекции (Категории)",
-            link:"main.admin.direction_category",
-            icon:"fa-dashboard"
-        },
-        {
-            title:"Сезоны",
-            link:"main.admin.seasons",
-            icon:"fa-dashboard"
-        },
-        {
-            title:"Выставки",
-            link:"main.admin.exhibitions",
-            icon:"fa-dashboard"
-        },
-        {
-            title:"Виды доступа",
-            link:"main.admin.access_type",
-            icon:"fa-dashboard"
-        },
-        {
-            title:"Пользователи",
-            link:"main.admin.users",
-            icon:"fa-dashboard"
-        },
-        {
-            title:"Категории БД",
-            link:"main.admin.database_category",
-            icon:"fa-dashboard"
-        },
-        {
-            title:"Базы данных",
-            link:"main.admin.databases",
-            icon:"fa-dashboard"
-        },
-        {
-            title: "Адреса",
-            link: "main.admin.address",
-            icon: "fa-dashboard",
-            have_subitems: true,
-            subitems: [
-                {
-                    title:"Страны",
-                    link:"main.admin.country",
-                    icon:"fa-dashboard"
-                },
-                {
-                    title:"Области",
-                    link:"main.admin.oblast",
-                    icon:"fa-dashboard"
-                },
-                {
-                    title:"Города",
-                    link:"main.admin.city",
-                    icon:"fa-dashboard"
-                }
-            ]
-        }
-        
-    ];
-};
-
-kmkya_client.controller('adminCtrl',adminCtrl);
 var admin_access_typeCtrl = function($scope,$state) {
 
 };
@@ -1039,14 +1021,6 @@ var admin_database_categoryCtrl = function($scope,$state) {
 };
 
 kmkya_client.controller('admin_database_categoryCtrl',admin_database_categoryCtrl);
-/**
- * Created by user on 03.08.2016.
- */
-var admin_exhibitionsCtrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);
 
 var addDirectionCategoryCtrl = function($scope,direction_category_service)
 {
@@ -1216,6 +1190,14 @@ kmkya_client.controller('admin_direction_categoryCtrl',admin_direction_categoryC
 kmkya_client.controller('addDirectionCategoryCtrl',addDirectionCategoryCtrl);
 kmkya_client.controller('editDirectionCategoryCtrl',editDirectionCategoryCtrl);
 
+/**
+ * Created by user on 03.08.2016.
+ */
+var admin_exhibitionsCtrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);
 var admin_oblastCtrl = function($scope,$state) {
 
 };
@@ -1234,3 +1216,21 @@ var admin_usersCtrl = function($scope,$state) {
 };
 
 kmkya_client.controller('admin_usersCtrl',admin_usersCtrl);
+
+var reports1Ctrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('reports1Ctrl',reports1Ctrl);
+
+var reports2Ctrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('reports2Ctrl',reports2Ctrl);
+
+var reports3Ctrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('reports3Ctrl',reports3Ctrl);
