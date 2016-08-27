@@ -22,8 +22,7 @@ var reportsCtrl = function($scope,$state,$rootScope,sweetAlert) {
 
     $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams, options){
-          //  if ((toState.name == 'main.reports.report3') && ($rootScope.user.type != 'admin'))
-            if (($rootScope.user.type != 'admin'))
+            if (($rootScope.user.type != 'admin') && (toState.name.includes('main.reports.')) )
             {
                 if (!R.contains(parseInt(toParams.access_id),$rootScope.user.permission)){
                     event.preventDefault();

@@ -690,8 +690,7 @@ var reportsCtrl = function($scope,$state,$rootScope,sweetAlert) {
 
     $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams, options){
-          //  if ((toState.name == 'main.reports.report3') && ($rootScope.user.type != 'admin'))
-            if (($rootScope.user.type != 'admin'))
+            if (($rootScope.user.type != 'admin') && (toState.name.includes('main.reports.')) )
             {
                 if (!R.contains(parseInt(toParams.access_id),$rootScope.user.permission)){
                     event.preventDefault();
@@ -711,14 +710,6 @@ var reportsCtrl = function($scope,$state,$rootScope,sweetAlert) {
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
-/**
- * Created by user on 03.08.2016.
- */
-var admin_exhibitionsCtrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);
 
 var addDirectionCategoryCtrl = function($scope,direction_category_service)
 {
@@ -888,6 +879,14 @@ kmkya_client.controller('admin_direction_categoryCtrl',admin_direction_categoryC
 kmkya_client.controller('addDirectionCategoryCtrl',addDirectionCategoryCtrl);
 kmkya_client.controller('editDirectionCategoryCtrl',editDirectionCategoryCtrl);
 
+/**
+ * Created by user on 03.08.2016.
+ */
+var admin_exhibitionsCtrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);
 /**
  * Created by user on 03.08.2016.
  */
