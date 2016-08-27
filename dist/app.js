@@ -879,25 +879,6 @@ kmkya_client.controller('adminCtrl',adminCtrl);
 /**
  * Created by user on 31.07.2016.
  */
-var dashboardCtrl = function($scope,$state,$rootScope) {
-    $rootScope.mainMenu = [
-        {
-            title:"Статистика",
-            link:"main.admin.direction_category",
-            icon:"fa-dashboard"
-        },
-        {
-            title:"Еще что-то ",
-            link:"main.admin.exhibitions",
-            icon:"fa-dashboard"
-        }
-    ];
-};
-
-kmkya_client.controller('dashboardCtrl',dashboardCtrl);
-/**
- * Created by user on 31.07.2016.
- */
 var databaseCtrl = function($scope,$state,$rootScope) {
     $rootScope.mainMenu = [ // TODO: заменить на генерирование меню из таблицы дирекций
         {
@@ -996,6 +977,25 @@ var reportsCtrl = function($scope,$state,$rootScope,sweetAlert) {
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
+/**
+ * Created by user on 31.07.2016.
+ */
+var dashboardCtrl = function($scope,$state,$rootScope) {
+    $rootScope.mainMenu = [
+        {
+            title:"Статистика",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Еще что-то ",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        }
+    ];
+};
+
+kmkya_client.controller('dashboardCtrl',dashboardCtrl);
 var admin_access_typeCtrl = function($scope,$state) {
 
 };
