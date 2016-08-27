@@ -58,8 +58,74 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         cached:false,
         templateUrl: 'app_parts/main/admin/exhibitions/exhibitions.html',
         controller: 'admin_exhibitionsCtrl'
-    };    
-    
+    };
+    var adminAccess_typeState = {
+        name: 'main.admin.access_type',
+        url: '/access_type',
+        cached:false,
+        templateUrl: 'app_parts/main/admin/access_type/access_type.html',
+        controller: 'admin_access_typeCtrl'
+    };
+    var adminUsersState = {
+        name: 'main.admin.users',
+        url: '/users',
+        cached:false,
+        templateUrl: 'app_parts/main/admin/users/users.html',
+        controller: 'admin_usersCtrl'
+    };
+
+    var adminCityState = {
+        name: 'main.admin.city',
+        url: '/city',
+        cached:false,
+        templateUrl: 'app_parts/main/admin/city/city.html',
+        controller: 'admin_cityCtrl'
+    };
+
+    var adminCountryState = {
+        name: 'main.admin.country',
+        url: '/country',
+        cached:false,
+        templateUrl: 'app_parts/main/admin/country/country.html',
+        controller: 'admin_countryCtrl'
+    };
+
+    var adminDatabase_categoryState = {
+        name: 'main.admin.database_category',
+        url: '/database_category',
+        cached:false,
+        templateUrl: 'app_parts/main/admin/database_category/database_category.html',
+        controller: 'admin_database_categoryCtrl'
+    };
+
+    var adminDatabasesState = {
+        name: 'main.admin.databases',
+        url: '/databases',
+        cached:false,
+        templateUrl: 'app_parts/main/admin/databases/databases.html',
+        controller: 'admin_databasesCtrl'
+    };
+
+    var adminOblastState = {
+        name: 'main.admin.oblast',
+        url: '/oblast',
+        cached:false,
+        templateUrl: 'app_parts/main/admin/oblast/oblast.html',
+        controller: 'admin_oblastCtrl'
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
 // database --------------------------------------------------------------------
     var databaseState = {
         name: 'main.database',
@@ -119,6 +185,14 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $stateProvider.state(admin_seasonsCtrl);
     $stateProvider.state(adminCategoryState);
     $stateProvider.state(adminExhibitionsState);
+    $stateProvider.state(adminUsersState);
+    $stateProvider.state(adminAccess_typeState);
+    $stateProvider.state(adminCityState);
+    $stateProvider.state(adminCountryState);
+    $stateProvider.state(adminDatabase_categoryState);
+    $stateProvider.state(adminDatabasesState);
+    $stateProvider.state(adminOblastState);
+ 
 //-------------------------------------------------------------------------------
     $stateProvider.state(databaseState);
 //-------------------------------------------------------------------------------

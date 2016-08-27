@@ -2,7 +2,7 @@
  * Created by user on 27.08.2016.
  */
 
-kmkya_client.service('user', function ($http,UrlConfig,$q,Upload) {
+kmkya_client.service('user', function ($http,UrlConfig,$q) {
 
     this.selectAll = function()
     {
@@ -30,15 +30,9 @@ kmkya_client.service('user', function ($http,UrlConfig,$q,Upload) {
 
     this.selectById = function(id)
     {
-        return $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/user/'+id+'/select');
-    };
-
-
-    this.getAccessForUserById = function(id)
-    {
         return $q(function(resolve, reject) {
 
-            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/access/byUserId/'+id)
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/user/'+id+'/select')
                 .then(function(response){
                     if (response.status == 200)
                     {
@@ -54,7 +48,9 @@ kmkya_client.service('user', function ($http,UrlConfig,$q,Upload) {
                 });
 
         });
+       
     };
+
 
     return this;
 });

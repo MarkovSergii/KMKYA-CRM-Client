@@ -19,7 +19,7 @@ var reportsCtrl = function($scope,$state,$rootScope,sweetAlert) {
             icon:"fa-dashboard"
         }
     ];
-
+    // система проверки доступа в отчетах
     $rootScope.$on('$stateChangeStart',
         function(event, toState, toParams, fromState, fromParams, options){
             if (($rootScope.user.type != 'admin') && (toState.name.includes('main.reports.')) )
