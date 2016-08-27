@@ -122,12 +122,34 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         templateUrl: 'app_parts/main/reports/reports.html',
         controller: 'reportsCtrl'
 
-    };    
-    
-    
-    
-    
-    
+    };
+    var reports1 = {
+        name: 'main.reports.report1',
+        url: '/reports/1/:access_id',
+        cached:false,
+        templateUrl: 'app_parts/main/reports/report1/report1.html',
+        controller: 'reports1Ctrl'
+
+    };
+    var reports2 = {
+        name: 'main.reports.report2',
+        url: '/reports/2/:access_id',
+        cached:false,
+        templateUrl: 'app_parts/main/reports/report2/report2.html',
+        controller: 'reports2Ctrl'
+
+    };
+    var reports3 = {
+        name: 'main.reports.report3',
+        url: '/reports/3/:access_id',
+        cached:false,
+        templateUrl: 'app_parts/main/reports/report3/report3.html',
+        controller: 'reports3Ctrl'
+
+    };
+
+
+
 
     $urlRouterProvider.when('', '/auth');
     $urlRouterProvider.otherwise('/auth');
@@ -145,6 +167,9 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $stateProvider.state(databaseState);
 //-------------------------------------------------------------------------------
     $stateProvider.state(reportsState);
+    $stateProvider.state(reports1);
+    $stateProvider.state(reports2);
+    $stateProvider.state(reports3);
 //-------------------------------------------------------------------------------
     $stateProvider.state(dashboardState);
 //-------------------------------------------------------------------------------
@@ -310,10 +335,72 @@ kmkya_client.factory('SocketIO', function ($rootScope,UrlConfig) {
 
 });
 /**
+ * Created by user on 27.08.2016.
+ */
+
+kmkya_client.service('user', function ($http,UrlConfig,$q,Upload) {
+
+    this.selectAll = function()
+    {
+        return $q(function(resolve, reject) {
+
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/user/all')
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+        });
+
+
+    };
+
+    this.selectById = function(id)
+    {
+        return $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/user/'+id+'/select');
+    };
+
+
+    this.getAccessForUserById = function(id)
+    {
+        return $q(function(resolve, reject) {
+
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/access/byUserId/'+id)
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+        });
+    };
+
+    return this;
+});
+
+
+/**
  * Created by user on 26.07.2016.
  */
 
-var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope){
+var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope,user){
 
 
     $scope.login = function(auth)
@@ -347,6 +434,18 @@ var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope
 
                                 $cookies.put('token', response.data.token,{expires :exp});
                                 $rootScope.user = response.data.user;
+
+                                user.getAccessForUserById(response.data.user.id)
+                                    .then(function(user_access_responce){
+                                        if (user_access_responce.data.error)
+                                        {
+
+                                        }
+                                        else {
+                                            $rootScope.user.permission = user_access_responce.data;
+                                        }
+                                    });
+
                                 $rootScope.token = response.data.token;
                                 $state.go('main');
                             }
@@ -377,7 +476,7 @@ kmkya_client.controller('authCtrl',authCtrl);
  * Created by user on 28.07.2016.
  */
 
-var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig,SocketIO) {
+var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig,SocketIO,user) {
 
 
     
@@ -395,6 +494,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
             $state.go('auth');
         };
 
+        // только зона Администратора
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams, options){
                 
@@ -405,12 +505,6 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                     $rootScope.curentUserState = fromState.name;
                     sweetAlert.swal("Error", "У вас нет доступа к этому разделу" ,"error");
                 }
-                else
-                {
-                    $rootScope.curentUserState = toState.name;
-                }
-
-
             });
         $rootScope.curentUserState = $state.current.name;
         $rootScope.UrlConfig = UrlConfig;
@@ -437,6 +531,18 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                     {
                         //save cookie and go to main
                         $rootScope.user = response.data.user;
+                        // get user permission
+                        user.getAccessForUserById(response.data.user.id)
+                            .then(function(user_access_responce){
+                                if (user_access_responce.data.error)
+                                {
+                                    
+                                }
+                                else {
+                                    $rootScope.user.permission = user_access_responce.data; 
+                                }
+                            });
+
                         $rootScope.token = $cookies.get('token');
                         $scope.controllerBody();
                     }
@@ -563,19 +669,45 @@ kmkya_client.controller('databaseCtrl',databaseCtrl);
 /**
  * Created by user on 31.07.2016.
  */
-var reportsCtrl = function($scope,$state,$rootScope) {
+var reportsCtrl = function($scope,$state,$rootScope,sweetAlert) {
     $rootScope.mainMenu = [
         {
-            title:"Отчет 1",
-            link:"main.admin.direction_category",
+            title:"Финансовый отчет №1",
+            link:"main.reports.report1({access_id:1})",
             icon:"fa-dashboard"
         },
         {
-            title:"Отчет 2",
-            link:"main.admin.exhibitions",
+            title:"Финансовый отчет №2",
+            link:"main.reports.report2({access_id:2})",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Финансовый отчет №3",
+            link:"main.reports.report3({access_id:3})",
             icon:"fa-dashboard"
         }
     ];
+
+    $rootScope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams, options){
+          //  if ((toState.name == 'main.reports.report3') && ($rootScope.user.type != 'admin'))
+            if (($rootScope.user.type != 'admin'))
+            {
+                if (!R.contains(parseInt(toParams.access_id),$rootScope.user.permission)){
+                    event.preventDefault();
+                    $rootScope.curentUserState = fromState.name;
+                    sweetAlert.swal("Error", "У вас нет доступа к этому разделу" ,"error");
+                }
+                else
+                {
+                    $rootScope.curentUserState = toState.name;
+                }
+            }
+           
+        });
+
+
+
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
@@ -764,3 +896,21 @@ var admin_seasonsCtrl = function($scope,$state) {
 };
 
 kmkya_client.controller('admin_seasonsCtrl',admin_seasonsCtrl);
+
+var reports1Ctrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('reports1Ctrl',reports1Ctrl);
+
+var reports2Ctrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('reports2Ctrl',reports2Ctrl);
+
+var reports3Ctrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('reports3Ctrl',reports3Ctrl);

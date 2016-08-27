@@ -78,12 +78,34 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         templateUrl: 'app_parts/main/reports/reports.html',
         controller: 'reportsCtrl'
 
-    };    
-    
-    
-    
-    
-    
+    };
+    var reports1 = {
+        name: 'main.reports.report1',
+        url: '/reports/1/:access_id',
+        cached:false,
+        templateUrl: 'app_parts/main/reports/report1/report1.html',
+        controller: 'reports1Ctrl'
+
+    };
+    var reports2 = {
+        name: 'main.reports.report2',
+        url: '/reports/2/:access_id',
+        cached:false,
+        templateUrl: 'app_parts/main/reports/report2/report2.html',
+        controller: 'reports2Ctrl'
+
+    };
+    var reports3 = {
+        name: 'main.reports.report3',
+        url: '/reports/3/:access_id',
+        cached:false,
+        templateUrl: 'app_parts/main/reports/report3/report3.html',
+        controller: 'reports3Ctrl'
+
+    };
+
+
+
 
     $urlRouterProvider.when('', '/auth');
     $urlRouterProvider.otherwise('/auth');
@@ -101,6 +123,9 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $stateProvider.state(databaseState);
 //-------------------------------------------------------------------------------
     $stateProvider.state(reportsState);
+    $stateProvider.state(reports1);
+    $stateProvider.state(reports2);
+    $stateProvider.state(reports3);
 //-------------------------------------------------------------------------------
     $stateProvider.state(dashboardState);
 //-------------------------------------------------------------------------------

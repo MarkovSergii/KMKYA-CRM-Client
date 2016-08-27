@@ -2,7 +2,7 @@
  * Created by user on 26.07.2016.
  */
 
-var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope){
+var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope,user){
 
 
     $scope.login = function(auth)
@@ -36,6 +36,18 @@ var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope
 
                                 $cookies.put('token', response.data.token,{expires :exp});
                                 $rootScope.user = response.data.user;
+
+                                user.getAccessForUserById(response.data.user.id)
+                                    .then(function(user_access_responce){
+                                        if (user_access_responce.data.error)
+                                        {
+
+                                        }
+                                        else {
+                                            $rootScope.user.permission = user_access_responce.data;
+                                        }
+                                    });
+
                                 $rootScope.token = response.data.token;
                                 $state.go('main');
                             }

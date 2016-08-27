@@ -2,7 +2,7 @@
  * Created by user on 28.07.2016.
  */
 
-var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig,SocketIO) {
+var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig,SocketIO,user) {
 
 
     
@@ -20,6 +20,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
             $state.go('auth');
         };
 
+        // только зона Администратора
         $rootScope.$on('$stateChangeStart',
             function(event, toState, toParams, fromState, fromParams, options){
                 
@@ -30,12 +31,6 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                     $rootScope.curentUserState = fromState.name;
                     sweetAlert.swal("Error", "У вас нет доступа к этому разделу" ,"error");
                 }
-                else
-                {
-                    $rootScope.curentUserState = toState.name;
-                }
-
-
             });
         $rootScope.curentUserState = $state.current.name;
         $rootScope.UrlConfig = UrlConfig;
@@ -62,6 +57,18 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                     {
                         //save cookie and go to main
                         $rootScope.user = response.data.user;
+                        // get user permission
+                        user.getAccessForUserById(response.data.user.id)
+                            .then(function(user_access_responce){
+                                if (user_access_responce.data.error)
+                                {
+                                    
+                                }
+                                else {
+                                    $rootScope.user.permission = user_access_responce.data; 
+                                }
+                            });
+
                         $rootScope.token = $cookies.get('token');
                         $scope.controllerBody();
                     }

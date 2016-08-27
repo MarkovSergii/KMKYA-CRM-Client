@@ -1,19 +1,45 @@
 /**
  * Created by user on 31.07.2016.
  */
-var reportsCtrl = function($scope,$state,$rootScope) {
+var reportsCtrl = function($scope,$state,$rootScope,sweetAlert) {
     $rootScope.mainMenu = [
         {
-            title:"Отчет 1",
-            link:"main.admin.direction_category",
+            title:"Финансовый отчет №1",
+            link:"main.reports.report1({access_id:1})",
             icon:"fa-dashboard"
         },
         {
-            title:"Отчет 2",
-            link:"main.admin.exhibitions",
+            title:"Финансовый отчет №2",
+            link:"main.reports.report2({access_id:2})",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Финансовый отчет №3",
+            link:"main.reports.report3({access_id:3})",
             icon:"fa-dashboard"
         }
     ];
+
+    $rootScope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams, options){
+          //  if ((toState.name == 'main.reports.report3') && ($rootScope.user.type != 'admin'))
+            if (($rootScope.user.type != 'admin'))
+            {
+                if (!R.contains(parseInt(toParams.access_id),$rootScope.user.permission)){
+                    event.preventDefault();
+                    $rootScope.curentUserState = fromState.name;
+                    sweetAlert.swal("Error", "У вас нет доступа к этому разделу" ,"error");
+                }
+                else
+                {
+                    $rootScope.curentUserState = toState.name;
+                }
+            }
+           
+        });
+
+
+
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
