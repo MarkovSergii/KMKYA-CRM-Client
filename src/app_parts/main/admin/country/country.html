@@ -1,1 +1,23 @@
-Страны
+<div class="box ui-sortable-handle">
+    <header>
+        <h5>Страны</h5>
+    </header>
+    <div id="stripedTable" class="body collapse in">
+        <table style="height: 90%;" class="table table-striped responsive-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th>Сортировка</th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="country in country_list">
+            <tr>
+                <td>{{country.id}}</td>
+                <td>{{country.name}}</td>
+                <td>{{country.order_by}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

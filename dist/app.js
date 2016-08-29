@@ -437,6 +437,102 @@ kmkya_client.service('access_type', function ($http,UrlConfig,$q) {
 
 
 /**
+ * Created by user on 29.08.2016.
+ */
+kmkya_client.service('address', function ($http,UrlConfig,$q) {
+
+
+    this.getCountries = function()
+    {
+        return $q(function(resolve, reject) {
+
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/country/all/')
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+        });
+    };
+    this.getCountryById = function(id)
+    {
+        return $q(function(resolve, reject) {
+
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/country/'+id+'/select')
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+        });
+    };
+
+    this.getOblast = function(id)
+    {
+        return $q(function(resolve, reject) {
+
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/oblast/all')
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+        });
+    };
+
+    this.getCities = function(id)
+    {
+        return $q(function(resolve, reject) {
+
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/city/all')
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+        });
+    };
+    
+    return this;
+});
+
+/**
  * Created by user on 03.08.2016.
  */
 
@@ -879,6 +975,25 @@ kmkya_client.controller('adminCtrl',adminCtrl);
 /**
  * Created by user on 31.07.2016.
  */
+var dashboardCtrl = function($scope,$state,$rootScope) {
+    $rootScope.mainMenu = [
+        {
+            title:"Статистика",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Еще что-то ",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        }
+    ];
+};
+
+kmkya_client.controller('dashboardCtrl',dashboardCtrl);
+/**
+ * Created by user on 31.07.2016.
+ */
 var databaseCtrl = function($scope,$state,$rootScope) {
     $rootScope.mainMenu = [ // TODO: заменить на генерирование меню из таблицы дирекций
         {
@@ -977,36 +1092,45 @@ var reportsCtrl = function($scope,$state,$rootScope,sweetAlert) {
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
-/**
- * Created by user on 31.07.2016.
- */
-var dashboardCtrl = function($scope,$state,$rootScope) {
-    $rootScope.mainMenu = [
-        {
-            title:"Статистика",
-            link:"main.admin.direction_category",
-            icon:"fa-dashboard"
-        },
-        {
-            title:"Еще что-то ",
-            link:"main.admin.exhibitions",
-            icon:"fa-dashboard"
-        }
-    ];
-};
-
-kmkya_client.controller('dashboardCtrl',dashboardCtrl);
 var admin_access_typeCtrl = function($scope,$state) {
 
 };
 
 kmkya_client.controller('admin_access_typeCtrl',admin_access_typeCtrl);
-var admin_cityCtrl = function($scope,$state) {
-
+var admin_cityCtrl = function($scope,$state,address) {
+    address.getCities()
+        .then(function(list){
+            if (list.error)
+            {
+                alert(list.message)
+            }
+            else
+            {
+                $scope.city_list = list.data;
+            }
+        })
+        .catch(function(error){
+            alert(error.message)
+        });
 };
 
 kmkya_client.controller('admin_cityCtrl',admin_cityCtrl);
-var admin_countryCtrl = function($scope,$state) {
+var admin_countryCtrl = function($scope,$state,address) {
+
+    address.getCountries()
+        .then(function(list){
+            if (list.error)
+            {
+                alert(list.message)
+            }
+            else
+            {
+                $scope.country_list = list.data;
+            }
+        })
+        .catch(function(error){
+            alert(error.message)
+        });
 
 };
 
@@ -1198,8 +1322,21 @@ var admin_exhibitionsCtrl = function($scope,$state) {
 };
 
 kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);
-var admin_oblastCtrl = function($scope,$state) {
-
+var admin_oblastCtrl = function($scope,$state,address) {
+    address.getOblast()
+        .then(function(list){
+            if (list.error)
+            {
+                alert(list.message)
+            }
+            else
+            {
+                $scope.oblast_list = list.data;
+            }
+        })
+        .catch(function(error){
+            alert(error.message)
+        });
 };
 
 kmkya_client.controller('admin_oblastCtrl',admin_oblastCtrl);
