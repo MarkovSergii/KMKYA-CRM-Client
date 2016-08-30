@@ -667,6 +667,117 @@ kmkya_client.service('direction_category_service', function ($http,UrlConfig,$q,
 
 
 /**
+ * Created by user on 30.08.2016.
+ */
+/**
+ * Created by user on 27.08.2016.
+ */
+
+kmkya_client.service('season_service', function ($http,UrlConfig,$q) {
+
+    this.selectAll = function()
+    {
+        return $q(function(resolve, reject) {
+
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/seasons/all')
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+
+        });
+
+
+    };
+
+    this.selectById = function(id)
+    {
+        return $q(function(resolve, reject) {
+
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/seasons/'+id+'/select')
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+
+        });
+
+    };
+
+    this.update = function(season)
+    {
+        return $q(function(resolve, reject) {
+
+
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/seasons/'+season.id+'/update',season)
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+
+
+        });
+    };
+
+    this.add = function(season)
+    {
+        return $q(function(resolve, reject) {
+
+
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/seasons/insert',season)
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+        });
+    };
+
+
+    return this;
+});
+
+
+/**
  * Created by user on 28.07.2016.
  */
 
@@ -1092,24 +1203,6 @@ var reportsCtrl = function($scope,$state,$rootScope,sweetAlert) {
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
-var admin_cityCtrl = function($scope,$state,address_service) {
-    address.getCities()
-        .then(function(list){
-            if (list.error)
-            {
-                alert(list.message)
-            }
-            else
-            {
-                $scope.city_list = list.data;
-            }
-        })
-        .catch(function(error){
-            alert(error.message)
-        });
-};
-
-kmkya_client.controller('admin_cityCtrl',admin_cityCtrl);
 
 var addAccess_typeCtrl = function($scope,access_type_service)
 {
@@ -1251,9 +1344,27 @@ var admin_access_typeCtrl = function($scope,$state,access_type_service,ngDialog,
 kmkya_client.controller('admin_access_typeCtrl',admin_access_typeCtrl);
 kmkya_client.controller('addAccess_typeCtrl',addAccess_typeCtrl);
 kmkya_client.controller('editAccess_typeCtrl',editAccess_typeCtrl);
+var admin_cityCtrl = function($scope,$state,address_service) {
+    address_service.getCities()
+        .then(function(list){
+            if (list.error)
+            {
+                alert(list.message)
+            }
+            else
+            {
+                $scope.city_list = list.data;
+            }
+        })
+        .catch(function(error){
+            alert(error.message)
+        });
+};
+
+kmkya_client.controller('admin_cityCtrl',admin_cityCtrl);
 var admin_countryCtrl = function($scope,$state,address_service) {
 
-    address.getCountries()
+    address_service.getCountries()
         .then(function(list){
             if (list.error)
             {
@@ -1459,7 +1570,7 @@ var admin_exhibitionsCtrl = function($scope,$state) {
 
 kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);
 var admin_oblastCtrl = function($scope,$state,address_service) {
-    address.getOblast()
+    address_service.getOblast()
         .then(function(list){
             if (list.error)
             {
@@ -1479,11 +1590,109 @@ kmkya_client.controller('admin_oblastCtrl',admin_oblastCtrl);
 /**
  * Created by user on 03.08.2016.
  */
-var admin_seasonsCtrl = function($scope,$state) {
+
+var addSeasonCtrl = function($scope,season_service)
+{
+
+    $scope.add = function()
+    {
+        season_service.add($scope.season)
+            .then(function (newRecorcd){
+                if (newRecorcd.error)
+                {
+                    alert(newRecorcd.message)
+                }
+                else
+                {
+                    $scope.seasons_list.push(newRecorcd.data);
+                    $scope.closeThisDialog();
+                }
+            })
+            .catch(function(error){
+                alert(error.message)
+            });
+    }
+};
+
+var editSeasonCtrl = function($scope,season_service)
+{
+    $scope.save = function(season)
+    {
+        season_service.update(season)
+            .then(function (updatedRecorcd){
+                if (updatedRecorcd.error)
+                {
+                    alert(updatedRecorcd.message)
+                }
+                else
+                {
+                    // найти в списке и перезаписать
+                    for (var i =0;i<$scope.seasons_list.length;i++)
+                    {
+                        if ($scope.seasons_list[i].id == season.id)
+                        {
+                            $scope.seasons_list[i] = season;
+                            $scope.closeThisDialog();
+                            break;
+                        }
+                    }
+                }
+            })
+            .catch(function(error){
+                alert(error.message)
+            });
+    }
+};
+
+
+var admin_seasonsCtrl = function($scope,$state,season_service,ngDialog,sweetAlert) {
+
+    season_service.selectAll()
+        .then(function(list){
+            if (list.error)
+            {
+                alert(list.message)
+            }
+            else
+            {
+                $scope.seasons_list = list.data;
+            }
+        })
+        .catch(function(error){
+            alert(error.message)
+        });
+
+    $scope.addSeason = function()
+    {
+        $scope.addDialog = ngDialog.openConfirm({
+            template: 'app_parts/main/admin/seasons/dialog/add.html',
+            controller: 'addSeasonCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
+            scope:$scope,
+            closeByDocument:false,
+            overlay: true
+        });
+    };
+    $scope.editSeason = function(season)
+    {
+        $scope.addDialog = ngDialog.openConfirm({
+            template: 'app_parts/main/admin/seasons/dialog/edit.html',
+            controller: 'editSeasonCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
+            scope:$scope,
+            data : angular.copy(season),
+            closeByDocument:false,
+            overlay: true
+        });
+    };
 
 };
 
 kmkya_client.controller('admin_seasonsCtrl',admin_seasonsCtrl);
+kmkya_client.controller('editSeasonCtrl',editSeasonCtrl);
+kmkya_client.controller('addSeasonCtrl',addSeasonCtrl);
 var admin_usersCtrl = function($scope,$state) {
 
 };

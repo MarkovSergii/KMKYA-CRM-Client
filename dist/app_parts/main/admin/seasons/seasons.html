@@ -1,1 +1,38 @@
-seasons
+<div class="box ui-sortable-handle">
+    <header>
+        <h5>Сезоны</h5>
+    </header>
+    <div id="stripedTable" class="body collapse in">
+        <table style="height: 90%;" class="table table-striped responsive-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th>Дата создания</th>
+                <th>Дата редактирования</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="season in seasons_list">
+            <tr>
+                <td>{{season.id}}</td>
+                <td>{{season.name}}</td>
+                <td>{{season.createdAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>{{season.updatedAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>
+                    <div class="toolbar">
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-default" ng-click="editSeason(season)">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button class="btn btn-success" ng-click="addSeason()">Добавить</button>
+    </div>
+</div>

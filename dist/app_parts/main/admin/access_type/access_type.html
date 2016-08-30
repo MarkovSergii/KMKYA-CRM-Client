@@ -8,6 +8,8 @@
             <tr>
                 <th>#</th>
                 <th>Название</th>
+                <th>Дата создания</th>
+                <th>Дата редактирования</th>
                 <th></th>
             </tr>
             </thead>
@@ -15,6 +17,8 @@
             <tr>
                 <td>{{access_type.id}}</td>
                 <td>{{access_type.name}}</td>
+                <td>{{access_type.createdAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>{{access_type.updatedAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
                 <td>
                     <div class="toolbar">
                         <div class="btn-group">

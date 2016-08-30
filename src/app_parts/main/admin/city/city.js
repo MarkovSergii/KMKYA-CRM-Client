@@ -1,5 +1,5 @@
 var admin_cityCtrl = function($scope,$state,address_service) {
-    address.getCities()
+    address_service.getCities()
         .then(function(list){
             if (list.error)
             {

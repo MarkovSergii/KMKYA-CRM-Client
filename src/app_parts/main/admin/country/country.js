@@ -1,6 +1,6 @@
 var admin_countryCtrl = function($scope,$state,address_service) {
 
-    address.getCountries()
+    address_service.getCountries()
         .then(function(list){
             if (list.error)
             {
