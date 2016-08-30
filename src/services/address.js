@@ -1,7 +1,7 @@
 /**
  * Created by user on 29.08.2016.
  */
-kmkya_client.service('address', function ($http,UrlConfig,$q) {
+kmkya_client.service('address_service', function ($http,UrlConfig,$q) {
 
 
     this.getCountries = function()

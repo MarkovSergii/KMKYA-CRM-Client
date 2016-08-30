@@ -267,7 +267,7 @@ kmkya_client.constant('UrlConfig', {
 /**
  * Created by user on 27.08.2016.
  */
-kmkya_client.service('access', function ($http,UrlConfig,$q) {
+kmkya_client.service('access_service', function ($http,UrlConfig,$q) {
 
  
     this.getAccessForUserById = function(id)
@@ -309,7 +309,7 @@ kmkya_client.service('access', function ($http,UrlConfig,$q) {
  * Created by user on 27.08.2016.
  */
 
-kmkya_client.service('access_type', function ($http,UrlConfig,$q) {
+kmkya_client.service('access_type_service', function ($http,UrlConfig,$q) {
 
     this.selectAll = function()
     {
@@ -408,10 +408,10 @@ kmkya_client.service('access_type', function ($http,UrlConfig,$q) {
         }); 
     };
 
-    this.delete = function(id,access_type_id)
+    this.delete = function(access_type_id)
     {
         return $q(function(resolve, reject) {
-            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+id+'/delete',{access_type_id:access_type_id})
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/access_types/'+access_type_id+'/delete')
                 .then(function(response){
                     if (response.status == 200)
                     {
@@ -439,7 +439,7 @@ kmkya_client.service('access_type', function ($http,UrlConfig,$q) {
 /**
  * Created by user on 29.08.2016.
  */
-kmkya_client.service('address', function ($http,UrlConfig,$q) {
+kmkya_client.service('address_service', function ($http,UrlConfig,$q) {
 
 
     this.getCountries = function()
@@ -680,7 +680,7 @@ kmkya_client.factory('SocketIO', function ($rootScope,UrlConfig) {
  * Created by user on 27.08.2016.
  */
 
-kmkya_client.service('user', function ($http,UrlConfig,$q) {
+kmkya_client.service('user_service', function ($http,UrlConfig,$q) {
 
     this.selectAll = function()
     {
@@ -814,7 +814,7 @@ kmkya_client.controller('authCtrl',authCtrl);
  * Created by user on 28.07.2016.
  */
 
-var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig,SocketIO,access) {
+var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig,SocketIO,access_service) {
 
 
     
@@ -870,7 +870,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                         //save cookie and go to main
                         $rootScope.user = response.data.user;
                         // get user permission
-                        access.getAccessForUserById(response.data.user.id)
+                        access_service.getAccessForUserById(response.data.user.id)
                             .then(function(user_access_responce){
                                 if (user_access_responce.data.error)
                                 {
@@ -1092,12 +1092,7 @@ var reportsCtrl = function($scope,$state,$rootScope,sweetAlert) {
 };
 
 kmkya_client.controller('reportsCtrl',reportsCtrl);
-var admin_access_typeCtrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('admin_access_typeCtrl',admin_access_typeCtrl);
-var admin_cityCtrl = function($scope,$state,address) {
+var admin_cityCtrl = function($scope,$state,address_service) {
     address.getCities()
         .then(function(list){
             if (list.error)
@@ -1115,7 +1110,148 @@ var admin_cityCtrl = function($scope,$state,address) {
 };
 
 kmkya_client.controller('admin_cityCtrl',admin_cityCtrl);
-var admin_countryCtrl = function($scope,$state,address) {
+
+var addAccess_typeCtrl = function($scope,access_type_service)
+{
+
+    $scope.add = function()
+    {
+        access_type_service.add($scope.access_type)
+            .then(function (newRecorcd){
+                if (newRecorcd.error)
+                {
+                    alert(newRecorcd.message)
+                }
+                else
+                {
+                    $scope.access_types_list.push(newRecorcd.data);
+                    $scope.closeThisDialog();
+                }
+            })
+            .catch(function(error){
+                alert(error.message)
+            });
+    }
+};
+
+var editAccess_typeCtrl = function($scope,access_type_service)
+{
+    $scope.save = function(access_type)
+    {
+        access_type_service.update(access_type)
+            .then(function (updatedRecorcd){
+                if (updatedRecorcd.error)
+                {
+                    alert(updatedRecorcd.message)
+                }
+                else
+                {
+                    // найти в списке и перезаписать
+                    for (var i =0;i<$scope.access_types_list.length;i++)
+                    {
+                        if ($scope.access_types_list[i].id == access_type.id)
+                        {
+                            $scope.access_types_list[i] = access_type;
+                            $scope.closeThisDialog();
+                            break;
+                        }
+                    }
+                }
+            })
+            .catch(function(error){
+                alert(error.message)
+            });
+    }
+};
+
+
+
+var admin_access_typeCtrl = function($scope,$state,access_type_service,ngDialog,sweetAlert) {
+
+    access_type_service.selectAll()
+        .then(function(list){
+            if (list.error)
+            {
+                alert(list.message)
+            }
+            else
+            {
+                $scope.access_types_list = list.data;
+            }
+        })
+        .catch(function(error){
+            alert(error.message)
+        });
+
+    $scope.addAccess_type = function()
+    {
+        $scope.addDialog = ngDialog.openConfirm({
+            template: 'app_parts/main/admin/access_type/dialog/add.html',
+            controller: 'addAccess_typeCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
+            scope:$scope,
+            closeByDocument:false,
+            overlay: true
+        });
+    };
+    $scope.editAccess_type = function(access_type)
+    {
+        $scope.addDialog = ngDialog.openConfirm({
+            template: 'app_parts/main/admin/access_type/dialog/edit.html',
+            controller: 'editAccess_typeCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
+            scope:$scope,
+            data : angular.copy(access_type),
+            closeByDocument:false,
+            overlay: true
+        });
+    };
+    $scope.deleteAccess_type = function(access_type)
+    {
+
+        sweetAlert.swal({
+            title: 'Вы уверены?',
+            text: "Востановить будет невозможно",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Да удалить!',
+            cancelButtonText: 'Нет'
+        }).then(function() {
+
+            access_type_service.delete(access_type.id)
+                    .then(function () {
+                        $scope.access_types_list.splice(R.findIndex(R.propEq('id', access_type.id))($scope.access_types_list),1);
+                        sweetAlert.swal(
+                            {
+                                title: 'Успешно',
+                                text: "Категория(дирекция) удалена",
+                                type: 'success',
+                                timer:2000
+                            }
+                        ).done();
+                    })
+                    .catch(function(error){
+                        alert(error.message)
+                    });
+
+            }).done();
+       
+    };  
+    
+    
+    
+    
+    
+};
+
+kmkya_client.controller('admin_access_typeCtrl',admin_access_typeCtrl);
+kmkya_client.controller('addAccess_typeCtrl',addAccess_typeCtrl);
+kmkya_client.controller('editAccess_typeCtrl',editAccess_typeCtrl);
+var admin_countryCtrl = function($scope,$state,address_service) {
 
     address.getCountries()
         .then(function(list){
@@ -1322,7 +1458,7 @@ var admin_exhibitionsCtrl = function($scope,$state) {
 };
 
 kmkya_client.controller('admin_exhibitionsCtrl',admin_exhibitionsCtrl);
-var admin_oblastCtrl = function($scope,$state,address) {
+var admin_oblastCtrl = function($scope,$state,address_service) {
     address.getOblast()
         .then(function(list){
             if (list.error)

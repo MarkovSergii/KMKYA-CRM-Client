@@ -1,1 +1,37 @@
-Виды доступа
+<div class="box ui-sortable-handle">
+    <header>
+        <h5>Виды доступа</h5>
+    </header>
+    <div id="stripedTable" class="body collapse in">
+        <table style="height: 90%;" class="table table-striped responsive-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="access_type in access_types_list">
+            <tr>
+                <td>{{access_type.id}}</td>
+                <td>{{access_type.name}}</td>
+                <td>
+                    <div class="toolbar">
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-default" ng-click="editAccess_type(access_type)">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                            <a class="btn btn-danger btn-sm" ng-click="deleteAccess_type(access_type)">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+             </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button class="btn btn-success" ng-click="addAccess_type()">Добавить</button>
+    </div>
+</div>

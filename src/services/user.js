@@ -2,7 +2,7 @@
  * Created by user on 27.08.2016.
  */
 
-kmkya_client.service('user', function ($http,UrlConfig,$q) {
+kmkya_client.service('user_service', function ($http,UrlConfig,$q) {
 
     this.selectAll = function()
     {

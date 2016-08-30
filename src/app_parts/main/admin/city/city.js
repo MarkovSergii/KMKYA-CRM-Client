@@ -1,4 +1,4 @@
-var admin_cityCtrl = function($scope,$state,address) {
+var admin_cityCtrl = function($scope,$state,address_service) {
     address.getCities()
         .then(function(list){
             if (list.error)

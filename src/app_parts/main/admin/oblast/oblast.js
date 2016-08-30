@@ -1,4 +1,4 @@
-var admin_oblastCtrl = function($scope,$state,address) {
+var admin_oblastCtrl = function($scope,$state,address_service) {
     address.getOblast()
         .then(function(list){
             if (list.error)

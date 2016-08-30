@@ -2,7 +2,7 @@
  * Created by user on 27.08.2016.
  */
 
-kmkya_client.service('access_type', function ($http,UrlConfig,$q) {
+kmkya_client.service('access_type_service', function ($http,UrlConfig,$q) {
 
     this.selectAll = function()
     {
@@ -101,10 +101,10 @@ kmkya_client.service('access_type', function ($http,UrlConfig,$q) {
         }); 
     };
 
-    this.delete = function(id,access_type_id)
+    this.delete = function(access_type_id)
     {
         return $q(function(resolve, reject) {
-            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitionCategory/'+id+'/delete',{access_type_id:access_type_id})
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/access_types/'+access_type_id+'/delete')
                 .then(function(response){
                     if (response.status == 200)
                     {
