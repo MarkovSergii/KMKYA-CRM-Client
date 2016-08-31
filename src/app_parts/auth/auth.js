@@ -2,7 +2,7 @@
  * Created by user on 26.07.2016.
  */
 
-var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope,access){
+var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope,access_service){
 
 
     $scope.login = function(auth)
@@ -37,7 +37,7 @@ var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope
                                 $cookies.put('token', response.data.token,{expires :exp});
                                 $rootScope.user = response.data.user;
 
-                                access.getAccessForUserById(response.data.user.id)
+                                access_service.getAccessForUserById(response.data.user.id)
                                     .then(function(user_access_responce){
                                         if (user_access_responce.data.error)
                                         {
