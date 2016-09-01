@@ -25,6 +25,6 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть </button>
-        <button class="btn btn-success" ng-click="save(ngDialogData)"> Сохранить </button>
+        <button class="btn btn-success" ng-disabled="!ngDialogData.name" ng-click="save(ngDialogData)"> Сохранить </button>
     </div>
 </div><!-- /.modal-content -->

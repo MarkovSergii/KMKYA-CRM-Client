@@ -1,6 +1,11 @@
 <div class="box ui-sortable-handle">
     <header>
         <h5>Сезоны</h5>
+        <div class="toolbar">
+            <div class="btn-group">
+                <button class="btn btn-success" ng-click="addSeason()">Добавить</button>
+            </div>
+        </div>
     </header>
     <div id="stripedTable" class="body collapse in">
         <table style="height: 90%;" class="table table-striped responsive-table">
@@ -31,8 +36,5 @@
             </tr>
             </tbody>
         </table>
-    </div>
-    <div>
-        <button class="btn btn-success" ng-click="addSeason()">Добавить</button>
     </div>
 </div>

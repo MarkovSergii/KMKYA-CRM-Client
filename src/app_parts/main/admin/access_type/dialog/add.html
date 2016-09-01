@@ -23,7 +23,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть </button>
-        <button class="btn btn-success" ng-click="add()"> Добавить </button>
+        <button class="btn btn-success" ng-disabled="!access_type.name" ng-click="add()"> Добавить </button>
     </div>
 </div><!-- /.modal-content -->
 

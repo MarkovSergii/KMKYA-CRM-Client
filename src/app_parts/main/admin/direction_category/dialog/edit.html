@@ -41,6 +41,6 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть </button>
-        <button class="btn btn-success" ng-click="saveCategory(ngDialogData)"> Сохранить </button>
+        <button class="btn btn-success" ng-disabled="(!ngDialogData.name) || ((!ngDialogData.new_logo) && (!ngDialogData.logo))" ng-click="saveCategory(ngDialogData)"> Сохранить </button>
     </div>
 </div><!-- /.modal-content -->
