@@ -54,3 +54,27 @@
 {
     width:25px
 }
+
+
+.databaseRazdelName
+{
+    font-weight: 100;!important;
+}
+
+
+.databaseItem
+{
+    padding-bottom: 5px;
+}
+.databaseName{
+    display: inline-block;
+    text-align: left;
+    width: 80%;
+}
+
+.databaseButtons
+{
+    display: inline-block;
+    text-align: right;
+
+}

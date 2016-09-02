@@ -134,14 +134,6 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         controller: 'admin_countryCtrl'
     };
 
-    var adminDatabase_categoryState = {
-        name: 'main.admin.database_category',
-        url: '/database_category',
-        cached:false,
-        templateUrl: 'app_parts/main/admin/database_category/database_category.html',
-        controller: 'admin_database_categoryCtrl'
-    };
-
     var adminDatabasesState = {
         name: 'main.admin.databases',
         url: '/databases',
@@ -233,7 +225,6 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $stateProvider.state(adminAccess_typeState);
     $stateProvider.state(adminCityState);
     $stateProvider.state(adminCountryState);
-    $stateProvider.state(adminDatabase_categoryState);
     $stateProvider.state(adminDatabasesState);
     $stateProvider.state(adminOblastState);
  
@@ -1016,6 +1007,25 @@ kmkya_client.controller('mainCtrl',mainCtrl);
 
 
 /**
+ * Created by user on 31.07.2016.
+ */
+var dashboardCtrl = function($scope,$state,$rootScope) {
+    $rootScope.mainMenu = [
+        {
+            title:"Статистика",
+            link:"main.admin.direction_category",
+            icon:"fa-dashboard"
+        },
+        {
+            title:"Еще что-то ",
+            link:"main.admin.exhibitions",
+            icon:"fa-dashboard"
+        }
+    ];
+};
+
+kmkya_client.controller('dashboardCtrl',dashboardCtrl);
+/**
  * Created by user on 30.07.2016.
  */
 var adminCtrl = function($scope,$state,$rootScope) {
@@ -1043,11 +1053,6 @@ var adminCtrl = function($scope,$state,$rootScope) {
         {
             title:"Пользователи",
             link:"main.admin.users",
-            icon:"fa-dashboard"
-        },
-        {
-            title:"Категории БД",
-            link:"main.admin.database_category",
             icon:"fa-dashboard"
         },
         {
@@ -1083,25 +1088,6 @@ var adminCtrl = function($scope,$state,$rootScope) {
 };
 
 kmkya_client.controller('adminCtrl',adminCtrl);
-/**
- * Created by user on 31.07.2016.
- */
-var dashboardCtrl = function($scope,$state,$rootScope) {
-    $rootScope.mainMenu = [
-        {
-            title:"Статистика",
-            link:"main.admin.direction_category",
-            icon:"fa-dashboard"
-        },
-        {
-            title:"Еще что-то ",
-            link:"main.admin.exhibitions",
-            icon:"fa-dashboard"
-        }
-    ];
-};
-
-kmkya_client.controller('dashboardCtrl',dashboardCtrl);
 /**
  * Created by user on 31.07.2016.
  */
@@ -1383,15 +1369,79 @@ var admin_countryCtrl = function($scope,$state,address_service) {
 
 kmkya_client.controller('admin_countryCtrl',admin_countryCtrl);
 var admin_databasesCtrl = function($scope,$state) {
-
+    $scope.list = [
+        {
+            direction_id:1,
+            direction_name :"Fashion",
+            razdels:[
+                {
+                    rasdel_id:1,
+                    razdel_name:"Раздел 1",
+                    databases:[
+                        {
+                            db_id:1,
+                            db_name:"БД1"
+                        },
+                        {
+                            db_id:2,
+                            db_name:"БД2"
+                        }
+                    ]
+                },
+                {
+                    rasdel_id:2,
+                    razdel_name:"Раздел 2",
+                    databases:[
+                        {
+                            db_id:3,
+                            db_name:"БД3"
+                        },
+                        {
+                            db_id:4,
+                            db_name:"БД4"
+                        },
+                        {
+                            db_id:5,
+                            db_name:"БД5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            direction_id:2,
+            direction_name :"Mebel",
+            razdels:[
+                {
+                    rasdel_id:3,
+                    razdel_name:"Раздел 1",
+                    databases:[
+                        {
+                            db_id:4,
+                            db_name:"БД4"
+                        },
+                        {
+                            db_id:5,
+                            db_name:"БД5"
+                        }
+                    ]
+                },
+                {
+                    rasdel_id:4,
+                    razdel_name:"Раздел 2",
+                    databases:[
+                        {
+                            db_id:6,
+                            db_name:"БД6"
+                        }
+                    ]
+                }
+            ]
+        }
+    ];
 };
 
 kmkya_client.controller('admin_databasesCtrl',admin_databasesCtrl);
-var admin_database_categoryCtrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('admin_database_categoryCtrl',admin_database_categoryCtrl);
 
 var addDirectionCategoryCtrl = function($scope,direction_category_service)
 {
@@ -1587,6 +1637,11 @@ var admin_oblastCtrl = function($scope,$state,address_service) {
 };
 
 kmkya_client.controller('admin_oblastCtrl',admin_oblastCtrl);
+var admin_usersCtrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('admin_usersCtrl',admin_usersCtrl);
 /**
  * Created by user on 03.08.2016.
  */
@@ -1693,23 +1748,18 @@ var admin_seasonsCtrl = function($scope,$state,season_service,ngDialog,sweetAler
 kmkya_client.controller('admin_seasonsCtrl',admin_seasonsCtrl);
 kmkya_client.controller('editSeasonCtrl',editSeasonCtrl);
 kmkya_client.controller('addSeasonCtrl',addSeasonCtrl);
-var admin_usersCtrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('admin_usersCtrl',admin_usersCtrl);
-
-var reports1Ctrl = function($scope,$state) {
-
-};
-
-kmkya_client.controller('reports1Ctrl',reports1Ctrl);
 
 var reports2Ctrl = function($scope,$state) {
 
 };
 
 kmkya_client.controller('reports2Ctrl',reports2Ctrl);
+
+var reports1Ctrl = function($scope,$state) {
+
+};
+
+kmkya_client.controller('reports1Ctrl',reports1Ctrl);
 
 var reports3Ctrl = function($scope,$state) {
 

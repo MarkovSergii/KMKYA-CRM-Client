@@ -90,14 +90,6 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         controller: 'admin_countryCtrl'
     };
 
-    var adminDatabase_categoryState = {
-        name: 'main.admin.database_category',
-        url: '/database_category',
-        cached:false,
-        templateUrl: 'app_parts/main/admin/database_category/database_category.html',
-        controller: 'admin_database_categoryCtrl'
-    };
-
     var adminDatabasesState = {
         name: 'main.admin.databases',
         url: '/databases',
@@ -189,7 +181,6 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $stateProvider.state(adminAccess_typeState);
     $stateProvider.state(adminCityState);
     $stateProvider.state(adminCountryState);
-    $stateProvider.state(adminDatabase_categoryState);
     $stateProvider.state(adminDatabasesState);
     $stateProvider.state(adminOblastState);
  

@@ -1,56 +1,46 @@
 <div class="row">
-    <div class="box">
-        <header class="dark">
-            <div class="icons">
-                <i class="fa fa-cloud-upload"></i>
-            </div>
-            <h5>Базы данных</h5>
-            <div class="toolbar">
-                <div class="btn-group">
-                    <button class="btn btn-success"> Добавить раздел</button>
+    <div class="col-lg-6" ng-repeat="direction in list">
+        <div class="box" style="position: relative; left: 0px; top: 0px;" >
+            <header>
+                <h5>{{direction.direction_name}}</h5>
+                <div class="toolbar">
+                    <button class="btn btn-success btn-xs">Добавить раздел</button>
                 </div>
-            </div>
-        </header>
-        <div class="body">
-            <div id="defaultTable" class="body collapse in">
-                <table class="table responsive-table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Score</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Jill</td>
-                        <td>Smith</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Eve</td>
-                        <td>Jackson</td>
-                        <td>94</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>80</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Adam</td>
-                        <td>Johnson</td>
-                        <td>67</td>
-                    </tr>
-                    </tbody>
-                </table>
+            </header>
+            <div class="body">
+                <div>
+                    <div class="databaseRazdel" ng-repeat="razdel in direction.razdels">
+                        <div class="box" style="position: relative; left: 0px; top: 0px;">
+                            <header>
+                                <h5 style="font-weight: 100;" >{{razdel.razdel_name}}</h5>
+                                <div class="toolbar">
+                                    <div class="btn-group">
+                                        <a class="btn btn-success btn-xs" ng-click="">
+                                            <i class="fa fa-plus">&nbsp;Добавить БД</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="body">
+                                <div class="databaseRazdelContent">
+                                    <div class="databaseItem" ng-repeat="db in razdel.databases">
+                                        <div class="databaseName">
+                                            {{db.db_name}}
+                                        </div>
+                                        <div class="databaseButtons">
+                                            <div class="btn-group">
+                                                <a class="btn btn-danger btn-xs" ng-click="">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
 </div>

@@ -29,11 +29,6 @@ var adminCtrl = function($scope,$state,$rootScope) {
             icon:"fa-dashboard"
         },
         {
-            title:"Категории БД",
-            link:"main.admin.database_category",
-            icon:"fa-dashboard"
-        },
-        {
             title:"Базы данных",
             link:"main.admin.databases",
             icon:"fa-dashboard"
