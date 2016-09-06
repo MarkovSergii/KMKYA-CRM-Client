@@ -1,2 +1,4 @@
 dist
 node_modules
+.ides
+bower_components
