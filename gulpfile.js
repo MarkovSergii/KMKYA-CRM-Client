@@ -9,6 +9,7 @@ var jade = require('gulp-jade');
 var concat = require('gulp-concat');
 var cleanCSS = require('gulp-clean-css');
 var uglify = require('gulp-uglify');
+var clean = require('gulp-clean');
 
 var dist = {
     css : "dist/css",
@@ -19,7 +20,10 @@ var dist = {
     templates : "dist"    
 };
 
-
+gulp.task('clean', function () {
+    return gulp.src('dist', {read: false})
+        .pipe(clean());
+});
 
 gulp.task('html', function() {
     return gulp.src('src/index.html')
@@ -68,6 +72,7 @@ gulp.task('app', function() {
 });
 
 gulp.task('build', function() {
+    gulp.run('clean');
     gulp.run('vendorjs');
     gulp.run('templates');
     gulp.run('img');
