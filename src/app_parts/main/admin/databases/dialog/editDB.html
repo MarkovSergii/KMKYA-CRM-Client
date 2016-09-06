@@ -1,0 +1,30 @@
+
+
+<div style="background-color: white">
+    <div class="modal-header">
+
+        <h4 class="modal-title">Редактирование БД</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <fieldset>
+
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="input_name">Название</label>
+                    <div class="col-md-8">
+                        <input id="input_name" name="input_name" type="text" placeholder="Название" class="form-control input-md" required="" ng-model="ngDialogData.name">
+                    </div>
+                </div>
+
+
+            </fieldset>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть </button>
+        <button class="btn btn-success" ng-disabled="!ngDialogData.name" ng-click="save(ngDialogData)"> Сохранить </button>
+    </div>
+</div><!-- /.modal-content -->

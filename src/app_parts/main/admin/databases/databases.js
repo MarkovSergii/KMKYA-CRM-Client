@@ -1,6 +1,112 @@
-var admin_databasesCtrl = function($scope,$state,direction_category_service,database_category_service,database_service) {
-    
-    
+
+var addDatabaseCategoryCtrl = function ($scope,database_category_service,kmkya_utils) {
+
+    $scope.add = ()=>
+    {
+        $scope.razdel.direction_category_id = $scope.selectedDirection.id;
+        database_category_service.add($scope.razdel)
+            .then(function (newRecorcd){
+                if (newRecorcd.error)
+                {
+                    alert(newRecorcd.message)
+                }
+                else
+                {
+                    var index = kmkya_utils.findIndexByField($scope.list,'id',$scope.selectedDirection.id);
+                    $scope.list[index].list.push(newRecorcd.data);
+                    $scope.closeThisDialog();
+                }
+            })
+            .catch(function(error){
+                alert(error.message)
+            });
+    }
+};
+
+var editDatabaseCategoryCtrl = function ($scope,database_category_service,kmkya_utils) {
+
+
+    $scope.save = function(databaseCategory)
+    {
+
+        database_category_service.update(databaseCategory)
+            .then(function (updatedRecorcd){
+
+                if (updatedRecorcd.error)
+                {
+                    alert(updatedRecorcd.message)
+                }
+                else
+                {
+                    var indexDirection = kmkya_utils.findIndexByField($scope.list,'id',$scope.selectedDirection.id);
+                    var indexDatabaseCategory = kmkya_utils.findIndexByField($scope.list[indexDirection].list,'id',databaseCategory.id);
+
+                    $scope.list[indexDirection].list[indexDatabaseCategory] = databaseCategory;
+                    $scope.closeThisDialog();
+
+                }
+            })
+            .catch(function(error){
+                alert(error.message)
+            });
+    }
+};
+
+var addDBCtrl = function ($scope,database_service,kmkya_utils) {
+    $scope.add = ()=>
+    {
+        $scope.db.database_category_id = $scope.selectedDatabaseCategory.id;
+        database_service.add($scope.db)
+            .then(function (newRecorcd){
+                if (newRecorcd.error)
+                {
+                    alert(newRecorcd.message)
+                }
+                else
+                {
+                    var indexDirection = kmkya_utils.findIndexByField($scope.list,'id',$scope.selectedDirection.id);
+                    var indexRazdel = kmkya_utils.findIndexByField($scope.list[indexDirection].list,'id',$scope.selectedDatabaseCategory.id);
+                    $scope.list[indexDirection].list[indexRazdel].list.push(newRecorcd.data);
+                    $scope.closeThisDialog();
+                }
+            })
+            .catch(function(error){
+                alert(error.message)
+            });
+    }
+};
+
+var editDBCtrl = function ($scope,database_service,kmkya_utils) {
+
+    $scope.save = function(database)
+    {
+
+        database_service.update(database)
+            .then(function (updatedRecorcd){
+
+                if (updatedRecorcd.error)
+                {
+                    alert(updatedRecorcd.message)
+                }
+                else
+                {
+                    var indexDirection = kmkya_utils.findIndexByField($scope.list,'id',$scope.selectedDirection.id);
+                    var indexDatabaseCategory = kmkya_utils.findIndexByField($scope.list[indexDirection].list,'id',$scope.selectedDatabaseCategory.id);
+                    var indexDatabase = kmkya_utils.findIndexByField($scope.list[indexDirection].list[indexDatabaseCategory].list,'id',database.id);
+                    $scope.list[indexDirection].list[indexDatabaseCategory].list[indexDatabase] = database;
+                    $scope.closeThisDialog();
+
+                }
+            })
+            .catch(function(error){
+                alert(error.message)
+            });
+    }
+};
+
+var admin_databasesCtrl = function($scope,$state,direction_category_service,database_category_service,database_service,kmkya_utils,ngDialog,sweetAlert) {
+
+    // load all needed data
     Promise.all(
         [
             direction_category_service.selectAll(),
@@ -8,126 +114,107 @@ var admin_databasesCtrl = function($scope,$state,direction_category_service,data
             database_service.selectAll()
         ])
         .then(function(arr){
-           // console.log(arr[0]);
-           // console.log(arr[1]);
-           // console.log(arr[2]);
-            //R.find(R.propEq('a', 2))(xs); //=> {a: 2}
 
-            var m1 = [
-                {id:1,name:"name1"},
-                {id:2,name:"name2"},
-                {id:3,name:"name3"}
-            ];
+            var t1 = kmkya_utils.sJoin(arr[1].data,arr[2].data,'id','database_category_id','list');
+            $scope.list = kmkya_utils.sJoin(arr[0].data,t1,'id','direction_category_id','list');
 
-            var m2 = [
-                {id:1,m_id:1,name:"subname1"},
-                {id:2,m_id:1,name:"subname2"},
-                {id:3,m_id:2,name:"subname3"},
-                {id:4,m_id:2,name:"subname4"},
-                {id:5,m_id:3,name:"subname5"}
-            ];
-
-            var m3 = [
-                {id:1,m_id:1,name:"subsubname2"},
-                {id:2,m_id:1,name:"subsubname2"},
-                {id:3,m_id:2,name:"subsubname3"},
-                {id:4,m_id:2,name:"subsubname4"},
-                {id:5,m_id:3,name:"subsubname5"},
-                {id:6,m_id:4,name:"subsubname6"},
-                {id:7,m_id:4,name:"subsubname7"},
-                {id:8,m_id:4,name:"subsubname8"},
-                {id:9,m_id:4,name:"subsubname9"},
-                {id:10,m_id:5,name:"subsubname10"}
-            ]
-
-            var sJoin = (parentArr,subArr,parentArrConnectField,subArrConnectField,parentListField) =>
-                R.map((parentItem) => R.assoc(parentListField,R.filter((subItem) => subItem[subArrConnectField]==parentItem[parentArrConnectField],subArr),parentItem),parentArr);
-
-            var t1 = sJoin(m2,m3,'id','m_id','subsub');
-            var t2 = sJoin(m1,t1,'id','m_id','list');
-            console.log(t2);
-            
-            
-            
         })
         .catch(function(err){
             console.log(err);
         });
-    
-    
-    
-    
-    
-    $scope.list = [
-        {
-            direction_id:1,
-            direction_name :"Fashion",
-            razdels:[
-                {
-                    rasdel_id:1,
-                    razdel_name:"Раздел 1",
-                    databases:[
-                        {
-                            db_id:1,
-                            db_name:"БД1"
-                        },
-                        {
-                            db_id:2,
-                            db_name:"БД2"
-                        }
-                    ]
-                },
-                {
-                    rasdel_id:2,
-                    razdel_name:"Раздел 2",
-                    databases:[
-                        {
-                            db_id:3,
-                            db_name:"БД3"
-                        },
-                        {
-                            db_id:4,
-                            db_name:"БД4"
-                        },
-                        {
-                            db_id:5,
-                            db_name:"БД5"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            direction_id:2,
-            direction_name :"Mebel",
-            razdels:[
-                {
-                    rasdel_id:3,
-                    razdel_name:"Раздел 1",
-                    databases:[
-                        {
-                            db_id:4,
-                            db_name:"БД4"
-                        },
-                        {
-                            db_id:5,
-                            db_name:"БД5"
-                        }
-                    ]
-                },
-                {
-                    rasdel_id:4,
-                    razdel_name:"Раздел 2",
-                    databases:[
-                        {
-                            db_id:6,
-                            db_name:"БД6"
-                        }
-                    ]
-                }
-            ]
-        }
-    ];
+        
+    $scope.addDatabaseCategoryShowDialog = (direction)=>{
+        $scope.selectedDirection = direction;
+        $scope.addDialog = ngDialog.openConfirm({
+            template: 'app_parts/main/admin/databases/dialog/addDatabaseCategory.html',
+            controller: 'addDatabaseCategoryCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
+            scope:$scope,
+            closeByDocument:false,
+            overlay: true
+        });
+    };
+    $scope.addDBShowDialog = (direction,databaseCategory)=>{
+        $scope.selectedDirection = direction;
+        $scope.selectedDatabaseCategory = databaseCategory;
+        $scope.addDialog = ngDialog.openConfirm({
+            template: 'app_parts/main/admin/databases/dialog/addDB.html',
+            controller: 'addDBCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
+            scope:$scope,
+            closeByDocument:false,
+            overlay: true
+        });
+    };
+    $scope.editDatabaseCategoryShowDialog = (direction,databaseCategory)=>{
+        $scope.selectedDirection = direction;
+        $scope.selectedDatabaseCategory = databaseCategory;
+        $scope.addDialog = ngDialog.openConfirm({
+            template: 'app_parts/main/admin/databases/dialog/editDatabaseCategory.html',
+            controller: 'editDatabaseCategoryCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
+            scope:$scope,
+            data : angular.copy(databaseCategory),
+            closeByDocument:false,
+            overlay: true
+        });
+    };
+    $scope.editDBShowDialog = (direction,databaseCategory,db)=>{
+        $scope.selectedDirection = direction;
+        $scope.selectedDatabaseCategory = databaseCategory;
+        $scope.selectedDB = db;
+        $scope.addDialog = ngDialog.openConfirm({
+            template: 'app_parts/main/admin/databases/dialog/editDB.html',
+            controller: 'editDBCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
+            scope:$scope,
+            data : angular.copy(db),
+            closeByDocument:false,
+            overlay: true
+        });
+    };
+    $scope.deleteDatabaseCategoryShowDialog = ()=>{
+        sweetAlert.swal({
+            title: 'Вы уверены?',
+            text: "Востановить будет невозможно",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Да удалить!',
+            cancelButtonText: 'Нет'
+        }).then(function() {
+
+
+        }).done();
+    };
+    $scope.deleteDBShowDialog = ()=>{
+        sweetAlert.swal({
+            title: 'Вы уверены?',
+            text: "Востановить будет невозможно",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Да удалить!',
+            cancelButtonText: 'Нет'
+        }).then(function() {
+
+
+        }).done();
+    }   
+
 };
 
 kmkya_client.controller('admin_databasesCtrl',admin_databasesCtrl);
+
+kmkya_client.controller('addDatabaseCategoryCtrl',addDatabaseCategoryCtrl);
+kmkya_client.controller('editDatabaseCategoryCtrl',editDatabaseCategoryCtrl);
+kmkya_client.controller('addDBCtrl',addDBCtrl);
+kmkya_client.controller('editDBCtrl',editDBCtrl);
+
+
