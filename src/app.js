@@ -12,6 +12,8 @@ var kmkya_client = angular.module('kmkya_client',[
     'ngFileUpload',
     'ui.grid',
     'ui.grid.selection',
-    'underscore'
+    'underscore',
+    'ngTagsInput',
+    'ngPopover'
     ]);
 

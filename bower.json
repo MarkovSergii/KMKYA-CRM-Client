@@ -21,6 +21,9 @@
     "underscore": "^1.8.3",
     "angular": "^1.5.8",
     "ramda": "^0.22.1",
-    "socket.io": "^1.4.8"
+    "socket.io": "^1.4.8",
+    "ng-tags-input": "^3.1.1",
+    "angular-tipped": "^0.3.0",
+    "angular-popover": "*"
   }
 }
