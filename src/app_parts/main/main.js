@@ -12,6 +12,23 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
         console.log(msg);
     });
 
+    // только зона Администратора
+    $rootScope.$on('$stateChangeStart',
+        function(event, toState, toParams, fromState, fromParams, options){
+
+            if ((toState.name == 'main.admin') && ($rootScope.user.type != 'admin'))
+            {
+
+                event.preventDefault();
+                $rootScope.curentUserState = fromState.name;
+                sweetAlert.swal("Error", "У вас нет доступа к этому разделу" ,"error");
+            }
+            else
+                $rootScope.curentUserState = toState.name;
+        });
+
+    $rootScope.UrlConfig = UrlConfig;
+
     $scope.controllerBody = function()
     {
         $scope.logout = function()
@@ -20,20 +37,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
             $state.go('auth');
         };
 
-        // только зона Администратора
-        $rootScope.$on('$stateChangeStart',
-            function(event, toState, toParams, fromState, fromParams, options){
-                
-                if ((toState.name == 'main.admin') && ($rootScope.user.type != 'admin'))
-                {
-                    
-                    event.preventDefault();
-                    $rootScope.curentUserState = fromState.name;
-                    sweetAlert.swal("Error", "У вас нет доступа к этому разделу" ,"error");
-                }
-            });
-        $rootScope.curentUserState = $state.current.name;
-        $rootScope.UrlConfig = UrlConfig;
+
 
     };
 
