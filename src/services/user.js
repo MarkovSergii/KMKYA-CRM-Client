@@ -51,6 +51,30 @@ kmkya_client.service('user_service', function ($http,UrlConfig,$q) {
        
     };
 
+    this.add = function(newuser)
+    {
+        return $q(function(resolve, reject) {
+
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/user/insert', newuser)
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        console.log('2'+ response);
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    console.log('3');
+                    return reject({error:true,message:error.statusText} );
+                });
+
+        });
+
+    };
 
     return this;
 });

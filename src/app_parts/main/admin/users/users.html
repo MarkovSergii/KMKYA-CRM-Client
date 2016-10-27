@@ -1,1 +1,45 @@
-пользователи
+<div class="box ui-sortable-handle">
+    <header>
+        <h5>Список пользователей</h5>
+        <div class="toolbar">
+            <div class="btn-group">
+                <button class="btn btn-metis-2 btn-grad" ng-click="addUser()">Добавить</button>
+            </div>
+        </div>
+    </header>
+    <div id="stripedTable" class="body collapse in">
+        <table class="table table-striped responsive-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Имя</th>
+                <th>Email</th>
+                <th>Уровни доступа</th>
+                <th>Дата регистрации</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="user in users_list">
+            <tr>
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.type}}</td>
+                <td>{{user.createdAt | date : "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>
+                    <div class="toolbar">
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-default" ng-click="editDirection_category(direction)">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                            <a class="btn btn-danger btn-sm" ng-click="deleteDirection_category(direction)">
+                                <i class="fa fa-trash-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
