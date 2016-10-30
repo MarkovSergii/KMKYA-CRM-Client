@@ -72,24 +72,24 @@
 
             <li ng-repeat="menuItem in mainMenu">
                 <a ng-show="menuItem.have_subitems">
-                    <i class="fa fa-dashboard"></i>
+                    <img width="30px" height="30px" ng-src="{{UrlConfig.serverUrl}}:{{UrlConfig.serverPort}}{{menuItem.logo}}">
                     <span class="link-title">&nbsp;{{menuItem.title}}</span>
                     <span ng-if="menuItem.have_subitems" class="fa arrow"></span>
                 </a>
                 <a ng-hide="menuItem.have_subitems" ui-sref="{{menuItem.link}}">
-                    <i class="fa fa-dashboard"></i>
+                    <i class="fa {{menuItem.icon}}"></i>
                     <span class="link-title">&nbsp;{{menuItem.title}}</span>
                     <span ng-if="menuItem.have_subitems" class="fa arrow"></span>
                 </a>
                 <ul ng-if="menuItem.have_subitems" class="collapse">
                     <li ng-repeat="subItem in menuItem.subitems">
                         <a ng-show="subItem.have_subitems">
-                            <i class="fa fa-dashboard"></i>
+                            <i class="fa {{subItem.icon}}"></i>
                             <span class="link-title">&nbsp;{{subItem.title}}</span>
                             <span ng-if="subItem.have_subitems" class="fa arrow"></span>
                         </a>
                         <a ng-hide="subItem.have_subitems" ui-sref="{{subItem.link}}">
-                            <i class="fa fa-dashboard"></i>
+                            <i class="fa {{subItem.icon}}"></i>
                             <span class="link-title">&nbsp;{{subItem.title}}</span>
                             <span ng-if="subItem.have_subitems" class="fa arrow"></span>
                         </a>

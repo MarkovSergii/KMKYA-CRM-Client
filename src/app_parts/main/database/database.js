@@ -20,6 +20,7 @@ var databaseCtrl = function($scope,$state,$rootScope,sweetAlert,direction_catego
                 dir.title = dir.name;
                 dir.link = "main.admin.direction_category";
                 dir.icon = "fa-dashboard";
+                dir.logo = dir.logo;
                 dir.have_subitems = true;
                 dir.subitems = [
                     {
@@ -52,6 +53,7 @@ var databaseCtrl = function($scope,$state,$rootScope,sweetAlert,direction_catego
                 return dir;
             });
             $rootScope.mainMenu = new_directions;
+            //console.log(new_directions);
         })
         .catch(console.log);
 
