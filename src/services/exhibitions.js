@@ -1,13 +1,17 @@
 /**
- * Created by user on 03.09.2016.
+ * Created by user on 30.08.2016.
  */
-kmkya_client.service('database_category_service', function ($http,UrlConfig,$q) {
+/**
+ * Created by user on 27.08.2016.
+ */
+
+kmkya_client.service('exhibitions_service', function ($http,UrlConfig,$q) {
 
     this.selectAll = function()
     {
         return $q(function(resolve, reject) {
 
-            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/database_category/all')
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitions/all')
                 .then(function(response){
                     if (response.status == 200)
                     {
@@ -32,7 +36,7 @@ kmkya_client.service('database_category_service', function ($http,UrlConfig,$q) 
     {
         return $q(function(resolve, reject) {
 
-            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/database_category/'+id+'/select')
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitions/'+id+'/select')
                 .then(function(response){
                     if (response.status == 200)
                     {
@@ -52,12 +56,12 @@ kmkya_client.service('database_category_service', function ($http,UrlConfig,$q) 
 
     };
 
-    this.update = function(database_category)
+    this.update = function(season)
     {
         return $q(function(resolve, reject) {
 
 
-            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/database_category/'+database_category.id+'/update',database_category)
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitions/'+season.id+'/update',season)
                 .then(function(response){
                     if (response.status == 200)
                     {
@@ -77,12 +81,12 @@ kmkya_client.service('database_category_service', function ($http,UrlConfig,$q) 
         });
     };
 
-    this.add = function(database_category)
+    this.add = function(season)
     {
         return $q(function(resolve, reject) {
 
 
-            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/database_category/insert',database_category)
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitions/insert',season)
                 .then(function(response){
                     if (response.status == 200)
                     {
@@ -99,30 +103,8 @@ kmkya_client.service('database_category_service', function ($http,UrlConfig,$q) 
 
         });
     };
-
-    this.delete = function(id)
-    {
-        return $q(function(resolve, reject) {
-            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/database_category/'+id+'/delete')
-                .then(function(response){
-                    if (response.status == 200)
-                    {
-                        return resolve( {error:false});
-                    }
-                    else
-                    {
-                        return reject( {error:true,message:response.statusText} );
-                    }
-                })
-                .catch(function(error){
-                    return reject({error:true,message:error.statusText} );
-                });
-        });
-
-    };
-
-
 
 
     return this;
 });
+
