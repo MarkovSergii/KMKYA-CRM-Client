@@ -51,6 +51,7 @@ var authCtrl = function($scope,$state,$cookies,UrlConfig,$http,toastr,$rootScope
                                     });
 
                                 $rootScope.token = response.data.token;
+                                $rootScope.curentUserState = 'main';
                                 $state.go('main');
                             }
 
