@@ -69,14 +69,16 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                                     
                                 }
                                 else {
-                                    $rootScope.user.permission = user_access_responce.data; 
+                                    $rootScope.user.permission = user_access_responce.data.access;
+                                    $rootScope.user.directions = user_access_responce.data.direction_user;
+                                    $rootScope.user.exhibitions = user_access_responce.data.exhibition_user;
                                 }
                             });
 
                         $rootScope.token = $cookies.get('token');
                         $scope.controllerBody();
                     }
-                })
+                }) 
                 .catch(function(){
                     toastr.error('Ошибка на сервере код ответа: '+response.status+' '+response.statusText,'ERROR!');
                     $state.go('auth');

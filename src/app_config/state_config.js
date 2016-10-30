@@ -106,18 +106,6 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         controller: 'admin_oblastCtrl'
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
 // database --------------------------------------------------------------------
     var databaseState = {
         name: 'main.database',
@@ -125,9 +113,21 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         cached:false,
         templateUrl: 'app_parts/main/database/database.html',
         controller: 'databaseCtrl'
-
     };
-    
+    var databaseFirmsState = {
+        name: 'main.database.firms',
+        url: '/firms/:direction_id',
+        cached:false,
+        templateUrl: 'app_parts/main/database/firms/firms.html',
+        controller: 'firmsCtrl'
+    };
+    var databaseUchState = {
+        name: 'main.database.uch',
+        url: '/uch/:exhibition_id',
+        cached:false,
+        templateUrl: 'app_parts/main/database/uch/uch.html',
+        controller: 'uchCtrl'
+    };
 // reports ---------------------------------------------------------------------
     var reportsState = {
         name: 'main.reports',
@@ -186,6 +186,8 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
  
 //-------------------------------------------------------------------------------
     $stateProvider.state(databaseState);
+    $stateProvider.state(databaseFirmsState);
+    $stateProvider.state(databaseUchState);
 //-------------------------------------------------------------------------------
     $stateProvider.state(reportsState);
     $stateProvider.state(reports1);

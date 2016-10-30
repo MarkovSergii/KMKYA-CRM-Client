@@ -75,18 +75,30 @@
                     <i class="fa fa-dashboard"></i>
                     <span class="link-title">&nbsp;{{menuItem.title}}</span>
                     <span ng-if="menuItem.have_subitems" class="fa arrow"></span>
-
                 </a>
                 <a ng-hide="menuItem.have_subitems" ui-sref="{{menuItem.link}}">
                     <i class="fa fa-dashboard"></i>
                     <span class="link-title">&nbsp;{{menuItem.title}}</span>
                     <span ng-if="menuItem.have_subitems" class="fa arrow"></span>
-
                 </a>
                 <ul ng-if="menuItem.have_subitems" class="collapse">
                     <li ng-repeat="subItem in menuItem.subitems">
-                        <a ui-sref="{{subItem.link}}">
-                        <i class="fa {{subItem.icon}}"></i>&nbsp;{{subItem.title}}</a>
+                        <a ng-show="subItem.have_subitems">
+                            <i class="fa fa-dashboard"></i>
+                            <span class="link-title">&nbsp;{{subItem.title}}</span>
+                            <span ng-if="subItem.have_subitems" class="fa arrow"></span>
+                        </a>
+                        <a ng-hide="subItem.have_subitems" ui-sref="{{subItem.link}}">
+                            <i class="fa fa-dashboard"></i>
+                            <span class="link-title">&nbsp;{{subItem.title}}</span>
+                            <span ng-if="subItem.have_subitems" class="fa arrow"></span>
+                        </a>
+                        <ul ng-if="subItem.have_subitems" class="collapse">
+                            <li ng-repeat="subsubItem in subItem.subitems">
+                                <a ui-sref="{{subsubItem.link}}">
+                                <i class="fa {{subsubItem.icon}}"></i>&nbsp;{{subsubItem.title}}</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </li>
