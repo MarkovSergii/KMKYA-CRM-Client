@@ -28,7 +28,7 @@ var addUserCtrl = function ($scope, user_service) {
         }
 
         return true
-
+// TODO: проверка на наличие вводимого e-mail в cписке пользователей
     };
 
 
@@ -63,8 +63,52 @@ var addUserCtrl = function ($scope, user_service) {
 
 };
 
+var editUserCtrl = function($scope,user_service)
+{
+    $scope.saveUser = function(user)
+    {
+        console.log(user);
+        user_service.update(user)
+            .then(function (updatedRecorcd){
+                if (updatedRecorcd.error)
+                {
+                    alert(updatedRecorcd.message)
+                }
+                else
+                {
+                    // найти в списке и перезаписать
+                    for (var i=0; i<$scope.users_list.length; i++)
+                    {
+                        if ($scope.users_list[i].id == updatedRecorcd.data.id)
+                        {
+                            $scope.users_list[i] = updatedRecorcd.data;
+                            $scope.closeThisDialog();
+                            break;
+                        }
+                    }
+
+                }
+            })
+            .catch(function(error){
+                alert(error.message)
+            });
+    }
+};
+
 var admin_usersCtrl = function($scope,user_service, ngDialog, $state) {
     $scope.users_list = {};
+    $scope.hidePass = false;
+    $scope.typeUser = {};
+
+    unique = function(arr) {
+        nextInput:
+            for (var i = 0; i < arr.length; i++) {
+                var str = arr[i].type; // для каждого элемента
+                $scope.typeUser[str] = str;
+            }
+           console.log($scope.typeUser);
+    };
+
     
     user_service.selectAll()
         .then(function (list) {
@@ -73,6 +117,9 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state) {
                 alert(list.message);
             } else {
                 $scope.users_list = list.data;
+                console.log($scope.users_list);
+                unique($scope.users_list);
+
             }
         })
         .catch(function(error){
@@ -92,7 +139,22 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state) {
             overlay: true
         });
     };
+
+    $scope.editUser = function(user)
+    {
+        $scope.addDialog = ngDialog.openConfirm({
+            template: 'app_parts/main/admin/users/dialog/edit.html',
+            controller: 'editUserCtrl',
+            className: 'ngdialog-theme-default custom-width-600',
+            showClose: false,
+            scope:$scope,
+            data : angular.copy(user),
+            closeByDocument:false,
+            overlay: true
+        });
+    };
 };
 
 kmkya_client.controller('admin_usersCtrl',admin_usersCtrl);
 kmkya_client.controller('addUserCtrl', addUserCtrl);
+kmkya_client.controller('editUserCtrl', editUserCtrl);

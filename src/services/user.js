@@ -63,17 +63,40 @@ kmkya_client.service('user_service', function ($http,UrlConfig,$q) {
                     }
                     else
                     {
-                        console.log('2'+ response);
                         return reject( {error:true,message:response.statusText} );
                     }
                 })
                 .catch(function(error){
-                    console.log('3');
                     return reject({error:true,message:error.statusText} );
                 });
 
         });
 
+    };
+
+    this.update = function(user)
+    {
+        return $q(function(resolve, reject) {
+
+
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/user/'+user.id+'/update',user)
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+
+
+        });
     };
 
     return this;
