@@ -95,7 +95,7 @@ var editUserCtrl = function($scope,user_service)
     }
 };
 
-var admin_usersCtrl = function($scope,user_service, ngDialog, $state) {
+var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils) {
     $scope.users_list = {};
     $scope.hidePass = false;
     $scope.typeUser = {};
@@ -118,7 +118,7 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state) {
             } else {
                 $scope.users_list = list.data;
                 console.log($scope.users_list);
-                unique($scope.users_list);
+                console.log(kmkya_utils.uniq($scope.users_list));
 
             }
         })

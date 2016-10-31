@@ -12,5 +12,8 @@ kmkya_client.service('kmkya_utils', function () {
     this.findIndexByField = (arrOfObjects,fieldName,fieldValue) =>
         R.findIndex(R.propEq(fieldName, fieldValue))(arrOfObjects);
 
+    this.uniq = (mas)=>
+        R.uniq(mas);
+
     return this;
 });
