@@ -1,70 +1,80 @@
 <div style="background-color: white">
+<div class="modal-header">
+    <h4 class="modal-title">Редактирование информации о пользователе</h4>
+</div>
+<div class="modal-body">
+<tabs>
+    <pane title="First Tab">
+        <form class="form-horizontal">
+            <fieldset>
 
-            <div class="modal-header">
-            <h4 class="modal-title">Редактирование информации о пользователе</h4>
-            </div>
-
-        <div class="modal-body">
-            <form class="form-horizontal">
-                <fieldset>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="input_name">Имя</label>
-                        <div class="col-md-8">
-                            <input id="input_name" name="input_name" type="text" placeholder="Название" class="form-control input-md" required="" ng-model="ngDialogData.name">
-                            <span id="name_span" class="error" hidden>Введите имя</span>
-                        </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="input_name">Имя</label>
+                    <div class="col-md-8">
+                        <input id="input_name" name="input_name" type="text" placeholder="Название" class="form-control input-md" required="" ng-model="ngDialogData.name">
+                        <span id="name_span" class="error" hidden>Введите имя</span>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="input_email">E-mail</label>
-                        <div class="col-md-8">
-                            <input id="input_email" name="input_email" type="text" placeholder="E-mail" class="form-control input-md" required="" ng-model="ngDialogData.email">
-                            <span id="email_span" class="error" hidden>Введите корректный e-mail</span>
-                        </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="input_email">E-mail</label>
+                    <div class="col-md-8">
+                        <input id="input_email" name="input_email" type="text" placeholder="E-mail" class="form-control input-md" required="" ng-model="ngDialogData.email">
+                        <span id="email_span" class="error" hidden>Введите корректный e-mail</span>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <div class="col-md-8 col-md-offset-4">
-                        <input type="checkbox" ng-model="hidePass" style="padding:5px !important;"> Изменить пароль
-                            </div>
+                <div class="form-group">
+                    <label class="col-md-4 col-md-offset-4 control-label" for="userPass">Изменить пароль:</label>
+                    <div class="col-md-4">
+                        <input id="userPass" type="checkbox" value="" ng-model="hidePass">
                     </div>
+                </div>
 
-                    <div class="form-group" ng-show="hidePass">
-                        <label class="col-md-4 control-label" for="input_password">Пароль</label>
-                        <div class="col-md-8">
-                            <input id="input_password" name="input_password" type="password" placeholder="Введите пароль" class="form-control input-md" required="" ng-model="ngDialogData">
-                            <span id="password_span" class="error" hidden>Введите корректный пароль не менее 6 символов</span>
-                        </div>
+                <div class="form-group" ng-show="hidePass">
+                    <label class="col-md-4 control-label" for="input_password">Пароль</label>
+                    <div class="col-md-8">
+                        <input id="input_password" name="input_password" type="password" placeholder="Введите пароль" class="form-control input-md" required="" ng-model="ngDialogData">
+                        <span id="password_span" class="error" hidden>Введите корректный пароль не менее 6 символов</span>
                     </div>
+                </div>
 
-                    <div class="form-group" ng-show="hidePass">
-                        <label class="col-md-4 control-label" for="input_re_password">Пароль повторно</label>
-                        <div class="col-md-8">
-                            <input id="input_re_password" name="input_re_password" type="password" placeholder="Введите пароль" class="form-control input-md" required="" ng-model="ngDialogData">
-                            <span id="repassword_span" class="error" hidden>Пароли не совпадают</span>
-                        </div>
+                <div class="form-group" ng-show="hidePass">
+                    <label class="col-md-4 control-label" for="input_re_password">Пароль повторно</label>
+                    <div class="col-md-8">
+                        <input id="input_re_password" name="input_re_password" type="password" placeholder="Введите пароль" class="form-control input-md" required="" ng-model="ngDialogData">
+                        <span id="repassword_span" class="error" hidden>Пароли не совпадают</span>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="input_type">Уровень доступа</label>
-                        <div class="col-md-8">
-                            <select id="input_type" class="form-control" style="width: 150px;">
-                                <option ng-model="ngDialogData" ng-repeat="value in typeUser">{{value}}</option>
-                            </select>
-                        </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="input_type">Уровень доступа</label>
+                    <div class="col-md-8">
+                        <select id="input_type" class="form-control" style="width: 150px;">
+                            <option ng-model="ngDialogData" ng-repeat="value in typeUser">{{value}}</option>
+                        </select>
                     </div>
+                </div>
 
-                </fieldset>
-            </form>
+            </fieldset>
+        </form>
 
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть </button>
-            <button class="btn btn-success" ng-disabled="(!ngDialogData.name) || (!ngDialogData.email)" ng-click="saveUser(ngDialogData)"> Сохранить </button>
-        </div>
+    </pane>
+    <pane title="Second Tab">
+        <div>This is the content of the second tab.</div>
+    </pane>
+    <pane title="Thirt Tab">
+        <div>This is the content of the third tab.</div>
+    </pane>
+</tabs>
+</div>
+<div class="modal-footer">
+     <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть </button>
+     <button class="btn btn-success" ng-disabled="(!ngDialogData.name) || (!ngDialogData.email)" ng-click="saveUser(ngDialogData)"> Сохранить </button>
+</div>
+</div>
 
-</div><!-- /.modal-content --></uib-tab>
+
 
 
