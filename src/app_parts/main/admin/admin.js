@@ -32,6 +32,7 @@ var adminCtrl = function($scope,$state,$rootScope) {
             title: "Адреса",
             link: "main.admin.address",
             icon: "fa-dashboard",
+            noimg: true,
             have_subitems: true,
             subitems: [
                 {
@@ -50,6 +51,11 @@ var adminCtrl = function($scope,$state,$rootScope) {
                     icon:"fa-dashboard"
                 }
             ]
+        },
+        {
+            title:"Временная вкладка",
+            link:"main.admin.temp",
+            icon:"fa-file-text-o"
         }
         
     ];

@@ -28,7 +28,7 @@ kmkya_client.service('user_service', function ($http,UrlConfig,$q) {
 
     };
 
-    this.selectById = function(id)
+    this.selectAccessById = function(id)
     {
         return $q(function(resolve, reject) {
 

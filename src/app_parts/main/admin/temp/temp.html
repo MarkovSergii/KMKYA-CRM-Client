@@ -1,0 +1,25 @@
+<h1>Вкладка для проверки http запросов к серверу</h1>
+<div>
+    <label>{{UrlConfig.serverUrl}}:{{UrlConfig.serverPort}}</label>
+    <input type="text" ng-model="secongPart" style='width:600px'>
+</div>
+<div>
+   <textarea cols="115" rows="10" ng-model="requestBody"></textarea>
+</div>
+<div style="padding-bottom: 10px">
+    <form>
+        <label>
+            <input type="radio" ng-model="requestType" value="GET">
+            GET
+        </label><br/>
+        <label>
+            <input type="radio" ng-model="requestType" value="POST">
+            POST
+        </label>
+    </form>
+    <button class="btn btn-success" ng-click="sendRequest(secongPart,requestBody,requestType)"> Отправить</button>
+    </br>
+</div>
+<div>
+    <textarea cols="115" rows="10" ng-model="requestResult"></textarea>
+</div>

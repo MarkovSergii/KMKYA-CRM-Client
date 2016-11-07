@@ -161,7 +161,15 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         controller: 'reports3Ctrl'
 
     };
+// temp -------------------------------------------------------------------------
+    var tempState = {
+        name: 'main.admin.temp',
+        url: '/temp',
+        cached:false,
+        templateUrl: 'app_parts/main/admin/temp/temp.html',
+        controller: 'tempCtrl'
 
+    };
 
 
 
@@ -169,6 +177,8 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $urlRouterProvider.otherwise('/auth');
 
 
+    $stateProvider.state(tempState); //TODO: remove after test
+    
     $stateProvider.state(authState);
 //-------------------------------------------------------------------------------
     $stateProvider.state(mainState);

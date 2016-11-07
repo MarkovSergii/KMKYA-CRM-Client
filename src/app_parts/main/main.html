@@ -22,7 +22,7 @@
 
                 <div class="topnav">
                     <div class="userAvatar">
-                        <img src="img/photo.jpg">
+                        <img src="img/photo.png">
                         <div>{{user.name}}</div>
                     </div>
                     <div class="btn-group">
@@ -72,7 +72,8 @@
 
             <li ng-repeat="menuItem in mainMenu">
                 <a ng-show="menuItem.have_subitems">
-                    <img width="30px" height="30px" ng-src="{{UrlConfig.serverUrl}}:{{UrlConfig.serverPort}}{{menuItem.logo}}">
+                    <img ng-if ="!menuItem.noimg" width="30px" height="30px" ng-src="{{UrlConfig.serverUrl}}:{{UrlConfig.serverPort}}{{menuItem.logo}}">
+                    <i ng-if ="menuItem.noimg" class="fa {{menuItem.icon}}"></i>
                     <span class="link-title">&nbsp;{{menuItem.title}}</span>
                     <span ng-if="menuItem.have_subitems" class="fa arrow"></span>
                 </a>
