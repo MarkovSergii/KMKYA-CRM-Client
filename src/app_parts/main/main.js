@@ -70,8 +70,8 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                                 }
                                 else {
                                     $rootScope.user.permission = user_access_responce.data.access;
-                                    $rootScope.user.directions = user_access_responce.data.direction_user;
-                                    $rootScope.user.exhibitions = user_access_responce.data.exhibition_user;
+                                    $rootScope.user.directions = user_access_responce.data.directions;
+                                    $rootScope.user.exhibitions = user_access_responce.data.exhibitions;
                                 }
                             });
 
