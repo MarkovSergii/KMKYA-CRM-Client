@@ -1,7 +1,7 @@
 var addUserCtrl = function ($scope, user_service) {
     let check = function()
     {
- //       this.clearfields();
+//        this.clearfields();
 
         if ($('#input_name').val().length==0)
         {
@@ -36,10 +36,12 @@ var addUserCtrl = function ($scope, user_service) {
     {
         if (check()){
             let data = {
-                name: $scope.newuser.name,
-                email: $scope.newuser.email,
-                password: $scope.newuser.password,
-                type: 'admin'
+                "name": $scope.newuser.name,
+                "email": $scope.newuser.email,
+                "password": $scope.newuser.password,
+                "type": $scope.newuser.type,
+                "access_types": [1],
+                "directions": [1]
             };
 
         user_service.add(data)
@@ -50,7 +52,8 @@ var addUserCtrl = function ($scope, user_service) {
                 }
                 else
                 {
-                    $scope.users_list.push(newRecord.data);
+                    $scope.users_list[$scope.users_list.length] = newRecord.data;
+                    console.log(newRecord);
                     $scope.closeThisDialog();
                 }
             })
@@ -65,10 +68,25 @@ var addUserCtrl = function ($scope, user_service) {
 
 var editUserCtrl = function($scope,user_service)
 {
-    $scope.saveUser = function(user)
+    console.log($scope.ngDialogData);
+
+
+
+    $scope.saveUser = function()
     {
-        console.log(user);
-        user_service.update(user)
+
+        data = {
+            "id": $scope.ngDialogData.id,
+            "name": $scope.ngDialogData.name,
+            "email": $scope.ngDialogData.email,
+            "type": $scope.ngDialogData.type,
+            "access_types": [1],
+            "directions": [1]
+        };
+
+        console.log(data);
+
+        user_service.update(data)
             .then(function (updatedRecorcd){
                 if (updatedRecorcd.error)
                 {
@@ -92,7 +110,8 @@ var editUserCtrl = function($scope,user_service)
             .catch(function(error){
                 alert(error.message)
             });
-    }
+    };
+
 };
 
 var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils) {
@@ -101,14 +120,51 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils
     $scope.typeUser = {};
 
     unique = function(arr) {
+        let str = [];
         nextInput:
             for (var i = 0; i < arr.length; i++) {
-                var str = arr[i].type; // для каждого элемента
-                $scope.typeUser[str] = str;
+                str[i] = arr[i].type; // для каждого элемента
             }
-           console.log($scope.typeUser);
+
+            str = kmkya_utils.uniq(str);
+
+            for (var i = 0; i < str.length; i++) {
+                $scope.typeUser[i] = str[i]; // для каждого элемента
+            }
+        console.log($scope.typeUser);
     };
 
+    let check = function()
+    {
+        //       this.clearfields();
+
+        if ($('#input_name').val().length==0)
+        {
+            $('#name_span').show();
+            return false
+        }
+
+        if ($('#input_email').val().match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i) == null)
+        {
+            $('#email_span').show();
+            return false
+        }
+
+        if ($('#input_password').val().match(/^[а-яА-ЯёЁa-zA-Z0-9]{6,}$/i)== null)
+        {
+            $('#password_span').show();
+            return false
+        }
+
+        if ($('#input_password').val()!=$('#input_re_password').val())
+        {
+            $('#repassword_span').show();
+            return false
+        }
+
+        return true
+// TODO: проверка на наличие вводимого e-mail в cписке пользователей
+    };
     
     user_service.selectAll()
         .then(function (list) {
@@ -116,9 +172,9 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils
             {
                 alert(list.message);
             } else {
+                console.log(list.data);
                 $scope.users_list = list.data;
-                console.log($scope.users_list);
-                console.log(kmkya_utils.uniq($scope.users_list));
+                unique($scope.users_list);
 
             }
         })
@@ -148,7 +204,7 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils
             className: 'ngdialog-theme-default custom-width-600',
             showClose: false,
             scope:$scope,
-            data : angular.copy(user),
+            data: angular.copy(user),
             closeByDocument:false,
             overlay: true
         });

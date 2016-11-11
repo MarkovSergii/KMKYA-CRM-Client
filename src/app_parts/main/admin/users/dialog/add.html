@@ -45,7 +45,9 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="input_type">Уровень доступа</label>
                     <div class="col-md-8">
-                        <select id="input_type" ng-model="oneExhibit" ng-options="record.id for record in allexhibit track by record.id" class="form-control" style="width: 150px;"></select>
+                        <select id="input_type" class="form-control" style="width: 150px;" ng-model="newuser.type">
+                            <option ng-repeat="record in typeUser">{{record}}</option>
+                        </select>
                     </div>
                 </div>
 
