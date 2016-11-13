@@ -78,6 +78,11 @@
     text-align: right;
 
 }
+
+.tab-content
+{
+    padding-top: 20px;
+}
 .login{
     padding-top: 100px;
 }

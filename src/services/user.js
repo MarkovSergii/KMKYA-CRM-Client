@@ -78,8 +78,32 @@ kmkya_client.service('user_service', function ($http,UrlConfig,$q) {
     {
         return $q(function(resolve, reject) {
 
-
             $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/user/'+user.id+'/update',user)
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+
+
+        });
+    };
+
+    this.selectAccessByUserID  = function(user)
+    {
+        console.log(user);
+        return $q(function(resolve, reject) {
+
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/access_types/'+user.id+'/select',user)
                 .then(function(response){
                     if (response.status == 200)
                     {
