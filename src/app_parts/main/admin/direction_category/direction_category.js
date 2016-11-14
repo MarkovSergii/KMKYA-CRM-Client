@@ -1,7 +1,7 @@
 
 var addDirectionCategoryCtrl = function($scope,direction_category_service)
 {
-    
+
     $scope.addCategory = function()
     {
         direction_category_service.add($scope.category)
@@ -17,9 +17,9 @@ var addDirectionCategoryCtrl = function($scope,direction_category_service)
                 }
             })
             .catch(function(error){
-            alert(error.message)
+                alert(error.message)
             });
-    }   
+    }
 };
 
 var editDirectionCategoryCtrl = function($scope,direction_category_service)

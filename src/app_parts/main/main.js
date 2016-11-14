@@ -6,10 +6,19 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
 
 
     
-    SocketIO.emit('join','hello');
+    SocketIO.emit('country');
+    SocketIO.emit('oblast');
+    SocketIO.emit('city');
 
-    SocketIO.on('join',function(msg){
-        console.log(msg);
+    SocketIO.on('country',function(msg){
+      $rootScope.ALLcountry = msg ;
+    });
+    SocketIO.on('oblast',function(msg){
+        $rootScope.ALLoblast = msg ;
+    });
+    SocketIO.on('city',function(msg){
+        $rootScope.ALLcity = msg ;
+        $rootScope.ALLcity.push({name:'Другой',id:0});
     });
 
     // только зона Администратора
