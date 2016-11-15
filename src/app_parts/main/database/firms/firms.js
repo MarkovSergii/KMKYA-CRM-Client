@@ -15,7 +15,7 @@ var addFirmsCtrl = function($scope,firms_service,tags)
     $scope.ALLtags = tags.data.map((one_tag)=>{
         one_tag.text = one_tag.name;
         return one_tag;
-    });
+    }) || [];
     $scope.loadTags = function(q){
         return $scope.ALLtags.filter(function(tag) {
             return (tag.text.toLowerCase()).includes(q.toLowerCase())
@@ -122,7 +122,7 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
             closeByDocument:false,
             overlay: true,
             resolve:{
-                tags :firms_service.selectAllTags
+                tags : ()=>firms_service.selectAllTags($state.params.direction_id)
             }
 
         });

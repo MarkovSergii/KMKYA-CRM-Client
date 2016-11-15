@@ -23,11 +23,11 @@ kmkya_client.service('firms_service', function ($http,UrlConfig,$q) {
                 });
         });
     };
-    this.selectAllTags = function()
+    this.selectAllTags = function(id)
     {
         return $q(function(resolve, reject) {
 
-            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/tags/all')
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/tags/all/'+id)
                 .then(function(response){
                     if (response.status == 200)
                     {
