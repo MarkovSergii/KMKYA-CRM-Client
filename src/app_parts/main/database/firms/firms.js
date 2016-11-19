@@ -6,6 +6,16 @@
 
 var addFirmsCtrl = function($scope,firms_service,tags)
 {
+    $scope.firm={};
+    $scope.getClass1 = ()=>{
+        return ($scope.firm.country!=1)  ? "col-md-5" : "col-md-7"
+    }
+    $scope.getClass2 = ()=>{
+        return ($scope.firm.country!=1)  ? "col-md-3" : "col-md-4"
+    }
+    $scope.getClass3 = ()=>{
+        return ($scope.firm.country!=1)  ? "col-md-9" : "col-md-8"
+    }
     $scope.tags = [
         { text: 'Пример' },
         { text: 'предустановленых' },
