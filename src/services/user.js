@@ -54,7 +54,6 @@ kmkya_client.service('user_service', function ($http,UrlConfig,$q) {
     this.add = function(newuser)
     {
         return $q(function(resolve, reject) {
-
             $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/user/insert', newuser)
                 .then(function(response){
                     if (response.status == 200)

@@ -53,7 +53,6 @@ var addUserCtrl = function ($scope, user_service) {
                 else
                 {
                     $scope.users_list[$scope.users_list.length] = newRecord.data;
-                    console.log(newRecord);
                     $scope.closeThisDialog();
                 }
             })
@@ -72,7 +71,7 @@ var editUserCtrl = function($scope,user_service)
 
 
 
-    $scope.saveUser = function()
+    $scope.saveUser = function(ngDialogData)
     {
 
         data = {
@@ -84,22 +83,22 @@ var editUserCtrl = function($scope,user_service)
             "directions": [1]
         };
 
-        console.log(data);
+        console.log('111222'+data);
 
         user_service.update(data)
-            .then(function (updatedRecorcd){
-                if (updatedRecorcd.error)
+            .then(function (updatedRecord){
+                if (updatedRecord.error)
                 {
-                    alert(updatedRecorcd.message)
+                    alert(updatedRecord.message)
                 }
                 else
                 {
                     // найти в списке и перезаписать
                     for (var i=0; i<$scope.users_list.length; i++)
                     {
-                        if ($scope.users_list[i].id == updatedRecorcd.data.id)
+                        if ($scope.users_list[i].id == updatedRecord.data.id)
                         {
-                            $scope.users_list[i] = updatedRecorcd.data;
+                            $scope.users_list[i] = updatedRecord.data;
                             $scope.closeThisDialog();
                             break;
                         }
