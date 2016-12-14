@@ -95,7 +95,7 @@ var editFirmCtrl = function($scope,firms_service)
 };
 
 
-var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,ngDialog) {
+var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,ngDialog,serviceAnLoader) {
     $scope.gridOptions = {
         enableFiltering: true,
         enableColumnMenus: true,
@@ -113,6 +113,9 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
         ]
     };
 
+    $scope.start = ()=> serviceAnLoader.start();
+
+    $scope.stop = ()=> serviceAnLoader.stop();
 
 
     firms_service.selectByDirectionId($state.params.direction_id)

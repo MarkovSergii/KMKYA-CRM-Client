@@ -14,6 +14,7 @@ var kmkya_client = angular.module('kmkya_client',[
     'ui.grid.selection',
     'underscore',
     'ngTagsInput',
-    'ngPopover'
+    'ngPopover',
+    'anLoader'
     ]);
 
