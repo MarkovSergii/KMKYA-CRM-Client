@@ -67,10 +67,6 @@ var addUserCtrl = function ($scope, user_service) {
 
 var editUserCtrl = function($scope,user_service)
 {
-    console.log($scope.ngDialogData);
-
-
-
     $scope.saveUser = function(ngDialogData)
     {
 
@@ -83,7 +79,7 @@ var editUserCtrl = function($scope,user_service)
             "directions": [1]
         };
 
-        console.log('111222'+data);
+        console.log($scope.ngDialogData);
 
         user_service.update(data)
             .then(function (updatedRecord){
@@ -96,9 +92,10 @@ var editUserCtrl = function($scope,user_service)
                     // найти в списке и перезаписать
                     for (var i=0; i<$scope.users_list.length; i++)
                     {
-                        if ($scope.users_list[i].id == updatedRecord.data.id)
+                        if ($scope.users_list[i].id == data.id)
                         {
-                            $scope.users_list[i] = updatedRecord.data;
+                            $scope.users_list[i] = data;
+                            $scope.users_list[i].createdAt = $scope.ngDialogData.createdAt;
                             $scope.closeThisDialog();
                             break;
                         }
