@@ -10,6 +10,7 @@ var concat = require('gulp-concat');
 var cleanCSS = require('gulp-clean-css');
 var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
+const runSequence = require('run-sequence');
 
 var dist = {
     css : "dist/css",
@@ -71,15 +72,12 @@ gulp.task('app', function() {
 
 });
 
-gulp.task('build', function() {
-    gulp.run('clean');
-    gulp.run('vendorjs');
-    gulp.run('templates');
-    gulp.run('img');
-    gulp.run('html');
-    gulp.run('css');
-    gulp.run('fonts');
-    gulp.run('app');
+
+
+gulp.task('build', function(callback) {
+    runSequence('clean',
+        ['vendorjs','templates','img','html','css','fonts','app'],
+        callback);
 });
 
 
