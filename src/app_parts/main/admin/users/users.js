@@ -1,3 +1,12 @@
+'use strict';
+
+// код который громоздкий и повтаряется несколько раз лутьше вынести в константы
+let VALIDATIONS ={
+    EMAIL: /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i,
+    PASSWORD:/^[а-яА-ЯёЁa-zA-Z0-9]{6,}$/i
+};
+
+
 var addUserCtrl = function ($scope, user_service) {
     let check = function()
     {
@@ -9,13 +18,13 @@ var addUserCtrl = function ($scope, user_service) {
             return false
         }
 
-        if ($('#input_email').val().match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i) == null)
+        if ($('#input_email').val().match(VALIDATIONS.EMAIL) == null)
         {
             $('#email_span').show();
             return false
         }
 
-        if ($('#input_password').val().match(/^[а-яА-ЯёЁa-zA-Z0-9]{6,}$/i)== null)
+        if ($('#input_password').val().match(VALIDATIONS.PASSWORD)== null)
         {
             $('#password_span').show();
             return false
@@ -65,12 +74,12 @@ var addUserCtrl = function ($scope, user_service) {
 
 };
 
-var editUserCtrl = function($scope,user_service)
+var editUserCtrl = function($scope,user_service,kmkya_utils)
 {
     $scope.saveUser = function(ngDialogData)
     {
 
-        data = {
+        let data = {
             "id": $scope.ngDialogData.id,
             "name": $scope.ngDialogData.name,
             "email": $scope.ngDialogData.email,
@@ -89,8 +98,14 @@ var editUserCtrl = function($scope,user_service)
                 }
                 else
                 {
+                    // лутьше писать используя готовые функции чем сомому делать for-if
+                    let userIndex = kmkya_utils.findIndexByField($scope.users_list,'id',data.id);
+                    $scope.users_list[userIndex] = data;
+                    $scope.users_list[userIndex].createdAt = $scope.ngDialogData.createdAt;
+                    $scope.closeThisDialog();
+
                     // найти в списке и перезаписать
-                    for (var i=0; i<$scope.users_list.length; i++)
+                    /*for (var i=0; i<$scope.users_list.length; i++)
                     {
                         if ($scope.users_list[i].id == data.id)
                         {
@@ -99,7 +114,7 @@ var editUserCtrl = function($scope,user_service)
                             $scope.closeThisDialog();
                             break;
                         }
-                    }
+                    }*/
 
                 }
             })
@@ -118,7 +133,10 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils
     unique = function(arr) {
         let str = [];
         nextInput:
-            for (var i = 0; i < arr.length; i++) {
+
+            // эта строчка делает то же что и весь код ниже    
+            $scope.typeUser = kmkya_utils.uniq(arr.map(item=>item.type));
+          /*  for (var i = 0; i < arr.length; i++) {
                 str[i] = arr[i].type; // для каждого элемента
             }
 
@@ -126,8 +144,9 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils
 
             for (var i = 0; i < str.length; i++) {
                 $scope.typeUser[i] = str[i]; // для каждого элемента
-            }
+            }*/
         console.log($scope.typeUser);
+
     };
 
     let check = function()
@@ -140,13 +159,13 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils
             return false
         }
 
-        if ($('#input_email').val().match(/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i) == null)
+        if ($('#input_email').val().match(VALIDATIONS.EMAIL) == null)
         {
             $('#email_span').show();
             return false
         }
 
-        if ($('#input_password').val().match(/^[а-яА-ЯёЁa-zA-Z0-9]{6,}$/i)== null)
+        if ($('#input_password').val().match(VALIDATIONS.PASSWORD)== null)
         {
             $('#password_span').show();
             return false
