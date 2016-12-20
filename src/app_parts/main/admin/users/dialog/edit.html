@@ -26,7 +26,6 @@
                 </div>
 
                 <div class="form-group">
-
                     <div class="col-md-8 col-md-offset-4 checkbox">
                         <label for="userPass"><input id="userPass" type="checkbox" value="" ng-model="hidePass">Изменить пароль</label>
                     </div>
@@ -62,8 +61,20 @@
 
     </pane>
     <pane title="Доступ">
-        <div>user_access_list</div>
+
+                <fieldset>
+                    <div class="form-group">
+                        <div ng-repeat="item in direction_list" class="col-md-8 checkbox">
+                            <label>
+                                <input type="checkbox" ng-checked="exists(item.id, ngDialogData.directions)" ng-click="toggle(item.id, ngDialogData.directions)">
+                                {{ item.name }}
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+
     </pane>
+
     <pane title="Конфигурация">
         <div>This is the content of the third tab.</div>
     </pane>
@@ -71,7 +82,7 @@
 </div>
 <div class="modal-footer">
      <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть </button>
-     <button class="btn btn-success" ng-disabled="(!ngDialogData.name) || (!ngDialogData.email)" ng-click="saveUser(ngDialogData)"> Сохранить </button>
+     <button class="btn btn-success" ng-disabled="(!ngDialogData.name) || (!ngDialogData.email)" ng-click="saveUser(ngDialogData, check1)"> Сохранить </button>
 </div>
 </div>
 

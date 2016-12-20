@@ -7,7 +7,7 @@ let VALIDATIONS ={
 };
 
 
-var addUserCtrl = function ($scope, user_service) {
+var addUserCtrl = function ($scope, user_service, direction_category_service) {
     let check = function()
     {
 //        this.clearfields();
@@ -76,6 +76,20 @@ var addUserCtrl = function ($scope, user_service) {
 
 var editUserCtrl = function($scope,user_service,kmkya_utils)
 {
+    $scope.exists = function (item, list) {
+        return list.indexOf(item) > -1;
+    };
+
+    $scope.toggle = function (item, list) {
+        var idx = list.indexOf(item);
+        if (idx > -1) {
+            $scope.ngDialogData.directions.splice(idx, 1);
+        }
+        else {
+            $scope.ngDialogData.directions.push(item);
+        }
+    };
+
     $scope.saveUser = function(ngDialogData)
     {
 
@@ -84,11 +98,12 @@ var editUserCtrl = function($scope,user_service,kmkya_utils)
             "name": $scope.ngDialogData.name,
             "email": $scope.ngDialogData.email,
             "type": $scope.ngDialogData.type,
-            "access_types": [1],
-            "directions": [1]
+            "access_types": [],
+            "directions": $scope.ngDialogData.directions
         };
 
-        console.log($scope.ngDialogData);
+        console.log(data);
+        console.log('------------------');
 
         user_service.update(data)
             .then(function (updatedRecord){
@@ -125,10 +140,11 @@ var editUserCtrl = function($scope,user_service,kmkya_utils)
 
 };
 
-var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils) {
+var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils, direction_category_service) {
     $scope.users_list = {};
     $scope.hidePass = false;
     $scope.typeUser = {};
+    $scope.direction_list = {};
 
     unique = function(arr) {
         let str = [];
@@ -148,6 +164,22 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils
         console.log($scope.typeUser);
 
     };
+
+    direction_category_service.selectAll()
+        .then(function(list){
+            if (list.error)
+            {
+                alert(list.message)
+            }
+            else
+            {
+                $scope.direction_list = list.data;
+                console.log($scope.direction_list);
+            }
+        })
+        .catch(function(error){
+            alert(error.message)
+        });
 
     let check = function()
     {
@@ -213,6 +245,7 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils
 
     $scope.editUser = function(user)
     {
+
         $scope.addDialog = ngDialog.openConfirm({
             template: 'app_parts/main/admin/users/dialog/edit.html',
             controller: 'editUserCtrl',
