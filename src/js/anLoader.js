@@ -16,8 +16,14 @@ anLoader.factory('serviceAnLoader', ($rootScope, $window) => {
 
             this.bk.style.width = this.elem.clientWidth + 'px';
             this.bk.style.height = this.elem.clientHeight + 'px';
-            this.bk.style.top = this.elem.offsetTop + 'px';
+            this.bk.style.top = this.elem.offsetParent.offsetTop + 'px';
             this.bk.style.left = this.elem.offsetLeft + 'px';
+        } else
+        if (this.bk){
+            this.bk.style.width = '100%';
+            this.bk.style.height = '100%';
+            this.bk.style.top = '0px';
+            this.bk.style.left = '0px';
         }
 
     };

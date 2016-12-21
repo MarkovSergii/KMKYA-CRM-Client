@@ -30,6 +30,10 @@
     width: 600px;
 }
 
+.mainMenu{
+    position: relative;
+    height: calc(100% - 54px);
+}
 
 .menu_item_selected
 {
