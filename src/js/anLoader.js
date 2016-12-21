@@ -75,9 +75,9 @@ anLoader.config(['$httpProvider',function($httpProvider) {
                 'requestError': function (rejection) {
                     // do something on error
                     if ($rootScope.anLoader_http == "true") $rootScope.showState = '';
-                    if (canRecover(rejection)) {
+                   /* if (canRecover(rejection)) {
                         return responseOrNewPromise
-                    }
+                    }*/
                     return $q.reject(rejection);
                 },
                 'response': function (response) {
@@ -90,9 +90,9 @@ anLoader.config(['$httpProvider',function($httpProvider) {
                 'responseError': function (rejection) {
                     // do something on error
                     if ($rootScope.anLoader_http == "true") $rootScope.showState = '';
-                    if (canRecover(rejection)) {
+                   /* if (canRecover(rejection)) {
                         return responseOrNewPromise
-                    }
+                    }*/
                     return $q.reject(rejection);
                 }
             };
