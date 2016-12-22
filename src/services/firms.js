@@ -66,7 +66,28 @@ kmkya_client.service('firms_service', function ($http,UrlConfig,$q) {
         });
 
     };
+    this.loadFakeData = function(){
+        return $q(function(resolve, reject) {
 
+            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/firms/fakeFirms')
+                .then(function(response){
+                    if (response.status == 200)
+                    {
+                        return resolve( {error:false,message:"",data:response.data} );
+                    }
+                    else
+                    {
+                        return reject( {error:true,message:response.statusText} );
+                    }
+                })
+                .catch(function(error){
+                    return reject({error:true,message:error.statusText} );
+                });
+
+
+
+        });
+    }
     this.update = function(firm)
     {
         return $q(function(resolve, reject) {

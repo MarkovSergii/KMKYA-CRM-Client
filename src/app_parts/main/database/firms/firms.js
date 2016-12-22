@@ -117,6 +117,15 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
 
     $scope.stop = ()=> serviceAnLoader.stop();
 
+    $scope.loadFakeData = function(){
+        $scope.gridOptions.data = firms_service.loadFakeData()
+            .then(function(data){
+                $scope.gridOptions.data = data.data;
+            })
+            .catch(console.log)
+    };
+
+
 
     firms_service.selectByDirectionId($state.params.direction_id)
         .then((data)=>{
