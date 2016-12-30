@@ -118,7 +118,7 @@ kmkya_client.service('firms_service', function ($http,UrlConfig,$q) {
         return $q(function(resolve, reject) {
 
 
-            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/exhibitions/insert',firm)
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/firms/insert',firm)
                 .then(function(response){
                     if (response.status == 200)
                     {

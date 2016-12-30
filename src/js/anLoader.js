@@ -48,7 +48,6 @@ anLoader.directive('anLoader', (serviceAnLoader,$rootScope) => {
         link: (scope, element, attrs) => {
             serviceAnLoader.calc(attrs.id);
             scope.anLoader_getContentUrl = function () {
-                console.log((attrs.templatefolder || 'templates')+'/'+ attrs.loaderType + '.html')
                 return (attrs.templatefolder || 'templates')+'/'+ attrs.loaderType + '.html'
             };
             $rootScope.anLoader_http = attrs.http || false;

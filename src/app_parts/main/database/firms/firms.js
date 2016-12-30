@@ -4,7 +4,7 @@
 'use strict';
 
 
-var addFirmsCtrl = function($scope,firms_service,tags)
+var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootScope)
 {
     $scope.firm={};
     $scope.getClass1 = ()=>{
@@ -35,16 +35,43 @@ var addFirmsCtrl = function($scope,firms_service,tags)
 
     $scope.firmValid = function ()
     {
-        return false;
+        if (!$scope.firm.name) return false;
+
+        if (!$scope.firm.country_id) return false;
+
+        if (($scope.firm.country_id==1) && (!$scope.firm.oblast_id)) return false;
+
+        if (($scope.firm.country_id==1) && ($scope.firm.oblast_id) && (!$scope.firm.city_id)) return false;
+
+        if (($scope.firm.city_id==0) && (!$scope.firm.city)) return false;
+
+        return true
+
     };
 
     $scope.cityFilter = function(one_city){
-        return ((one_city.oblast_id == $scope.firm.oblast) || (one_city.id==0))
+        return ((one_city.oblast_id == $scope.firm.oblast_id) || (one_city.id==0))
     };
-/*
+
+    let prepareFirmData = (data)=>{
+        data.database_id =  $state.params.direction_id;
+        data.country = kmkya_utils.findByField($rootScope.ALLcountry,'id',parseInt(data.country_id)).name;
+        if (data.country_id==1) data.oblast = kmkya_utils.findByField($rootScope.ALLoblast,'id',parseInt(data.oblast_id)).name;
+        if ((data.country_id==1) && (data.city_id!=0)) data.city = kmkya_utils.findByField($rootScope.ALLcity,'id',parseInt(data.city_id)).name;
+        if (data.tags){
+            data.tags = data.tags.map((tag)=>tag.name).join(',')
+        }
+        
+        return data;
+    };
+
+
     $scope.addFirm = function()
     {
-        firms_service.add($scope.firm)
+
+
+
+        firms_service.add(prepareFirmData($scope.firm))
             .then(function (newRecorcd){
                 if (newRecorcd.error)
                 {
@@ -52,14 +79,14 @@ var addFirmsCtrl = function($scope,firms_service,tags)
                 }
                 else
                 {
-                    $scope.direction_category_list.push(newRecorcd.data);
+                    $scope.firmsList.push(newRecorcd.data);
                     $scope.closeThisDialog();
                 }
             })
             .catch(function(error){
                 alert(error.message)
             });
-    }*/
+    }
 };
 
 var editFirmCtrl = function($scope,firms_service)
@@ -96,41 +123,43 @@ var editFirmCtrl = function($scope,firms_service)
 
 
 var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,ngDialog,serviceAnLoader) {
+
+    $scope.firmsList = [];
+
     $scope.gridOptions = {
         enableFiltering: true,
         enableColumnMenus: true,
+        enableRowSelection: true,
+        multiSelect : false,
+        noUnselect : true,
+        enableSelectAll: false,
+        enableRowHeaderSelection: false,
+        showFooter: true,
         onRegisterApi: function(gridApi){
             $scope.gridApi = gridApi;
         },
+        appScopeProvider: {
+            onDblClick : function(row) {
+                console.log(row.entity)
+            }
+        },
+        rowTemplate: "<div ng-dblclick=\"grid.appScope.onDblClick(row)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" ui-grid-cell ></div>",
         columnDefs: [
             // default
-            { field: 'name'},
-            { field: 'country'},
-            { field: 'oblast' },
-            { field: 'city' },
-            { field: 'address' },
-            { field: 'tags' }
+            {name:"name", field: 'name'},
+            {name:"country", field: 'country'},
+            {name:"oblast", field: 'oblast' },
+            {name:"city", field: 'city' },
+            {name:"address", field: 'address' },
+            {name:"tags", field: 'tags' }
         ]
     };
-
-    $scope.start = ()=> serviceAnLoader.start();
-
-    $scope.stop = ()=> serviceAnLoader.stop();
-
-    $scope.loadFakeData = function(){
-        $scope.gridOptions.data = firms_service.loadFakeData()
-            .then(function(data){
-                $scope.gridOptions.data = data.data;
-            })
-            .catch(console.log)
-    };
-
 
 
     firms_service.selectByDirectionId($state.params.direction_id)
         .then((data)=>{
-            console.log(data.data);
-            $scope.gridOptions.data = [];//$scope.myData;
+            $scope.firmsList = data.data;
+            $scope.gridOptions.data = $scope.firmsList;
         })
         .catch(console.log)
 
