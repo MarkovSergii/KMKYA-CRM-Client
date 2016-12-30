@@ -9,18 +9,14 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
     $scope.firm={};
     $scope.getClass1 = ()=>{
         return ($scope.firm.country!=1)  ? "col-md-5" : "col-md-7"
-    }
+    };
     $scope.getClass2 = ()=>{
         return ($scope.firm.country!=1)  ? "col-md-3" : "col-md-4"
-    }
+    };
     $scope.getClass3 = ()=>{
         return ($scope.firm.country!=1)  ? "col-md-9" : "col-md-8"
-    }
-    $scope.tags = [
-        { text: 'Пример' },
-        { text: 'предустановленых' },
-        { text: 'Тегов' }
-    ];
+    };
+
 
     $scope.ALLtags = tags.data.map((one_tag)=>{
         one_tag.text = one_tag.name;
@@ -54,15 +50,16 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
     };
 
     let prepareFirmData = (data)=>{
-        data.database_id =  $state.params.direction_id;
-        data.country = kmkya_utils.findByField($rootScope.ALLcountry,'id',parseInt(data.country_id)).name;
-        if (data.country_id==1) data.oblast = kmkya_utils.findByField($rootScope.ALLoblast,'id',parseInt(data.oblast_id)).name;
-        if ((data.country_id==1) && (data.city_id!=0)) data.city = kmkya_utils.findByField($rootScope.ALLcity,'id',parseInt(data.city_id)).name;
-        if (data.tags){
-            data.tags = data.tags.map((tag)=>tag.name).join(',')
+        let newFirm = angular.copy(data);
+        newFirm.database_id =  $state.params.direction_id;
+        newFirm.country = kmkya_utils.findByField($rootScope.ALLcountry,'id',parseInt(newFirm.country_id)).name;
+        if (newFirm.country_id==1) newFirm.oblast = kmkya_utils.findByField($rootScope.ALLoblast,'id',parseInt(newFirm.oblast_id)).name;
+        if ((newFirm.country_id==1) && (newFirm.city_id!=0)) newFirm.city = kmkya_utils.findByField($rootScope.ALLcity,'id',parseInt(newFirm.city_id)).name;
+        if (newFirm.tags){
+            newFirm.tags = newFirm.tags.map((tag)=>tag.text).join(',')
         }
         
-        return data;
+        return newFirm;
     };
 
 
