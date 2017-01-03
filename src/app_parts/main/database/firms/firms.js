@@ -3,7 +3,6 @@
  */
 'use strict';
 
-
 var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootScope)
 {
     $scope.firm={};
@@ -45,10 +44,6 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
 
     };
 
-    $scope.cityFilter = function(one_city){
-        return ((one_city.oblast_id == $scope.firm.oblast_id) || (one_city.id==0))
-    };
-
     let prepareFirmData = (data)=>{
         let newFirm = angular.copy(data);
         newFirm.database_id =  $state.params.direction_id;
@@ -86,40 +81,23 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
     }
 };
 
-var editFirmCtrl = function($scope,firms_service)
-{/*
-    $scope.saveCategory = function(direction_category)
-    {
-        direction_category_service.update(direction_category)
-            .then(function (updatedRecorcd){
-                if (updatedRecorcd.error)
-                {
-                    alert(updatedRecorcd.message)
-                }
-                else
-                {
-                    // найти в списке и перезаписать
-                    for (var i =0;i<$scope.direction_category_list.length;i++)
-                    {
-                        if ($scope.direction_category_list[i].id == updatedRecorcd.data.id)
-                        {
-                            $scope.direction_category_list[i] = updatedRecorcd.data;
-                            $scope.closeThisDialog();
-                            break;
-                        }
-                    }
-                    //$scope.direction_category_list.  push(newRecorcd.data);
+var editFirmCtrl = function($scope,firms_service,firmToEdit,tags)
+{
+    console.log(tags);
+    console.log(firmToEdit.data);
+    $scope.firm = firmToEdit.data;
+    $scope.firmToEdit = ()=>{
 
-                }
-            })
-            .catch(function(error){
-                alert(error.message)
-            });
-    }*/
+    }
 };
 
 
-var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,ngDialog,serviceAnLoader) {
+var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,ngDialog) {
+
+
+    $scope.cityFilter = function(one_city){
+        return ((one_city.oblast_id == $scope.firm.oblast_id) || (one_city.id==0))
+    };
 
     $scope.firmsList = [];
 
@@ -137,7 +115,9 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
         },
         appScopeProvider: {
             onDblClick : function(row) {
-                console.log(row.entity)
+                console.log(row.entity.id)
+                $scope.editFirmDialog(row.entity.id);
+
             }
         },
         rowTemplate: "<div ng-dblclick=\"grid.appScope.onDblClick(row)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" ui-grid-cell ></div>",
@@ -176,15 +156,19 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
         });
     };
 
-    $scope.editFirmDialog = function(){
+    $scope.editFirmDialog = function(firmId){
         ngDialog.openConfirm({
             template: 'app_parts/main/database/firms/dialog/edit.html',
-            controller: 'editFirmsCtrl',
-            className: 'ngdialog-theme-default custom-width-1000',
+            controller: 'editFirmCtrl',
+            className: 'ngdialog-theme-default custom-width-1100',
             showClose: false,
             scope:$scope,
             closeByDocument:false,
-            overlay: true
+            overlay: true,
+            resolve:{
+                tags : ()=>firms_service.selectAllTags($state.params.direction_id),
+                firmToEdit: ()=>firms_service.selectById(firmId)
+            }
         });
     }
     

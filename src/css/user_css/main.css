@@ -6,6 +6,10 @@
     padding-left: 0px;
 }
 
+.ngdialog.ngdialog-theme-default.custom-width-1100 .ngdialog-content {
+    width: 1100px;
+}
+
 .ngdialog.ngdialog-theme-default.custom-width-1000 .ngdialog-content {
     width: 1000px;
 }

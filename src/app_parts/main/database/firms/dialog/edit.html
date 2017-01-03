@@ -1,0 +1,192 @@
+<div style="background-color: white">
+    <div class="modal-header">
+
+        <h4 class="modal-title">Редактирование фирмы {{firm.name}}</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal container">
+            <fieldset>
+                <div class="row">
+                    <div class="col-lg-10 col-md-10 col-sm-10">
+                        <div class="row">
+                            <!-- Text input-->
+                            <div class="form-group col-md-12">
+                                <label class="col-md-3 control-label" for="firmName">Название компании</label>
+
+                                <div class="col-md-7">
+                                    <input id="firmName" name="" type="text" placeholder="Название компании"
+                                           class="form-control input-md" ng-model="firm.name">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Text input-->
+                            <div class="form-group col-md-5">
+                                <label class="col-md-3 control-label" for="directorName">Директор</label>
+
+                                <div class="col-md-9">
+                                    <input id="directorName" name="" type="text" placeholder="Директор"
+                                           class="col-md-3 form-control input-md" ng-model="firm.director">
+
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group col-md-7">
+                                <label class="col-md-4 control-label" for="contactPerson">Контактное лицо</label>
+
+                                <div class="col-md-8">
+                                    <input id="contactPerson" name="" type="text" placeholder="Контактное лицо"
+                                           class="form-control input-md" ng-model="firm.person">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-5">
+                                <label class="col-md-3 control-label" for="countryList">Страна</label>
+
+                                <div class="col-md-9">
+                                    <select id="countryList" name="selectbasic" class="form-control" ng-model="firm.country_id"
+                                        ng-options="country.id as country.name for country in ALLcountry">
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-7" ng-if="firm.country_id==1">
+                                <label class="col-md-4 control-label" for="oblastList">Область</label>
+
+                                <div class="col-md-8">
+                                    <select id="oblastList" name="selectbasic" class="form-control" ng-model="firm.oblast_id"
+                                            ng-options="oblast.id as oblast.name for oblast in ALLoblast">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-5" ng-if="((firm.country_id==1) && (firm.oblast_id))">
+                                <label class="col-md-3 control-label" for="cityList">Город</label>
+
+                                <div class="col-md-9">
+                                    <select id="cityList" name="selectbasic" class="form-control" ng-model="firm.city_id"
+                                            ng-options="city.id as city.name for city in ALLcity | filter: cityFilter">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group" ng-class="getClass1()"  ng-if="((firm.country_id!=1) || (firm.oblast_id==0) || (firm.city_id==0))">
+                                <label class="control-label" ng-class="getClass2()" for="cityText">Город</label>
+
+                                <div  ng-class="getClass3()">
+                                    <input id="cityText" name="textinput" type="text" placeholder="Город"
+                                           class="form-control input-md" ng-model="firm.city">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-5">
+                                <label class="col-md-3 control-label" for="postindex">Индекс</label>
+
+                                <div class="col-md-9">
+                                    <input id="postindex" name="textinput" type="text" placeholder="Почтовый индекс"
+                                           class="form-control input-md" ng-model="firm.postindex">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-7">
+                                <label class="col-md-2 control-label" for="address">Адрес</label>
+
+                                <div class="col-md-10">
+                                    <input id="address" name="textinput" type="text" placeholder="Адрес"
+                                           class="form-control input-md" ng-model="firm.address">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-5">
+                                <label class="col-md-3 control-label" for="tel">Телефоны</label>
+
+                                <div class="col-md-9">
+                                    <textarea class="form-control" id="tel" name="textarea" ng-model="firm.tel"></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-7">
+                                <label class="col-md-2 control-label" for="emails">Emails</label>
+
+                                <div class="col-md-10">
+                                    <textarea class="form-control" id="emails" name="textarea"
+                                              ng-model="firm.emails"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-5">
+                                <label class="col-md-3 control-label" for="website">Websites</label>
+
+                                <div class="col-md-9">
+                                    <input id="website" name="textinput" type="text" placeholder="Сайт"
+                                           class="form-control input-md" ng-model="firm.web">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-7">
+                                <label class="col-md-2 control-label" for="note">Заметка</label>
+
+                                <div class="col-md-10">
+                                    <input id="note" name="textinput" type="text" placeholder="Заметка"
+                                           class="form-control input-md" ng-model="firm.note">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-md-12">
+                                <label class="col-md-2 control-label">Принадлежность компаний</label>
+
+                                <div class="col-md-10">
+                                    <tags-input ng-model="firm.tags">
+                                        <auto-complete source="loadTags($query)"
+                                                       min-length="2"
+                                                       load-on-focus="false"
+                                                       load-on-empty="false"
+                                                       max-results-to-show="32">
+
+                                        </auto-complete>
+                                    </tags-input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        File store
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть</button>
+        <button class="btn btn-success" ng-disabled="(!firmValid())" ng-click="saveFirm()"> Сохранить</button>
+    </div>
+</div><!-- /.modal-content -->
+
+
+
