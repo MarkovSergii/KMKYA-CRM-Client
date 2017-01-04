@@ -26,6 +26,7 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
         one_tag.text = one_tag.name;
         return one_tag;
     }) || [];
+
     $scope.loadTags = function(q){
         return $scope.ALLtags.filter(function(tag) {
             return (tag.text.toLowerCase()).includes(q.toLowerCase())
@@ -90,6 +91,15 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
 var editFirmCtrl = function($scope,firms_service,firmToEdit,tags)
 {
 
+    
+    $scope.uploadFiles = (file)=>{
+        
+        console.log(file);
+        
+        firms_service.uploadFile(file)
+            .then(console.log)
+            .catch(console.log)
+    };    
 
     $scope.firm = firmToEdit.data;
 

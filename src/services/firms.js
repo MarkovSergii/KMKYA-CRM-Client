@@ -1,7 +1,7 @@
 /**
  * Created by user on 14.11.2016.
  */
-kmkya_client.service('firms_service', function ($http,UrlConfig,$q) {
+kmkya_client.service('firms_service', function ($http,UrlConfig,$q,Upload) {
 
     this.selectByDirectionId = function(id)
     {
@@ -66,14 +66,17 @@ kmkya_client.service('firms_service', function ($http,UrlConfig,$q) {
         });
 
     };
-    this.loadFakeData = function(){
+    this.uploadFile = function(firmFile)
+    {
         return $q(function(resolve, reject) {
-
-            $http.get(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/firms/fakeFirms')
+            Upload.upload({
+                url: UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/firms/addFile',
+                data: {firmFile: firmFile}
+            })
                 .then(function(response){
                     if (response.status == 200)
                     {
-                        return resolve( {error:false,message:"",data:response.data} );
+                        return resolve( {error:false,message:"",data:response.data.data} );
                     }
                     else
                     {
@@ -83,11 +86,9 @@ kmkya_client.service('firms_service', function ($http,UrlConfig,$q) {
                 .catch(function(error){
                     return reject({error:true,message:error.statusText} );
                 });
-
-
-
         });
-    }
+    };
+    
     this.update = function(firm)
     {
         return $q(function(resolve, reject) {
