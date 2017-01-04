@@ -6,6 +6,7 @@
 var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootScope)
 {
     $scope.firm={};
+
     $scope.getClass1 = ()=>{
         return ($scope.firm.country!=1)  ? "col-md-5" : "col-md-7"
     };
@@ -14,6 +15,10 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
     };
     $scope.getClass3 = ()=>{
         return ($scope.firm.country!=1)  ? "col-md-9" : "col-md-8"
+    };
+
+    $scope.cityFilter = function(one_city){
+        return ((one_city.oblast_id == $scope.firm.oblast_id) || (one_city.id==0))
     };
 
 
@@ -51,7 +56,8 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
         if (newFirm.country_id==1) newFirm.oblast = kmkya_utils.findByField($rootScope.ALLoblast,'id',parseInt(newFirm.oblast_id)).name;
         if ((newFirm.country_id==1) && (newFirm.city_id!=0)) newFirm.city = kmkya_utils.findByField($rootScope.ALLcity,'id',parseInt(newFirm.city_id)).name;
         if (newFirm.tags){
-            newFirm.tags = newFirm.tags.map((tag)=>tag.text).join(',')
+            newFirm.tagsNames = newFirm.tags.map((tag)=>tag.text).join(',').toLowerCase()
+            newFirm.tags = JSON.stringify(newFirm.tags);
         }
         
         return newFirm;
@@ -83,21 +89,42 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
 
 var editFirmCtrl = function($scope,firms_service,firmToEdit,tags)
 {
-    console.log(tags);
-    console.log(firmToEdit.data);
-    $scope.firm = firmToEdit.data;
-    $scope.firmToEdit = ()=>{
 
-    }
+
+    $scope.firm = firmToEdit.data;
+
+    $scope.firm.tags = ($scope.firm.tags) ?  JSON.parse($scope.firm.tags) : []
+
+    $scope.getClass1 = ()=>{
+        return ($scope.firm.country!=1)  ? "col-md-5" : "col-md-7"
+    };
+    $scope.getClass2 = ()=>{
+        return ($scope.firm.country!=1)  ? "col-md-3" : "col-md-4"
+    };
+    $scope.getClass3 = ()=>{
+        return ($scope.firm.country!=1)  ? "col-md-9" : "col-md-8"
+    };
+
+    $scope.cityFilter = function(one_city){
+        return ((one_city.oblast_id == $scope.firm.oblast_id) || (one_city.id==0))
+    };
+
+    $scope.ALLtags = tags.data.map((one_tag)=>{
+          one_tag.text = one_tag.name;
+          return one_tag;
+      }) || [];
+
+    $scope.loadTags = function(q){
+        return $scope.ALLtags.filter(function(tag) {
+            return (tag.text.toLowerCase()).includes(q.toLowerCase())
+        });
+    };
+
 };
 
 
 var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,ngDialog) {
 
-
-    $scope.cityFilter = function(one_city){
-        return ((one_city.oblast_id == $scope.firm.oblast_id) || (one_city.id==0))
-    };
 
     $scope.firmsList = [];
 
@@ -128,7 +155,7 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
             {name:"oblast", field: 'oblast' },
             {name:"city", field: 'city' },
             {name:"address", field: 'address' },
-            {name:"tags", field: 'tags' }
+            {name:"tags", field: 'tagsNames' }
         ]
     };
 
