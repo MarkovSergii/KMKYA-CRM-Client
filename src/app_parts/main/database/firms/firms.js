@@ -91,7 +91,17 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
 var editFirmCtrl = function($scope,firms_service,firmToEdit,tags)
 {
 
-    
+    $scope.files = [{id:1,name:"Файл 1.doc"},{id:2,name:"Файл 2.doc"}]
+
+
+    $scope.downloadFile = (id)=>{
+        console.log('download ',id);
+    }
+
+    $scope.removeFile = (id)=>{
+        console.log('remove ',id);
+    }
+
     $scope.uploadFiles = (file)=>{
         
         console.log(file);

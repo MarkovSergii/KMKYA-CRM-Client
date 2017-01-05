@@ -7,7 +7,7 @@
         <form class="form-horizontal container">
             <fieldset>
                 <div class="row">
-                    <div class="col-lg-10 col-md-10 col-sm-10">
+                    <div class="col-lg-9 col-md-9 col-sm-9">
                         <div class="row">
                             <!-- Text input-->
                             <div class="form-group col-md-12">
@@ -174,13 +174,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-md-2 col-sm-2">
+                    <div class="col-lg-3 col-md-3 col-sm-3">
                         <div>File store</div>
                         <div>
-                            <button class="btn btn-success" type="file" ngf-select="uploadFiles($file)" ngf-max-size="100MB">Upload file</button>
+                            <button class="btn btn-block btn-success" type="file" ngf-select="uploadFiles($file)" ngf-max-size="100MB">Upload file</button>
                         </div>
                         <div>
 
+                            <p ng-repeat="file in files" class="file">
+                                <span class="downloadFile" ng-click="downloadFile(file.id)">{{file.name}}</span>
+                                <img class="downloadFile" src="http://icons.iconarchive.com/icons/hopstarter/sleek-xp-basic/24/Download-icon.png" ng-click="downloadFile(file.id)">
+                                <img class="removeFile" src="http://icons.iconarchive.com/icons/hopstarter/sleek-xp-basic/24/Close-icon.png" ng-click="removeFile(file.id)">
+                            </p>
                         </div>
                     </div>
                 </div>
