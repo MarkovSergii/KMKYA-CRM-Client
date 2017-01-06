@@ -91,27 +91,82 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
 var editFirmCtrl = function($scope,firms_service,firmToEdit,tags)
 {
 
-    $scope.files = [{id:1,name:"Файл 1.doc"},{id:2,name:"Файл 2.doc"}]
-
-
     $scope.downloadFile = (id)=>{
         console.log('download ',id);
     }
 
     $scope.removeFile = (id)=>{
-        console.log('remove ',id);
+        sweetAlert.swal({
+            title: 'Вы уверены?',
+            text: "Востановить будет невозможно",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Да удалить!',
+            cancelButtonText: 'Нет'
+        }).then(function() {
+
+            firms_service.deleteFile(id)
+              .then(function () {
+
+                  $scope.firm.files.splice(R.findIndex(R.propEq('id', id))($scope.firm.files),1);
+                  sweetAlert.swal(
+                    {
+                        title: 'Успешно',
+                        text: "Файл удален",
+                        type: 'success',
+                        timer:1500
+                    }
+                  ).done();
+              })
+              .catch(function(error){
+                  sweetAlert.swal({
+                        title: 'Ошибка',
+                        text: error.message,
+                        type: 'error',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    }
+                  ).done();
+              });
+
+        }).done();
+
     }
 
     $scope.uploadFiles = (file)=>{
-        
-        console.log(file);
-        
+
         firms_service.uploadFile(file)
-            .then(console.log)
-            .catch(console.log)
+            .then((files)=>{
+              $scope.firm.files = angular.copy(files);
+              sweetAlert.swal(
+                {
+                    title: 'Успешно',
+                    text: "Файл загружен",
+                    type: 'success',
+                    timer:1500
+                }
+              ).done();
+
+            })
+            .catch((e)=>{
+              sweetAlert.swal({
+                  title: 'Ошибка',
+                  text: e,
+                  type: 'error',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  confirmButtonText: 'OK'
+                }
+              ).done();
+          })
     };    
 
     $scope.firm = firmToEdit.data;
+
+    $scope.files = [{id:1,name:"Файл 1.doc"},{id:2,name:"Файл 2.doc"}]
 
     $scope.firm.tags = ($scope.firm.tags) ?  JSON.parse($scope.firm.tags) : []
 

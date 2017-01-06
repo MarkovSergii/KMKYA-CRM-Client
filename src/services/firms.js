@@ -66,6 +66,27 @@ kmkya_client.service('firms_service', function ($http,UrlConfig,$q,Upload) {
         });
 
     };
+
+    this.deleteFile = function(firmId,fileId)
+    {
+        return $q(function(resolve, reject) {
+
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/firms/'+firmId+'/deleteFile/',fileId)
+              .then(function(response){
+                  if (response.status == 200)
+                  {
+                      return resolve( {error:false,message:"",data:response.data.data} );
+                  }
+                  else
+                  {
+                      return reject( {error:true,message:response.statusText} );
+                  }
+              })
+              .catch(function(error){
+                  return reject({error:true,message:error.statusText} );
+              });
+        });
+    };
     this.uploadFile = function(firmFile)
     {
         return $q(function(resolve, reject) {
