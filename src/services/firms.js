@@ -71,7 +71,7 @@ kmkya_client.service('firms_service', function ($http,UrlConfig,$q,Upload) {
     {
         return $q(function(resolve, reject) {
 
-            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/firms/'+firmId+'/deleteFile/',fileId)
+            $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/firms/'+firmId+'/deleteFile/',{fileId:fileId})
               .then(function(response){
                   if (response.status == 200)
                   {

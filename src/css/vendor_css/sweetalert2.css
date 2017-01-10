@@ -6,7 +6,7 @@
   top: 0;
   bottom: 0;
   display: none;
-  z-index: 1000; }
+  z-index: 7000; }
 
 .swal2-modal {
   background-color: #fff;
@@ -22,7 +22,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   display: none;
-  z-index: 2000; }
+  z-index: 8000; }
   .swal2-modal.loading {
     overflow-y: hidden; }
   .swal2-modal h2 {

@@ -88,14 +88,14 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
     }
 };
 
-var editFirmCtrl = function($scope,firms_service,firmToEdit,tags)
+var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert)
 {
 
     $scope.downloadFile = (id)=>{
         console.log('download ',id);
     }
 
-    $scope.removeFile = (id)=>{
+    $scope.removeFile = (fileId)=>{
         sweetAlert.swal({
             title: 'Вы уверены?',
             text: "Востановить будет невозможно",
@@ -107,10 +107,10 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags)
             cancelButtonText: 'Нет'
         }).then(function() {
 
-            firms_service.deleteFile(id)
-              .then(function () {
+            firms_service.deleteFile($scope.firm.id,fileId)
+              .then(function (files) {
 
-                  $scope.firm.files.splice(R.findIndex(R.propEq('id', id))($scope.firm.files),1);
+                  $scope.firm.files =  angular.copy(files.data);
                   sweetAlert.swal(
                     {
                         title: 'Успешно',
@@ -140,7 +140,7 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags)
 
         firms_service.uploadFile(file)
             .then((files)=>{
-              $scope.firm.files = angular.copy(files);
+              $scope.firm.files =  angular.copy(files.data);
               sweetAlert.swal(
                 {
                     title: 'Успешно',
@@ -166,7 +166,7 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags)
 
     $scope.firm = firmToEdit.data;
 
-    $scope.files = [{id:1,name:"Файл 1.doc"},{id:2,name:"Файл 2.doc"}]
+    $scope.firm.files = JSON.parse(firmToEdit.data.files);
 
     $scope.firm.tags = ($scope.firm.tags) ?  JSON.parse($scope.firm.tags) : []
 
