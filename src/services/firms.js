@@ -87,12 +87,12 @@ kmkya_client.service('firms_service', function ($http,UrlConfig,$q,Upload) {
               });
         });
     };
-    this.uploadFile = function(firmFile)
+    this.uploadFile = function(firmFile, firmId)
     {
         return $q(function(resolve, reject) {
             Upload.upload({
                 url: UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/firms/addFile',
-                data: {firmFile: firmFile}
+                data: {firmFile: firmFile, firmId: firmId}
             })
                 .then(function(response){
                     if (response.status == 200)
@@ -113,8 +113,6 @@ kmkya_client.service('firms_service', function ($http,UrlConfig,$q,Upload) {
     this.update = function(firm)
     {
         return $q(function(resolve, reject) {
-
-
             $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/firms/'+firm.id+'/update',firm)
                 .then(function(response){
                     if (response.status == 200)

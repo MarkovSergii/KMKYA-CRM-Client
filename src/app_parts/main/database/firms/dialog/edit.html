@@ -38,7 +38,7 @@
 
                                 <div class="col-md-8">
                                     <input id="contactPerson" name="" type="text" placeholder="Контактное лицо"
-                                           class="form-control input-md" ng-model="firm.person">
+                                           class="form-control input-md" ng-model="firm.contact_person">
                                 </div>
                             </div>
                         </div>
@@ -118,7 +118,7 @@
                                 <label class="col-md-3 control-label" for="tel">Телефоны</label>
 
                                 <div class="col-md-9">
-                                    <textarea class="form-control" id="tel" name="textarea" ng-model="firm.tel"></textarea>
+                                    <textarea class="form-control" id="tel" name="textarea" ng-model="firm.tels"></textarea>
                                 </div>
                             </div>
 
@@ -182,7 +182,7 @@
                         <div>
 
                             <p ng-repeat="file in firm.files" class="file">
-                                <span class="downloadFile" ng-click="downloadFile(file.id)">{{file.name}}</span>
+                                <span class="downloadFile" ng-click="downloadFile(file.id)">{{file.id}}</span>
                                 <img class="downloadFile" src="img/Download-icon.png" ng-click="downloadFile(file.id)">
                                 <img class="removeFile" src="img/Close-icon.png" ng-click="removeFile(file.id)">
                             </p>

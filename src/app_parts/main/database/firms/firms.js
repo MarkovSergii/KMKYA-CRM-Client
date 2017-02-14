@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootScope)
+var addFirmsCtrl = function($scope,firms_service,tags,$state,$rootScope)
 {
     $scope.firm={};
 
@@ -50,27 +50,10 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
 
     };
 
-    let prepareFirmData = (data)=>{
-        let newFirm = angular.copy(data);
-        newFirm.database_id =  $state.params.direction_id;
-        newFirm.country = kmkya_utils.findByField($rootScope.ALLcountry,'id',parseInt(newFirm.country_id)).name;
-        if (newFirm.country_id==1) newFirm.oblast = kmkya_utils.findByField($rootScope.ALLoblast,'id',parseInt(newFirm.oblast_id)).name;
-        if ((newFirm.country_id==1) && (newFirm.city_id!=0)) newFirm.city = kmkya_utils.findByField($rootScope.ALLcity,'id',parseInt(newFirm.city_id)).name;
-        if (newFirm.tags){
-            newFirm.tagsNames = newFirm.tags.map((tag)=>tag.text).join(',').toLowerCase()
-            newFirm.tags = JSON.stringify(newFirm.tags);
-        }
-        
-        return newFirm;
-    };
-
 
     $scope.addFirm = function()
     {
-
-
-
-        firms_service.add(prepareFirmData($scope.firm))
+        firms_service.add($scope.prepareFirmData($scope.firm))
             .then(function (newRecorcd){
                 if (newRecorcd.error)
                 {
@@ -88,8 +71,9 @@ var addFirmsCtrl = function($scope,firms_service,tags,kmkya_utils,$state,$rootSc
     }
 };
 
-var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert)
+var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmkya_utils)
 {
+    console.log($scope);
 
     $scope.downloadFile = (id)=>{
         console.log('download ',id);
@@ -138,7 +122,7 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert)
 
     $scope.uploadFiles = (file)=>{
 
-        firms_service.uploadFile(file)
+        firms_service.uploadFile(file, $scope.firm.id)
             .then((files)=>{
               $scope.firm.files =  angular.copy(files.data);
               sweetAlert.swal(
@@ -162,7 +146,48 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert)
                 }
               ).done();
           })
-    };    
+    };
+
+    $scope.firmValid = function ()
+    {
+        if (!$scope.firm.name) return false;
+
+        if (!$scope.firm.country_id) return false;
+
+        if (($scope.firm.country_id==1) && (!$scope.firm.oblast_id)) return false;
+
+        if (($scope.firm.country_id==1) && ($scope.firm.oblast_id) && (!$scope.firm.city_id)) return false;
+
+        if (($scope.firm.city_id==0) && (!$scope.firm.city)) return false;
+
+        return true
+
+    };
+
+
+
+    $scope.saveFirm = ()=>{
+        console.log($scope.prepareFirmData($scope.firm));
+
+        firms_service.update($scope.prepareFirmData($scope.firm))
+            .then(function (newRecorcd){
+                console.log(newRecorcd);
+                if (newRecorcd.error)
+                {
+                    alert(newRecorcd.message)
+                }
+                else
+                {
+                    let updateIndex = kmkya_utils.findIndexByField($scope.firmsList, 'id', $scope.firm.id);
+                    $scope.firmsList[updateIndex] = (newRecorcd.data);
+                    $scope.closeThisDialog();
+                }
+            })
+            .catch(function(error){
+                alert(error.message)
+            });
+    };
+
 
     $scope.firm = firmToEdit.data;
 
@@ -198,7 +223,21 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert)
 };
 
 
-var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,ngDialog) {
+var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,ngDialog,kmkya_utils) {
+
+    $scope.prepareFirmData = (data)=>{
+        let newFirm = angular.copy(data);
+        newFirm.database_id =  $state.params.direction_id;
+        newFirm.country = kmkya_utils.findByField($rootScope.ALLcountry,'id',parseInt(newFirm.country_id)).name;
+        if (newFirm.country_id==1) newFirm.oblast = kmkya_utils.findByField($rootScope.ALLoblast,'id',parseInt(newFirm.oblast_id)).name;
+        if ((newFirm.country_id==1) && (newFirm.city_id!=0)) newFirm.city = kmkya_utils.findByField($rootScope.ALLcity,'id',parseInt(newFirm.city_id)).name;
+        if (newFirm.tags){
+            newFirm.tagsNames = newFirm.tags.map((tag)=>tag.text).join(',').toLowerCase();
+            newFirm.tags = JSON.stringify(newFirm.tags);
+        }
+
+        return newFirm;
+    };
 
 
     $scope.firmsList = [];
@@ -217,7 +256,7 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
         },
         appScopeProvider: {
             onDblClick : function(row) {
-                console.log(row.entity.id)
+                console.log(row.entity.id);
                 $scope.editFirmDialog(row.entity.id);
 
             }
@@ -225,12 +264,12 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
         rowTemplate: "<div ng-dblclick=\"grid.appScope.onDblClick(row)\" ng-repeat=\"(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name\" class=\"ui-grid-cell\" ng-class=\"{ 'ui-grid-row-header-cell': col.isRowHeader }\" ui-grid-cell ></div>",
         columnDefs: [
             // default
-            {name:"name", field: 'name'},
-            {name:"country", field: 'country'},
-            {name:"oblast", field: 'oblast' },
-            {name:"city", field: 'city' },
-            {name:"address", field: 'address' },
-            {name:"tags", field: 'tagsNames' }
+            {name:"Название компании", field: 'name'},
+            {name:"Страна", field: 'country'},
+            {name:"Область", field: 'oblast' },
+            {name:"Город", field: 'city' },
+            {name:"Адрес", field: 'address' },
+            {name:"Тэги", field: 'tagsNames' }
         ]
     };
 
