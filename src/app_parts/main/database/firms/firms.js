@@ -93,7 +93,7 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmky
 
             firms_service.deleteFile($scope.firm.id,fileId)
               .then(function (files) {
-
+                  console.log($scope.firm.files);
                   $scope.firm.files =  angular.copy(files.data);
                   sweetAlert.swal(
                     {
@@ -276,6 +276,7 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
 
     firms_service.selectByDirectionId($state.params.direction_id)
         .then((data)=>{
+            console.log(data);
             $scope.firmsList = data.data;
             $scope.gridOptions.data = $scope.firmsList;
         })

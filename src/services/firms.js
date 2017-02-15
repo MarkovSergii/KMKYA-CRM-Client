@@ -51,7 +51,7 @@ kmkya_client.service('firms_service', function ($http,UrlConfig,$q,Upload) {
                 .then(function(response){
                     if (response.status == 200)
                     {
-                        return resolve( {error:false,message:"",data:response.data.data[0]} );
+                        return resolve( {error:false,message:"",data:response.data.data} );
                     }
                     else
                     {
