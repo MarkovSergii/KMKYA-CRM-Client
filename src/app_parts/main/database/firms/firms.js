@@ -89,12 +89,11 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmky
             cancelButtonColor: '#d33',
             confirmButtonText: 'Да удалить!',
             cancelButtonText: 'Нет'
-        }).then(function() {
-
+        })
+            .then(function() {
             firms_service.deleteFile($scope.firm.id,fileId)
               .then(function (files) {
-                  console.log($scope.firm.files);
-                  $scope.firm.files =  angular.copy(files.data);
+                  $scope.firm.fileList = angular.copy(files.data.fileList);
                   sweetAlert.swal(
                     {
                         title: 'Успешно',
@@ -124,7 +123,7 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmky
 
         firms_service.uploadFile(file, $scope.firm.id)
             .then((files)=>{
-              $scope.firm.files =  angular.copy(files.data);
+              $scope.firm.fileList =  angular.copy(files.data);
               sweetAlert.swal(
                 {
                     title: 'Успешно',
