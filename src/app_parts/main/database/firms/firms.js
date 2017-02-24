@@ -191,16 +191,7 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmky
     $scope.firm = firmToEdit.data;
 
     $scope.firm.files = JSON.parse(firmToEdit.data.files);
-    $scope.firm.files = [{
-        id:1,
-        name:"test.jpg",
-        ext:"jpg"
-    },
-        {id:12,
-            name:"hh.png",
-            ext:"_blank"
-        }
-    ];
+
     $scope.firm.tags = ($scope.firm.tags) ?  JSON.parse($scope.firm.tags) : []
 
     $scope.getClass1 = ()=>{
