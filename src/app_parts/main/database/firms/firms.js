@@ -76,8 +76,11 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmky
     console.log($scope);
 
     $scope.downloadFile = (id)=>{
-        console.log('download ',id);
-    }
+        firms_service.downloadFile(id)
+            .then((file)=>{
+                console.log(file);
+            })
+    };
 
     $scope.removeFile = (fileId)=>{
         sweetAlert.swal({
