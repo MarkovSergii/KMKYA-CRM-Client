@@ -126,3 +126,19 @@
     margin: 0px;
     padding-top: 5px;
 }
+.filesListBlock
+{
+    margin-top: 10px;
+    padding-right: 3px;
+    height: 296px;
+    overflow-y: auto;
+}
+
+.filesListBlock::-webkit-scrollbar
+{
+    border-radius: 1em;
+    background: rgba(110,110,110,.25);
+}
+::-webkit-scrollbar-thumb {
+    background-color: #999;
+}

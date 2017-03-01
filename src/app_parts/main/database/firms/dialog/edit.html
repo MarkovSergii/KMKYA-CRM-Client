@@ -1,4 +1,4 @@
-<div style="background-color: white">
+<div style="background-color: white" xmlns="http://www.w3.org/1999/html">
     <div class="modal-header">
 
         <h4 class="modal-title">Редактирование фирмы {{firm.name}}</h4>
@@ -179,13 +179,15 @@
                         <div>
                             <button class="btn btn-block btn-success" type="file" ngf-select="uploadFiles($file)" ngf-max-size="100MB">Upload file</button>
                         </div>
-                        <div>
+                        <div class="filesListBlock">
 
                             <p ng-repeat="file in firm.fileList" class="file">
                                 <img ng-src="{{UrlConfig.serverUrl+':'+UrlConfig.serverPort}}/filestore/public/icons/{{file.fileType}}.png">
-                                <span class="downloadFile" ng-click="downloadFile(file.id)">{{file.name}}</span>
+                                <span class="downloadFile" ng-click="downloadFile(file.id)">{{file.name | limitTo:12}}</span>
+                                <span style="float: right;">
                                 <img class="downloadFile" src="img/Download-icon.png" ng-click="downloadFile(file.id)">
                                 <img class="removeFile" src="img/Close-icon.png" ng-click="removeFile(file.id)">
+                                </span>
                             </p>
                         </div>
                     </div>
