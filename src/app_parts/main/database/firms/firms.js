@@ -71,15 +71,23 @@ var addFirmsCtrl = function($scope,firms_service,tags,$state,$rootScope)
     }
 };
 
-var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmkya_utils)
+var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmkya_utils,Blob)
 {
-    console.log($scope);
 
     $scope.downloadFile = (id)=>{
         firms_service.downloadFile(id)
-            .then((file)=>{
-                console.log(file);
-            })
+            .then(function (data, status, headers, config) {
+                var blob = new Blob([data.data], {type: "application/binary"});
+                var objectUrl = URL.createObjectURL(blob);
+                var element = document.createElement('a');
+                element.href = objectUrl;
+                element.setAttribute('download', kmkya_utils.findByField($scope.firm.fileList, 'id',id).name);
+                element.setAttribute('target', '_blank');
+                document.body.appendChild(element);
+                element.click();
+            }).error(function (data, status, headers, config) {
+                //upload failed
+            });
     };
 
     $scope.removeFile = (fileId)=>{

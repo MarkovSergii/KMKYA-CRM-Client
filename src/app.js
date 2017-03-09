@@ -15,6 +15,7 @@ var kmkya_client = angular.module('kmkya_client',[
     'underscore',
     'ngTagsInput',
     'ngPopover',
-    'anLoader'
+    'anLoader',
+    'ngFileSaver'
     ]);
 
