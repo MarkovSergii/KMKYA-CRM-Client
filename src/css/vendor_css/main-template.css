@@ -146,7 +146,11 @@ body {
 }
 #top .navbar-brand {
   padding: 0;
+  width: 250px;
 }
+#top .navbar-brand img{
+   margin: 5px;
+ }
 #top .topnav {
   margin: 10px 0;
   text-align: right;
