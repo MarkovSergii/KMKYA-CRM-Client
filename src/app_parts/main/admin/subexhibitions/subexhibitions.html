@@ -1,0 +1,40 @@
+<div class="box ui-sortable-handle">
+    <header>
+        <h5>Все подвыставки</h5>
+        <div class="toolbar">
+            <div class="btn-group">
+                <button class="btn btn-metis-2 btn-grad" ng-click="openAddSubexhibitionWindow()">Добавить</button>
+            </div>
+        </div>
+    </header>
+    <div id="stripedTable" class="body collapse in">
+        <table class="table table-striped responsive-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th>Дата создания</th>
+                <th>Дата редактирования</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="subexhibition in subexhibitions_list">
+            <tr>
+                <td>{{subexhibition.id}}</td>
+                <td>{{subexhibition.name}}</td>
+                <td>{{subexhibition.createdAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>{{subexhibition.updatedAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>
+                    <div class="toolbar">
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-default" ng-click="editSubexhibition(subexhibition)">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

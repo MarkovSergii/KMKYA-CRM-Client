@@ -19,6 +19,11 @@ var adminCtrl = function($scope,$state,$rootScope) {
             icon:"fa-dashboard"
         },
         {
+            title:"Подвыставки",
+            link:"main.admin.subexhibitions",
+            icon:"fa-dashboard"
+        },
+        {
             title:"Виды доступа",
             link:"main.admin.access_type",
             icon:"fa-dashboard"
