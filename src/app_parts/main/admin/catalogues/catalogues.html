@@ -1,0 +1,50 @@
+<div class="box ui-sortable-handle">
+    <header>
+        <h5>Все каталоги</h5>
+        <div class="toolbar">
+            <div class="btn-group">
+                <button class="btn btn-metis-2 btn-grad" ng-click="openAddCatalogueWindow()">Добавить</button>
+            </div>
+        </div>
+    </header>
+    <div id="stripedTable" class="body collapse in">
+        <table class="table table-striped responsive-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th>Дата создания</th>
+                <th>Дата редактирования</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="catalogue in catalogues_list">
+            <tr>
+                <td>{{catalogue.id}}</td>
+                <td>{{catalogue.name}}</td>
+                <td>{{catalogue.createdAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>{{catalogue.updatedAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td style="width: 50px">
+                    <div class="toolbar">
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-default" ng-click="editCatalogue(catalogue)">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 50px">
+                    <div class="toolbar">
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-default" ng-click="editCatalogueContent(catalogue)">
+                                <i class="fa fa-comments-o "></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

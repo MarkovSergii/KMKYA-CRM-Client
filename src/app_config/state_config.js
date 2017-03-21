@@ -66,6 +66,13 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         templateUrl: 'app_parts/main/admin/subexhibitions/subexhibitions.html',
         controller: 'adminSubexhibitionsCtrl'
     };
+    var adminCataloguesState = {
+        name: 'main.admin.catalogues',
+        url: '/catalogues',
+        cached:false,
+        templateUrl: 'app_parts/main/admin/catalogues/catalogues.html',
+        controller: 'adminCataloguesCtrl'
+    };    
     var adminAccess_typeState = {
         name: 'main.admin.access_type',
         url: '/access_type',
@@ -195,6 +202,7 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $stateProvider.state(adminCategoryState);
     $stateProvider.state(adminExhibitionsState);
     $stateProvider.state(adminSubexhibitionsState);
+    $stateProvider.state(adminCataloguesState);
     $stateProvider.state(adminUsersState);
     $stateProvider.state(adminAccess_typeState);
     $stateProvider.state(adminCityState);
