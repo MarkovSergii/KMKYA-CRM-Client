@@ -5,7 +5,7 @@ var adminCtrl = function($scope,$state,$rootScope) {
     $rootScope.mainMenu = [
         {
             title:"Дирекции (Категории)",
-            link:"main.admin.direction_category",
+            link:"main.admin.directions",
             icon:"fa-dashboard"
         },
         {

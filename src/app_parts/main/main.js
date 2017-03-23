@@ -2,7 +2,7 @@
  * Created by user on 28.07.2016.
  */
 
-var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig,SocketIO,user_service) {
+var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies,$http,$rootScope,UrlConfig,SocketIO,tables,table_service) {
 
 
     
@@ -71,7 +71,7 @@ var mainCtrl = function($scope,$state,toastr,sweetAlert,ngDialog,Upload,$cookies
                         //save cookie and go to main
                         $rootScope.user = response.data.user;
                         // get user permission
-                        user_service.selectAccessById(response.data.user.id)
+                        table_service.query(tables.user).selectById(response.data.user.id)
                             .then(function(user_access_responce){
                                 if (user_access_responce.data.error)
                                 {

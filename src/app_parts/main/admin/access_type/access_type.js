@@ -1,10 +1,10 @@
 
-var addAccess_typeCtrl = function($scope,access_type_service)
+var addAccess_typeCtrl = function($scope,tables,table_service)
 {
 
     $scope.add = function()
     {
-        access_type_service.add($scope.access_type)
+        table_service.query(tables.access_types).add($scope.access_type)
             .then(function (newRecorcd){
                 if (newRecorcd.error)
                 {
@@ -22,11 +22,11 @@ var addAccess_typeCtrl = function($scope,access_type_service)
     }
 };
 
-var editAccess_typeCtrl = function($scope,access_type_service)
+var editAccess_typeCtrl = function($scope,tables,table_service)
 {
     $scope.save = function(access_type)
     {
-        access_type_service.update(access_type)
+        table_service.query(tables.access_types).update(access_type)
             .then(function (updatedRecorcd){
                 if (updatedRecorcd.error)
                 {
@@ -54,9 +54,9 @@ var editAccess_typeCtrl = function($scope,access_type_service)
 
 
 
-var admin_access_typeCtrl = function($scope,$state,access_type_service,ngDialog,sweetAlert) {
+var admin_access_typeCtrl = function($scope,$state,tables,table_service,ngDialog,sweetAlert) {
 
-    access_type_service.selectAll()
+    table_service.query(tables.access_types).selectAll()
         .then(function(list){
             if (list.error)
             {
@@ -110,7 +110,7 @@ var admin_access_typeCtrl = function($scope,$state,access_type_service,ngDialog,
             cancelButtonText: 'Нет'
         }).then(function() {
 
-            access_type_service.delete(access_type.id)
+            table_service.query(tables.access_types).remove(access_type.id)
                     .then(function () {
                         $scope.access_types_list.splice(R.findIndex(R.propEq('id', access_type.id))($scope.access_types_list),1);
                         sweetAlert.swal(

@@ -1,10 +1,10 @@
 
-var addDirectionCategoryCtrl = function($scope,direction_category_service)
+var addDirectionsCtrl = function($scope,directions_service)
 {
 
-    $scope.addCategory = function()
+    $scope.addDirection = function()
     {
-        direction_category_service.add($scope.category)
+        directions_service.add($scope.direction)
             .then(function (newRecorcd){
                 if (newRecorcd.error)
                 {
@@ -12,7 +12,7 @@ var addDirectionCategoryCtrl = function($scope,direction_category_service)
                 }
                 else
                 {
-                    $scope.direction_category_list.push(newRecorcd.data);
+                    $scope.directions_list.push(newRecorcd.data);
                     $scope.closeThisDialog();
                 }
             })
@@ -22,11 +22,11 @@ var addDirectionCategoryCtrl = function($scope,direction_category_service)
     }
 };
 
-var editDirectionCategoryCtrl = function($scope,direction_category_service)
+var editDirectionsCtrl = function($scope,directions_service)
 {
-    $scope.saveCategory = function(direction_category)
+    $scope.saveDirection = function(directions)
     {
-        direction_category_service.update(direction_category)
+        directions_service.update(directions)
             .then(function (updatedRecorcd){
                 if (updatedRecorcd.error)
                 {
@@ -35,16 +35,16 @@ var editDirectionCategoryCtrl = function($scope,direction_category_service)
                 else
                 {
                     // найти в списке и перезаписать
-                    for (var i =0;i<$scope.direction_category_list.length;i++)
+                    for (var i =0;i<$scope.directions_list.length;i++)
                     {
-                        if ($scope.direction_category_list[i].id == updatedRecorcd.data.id)
+                        if ($scope.directions_list[i].id == updatedRecorcd.data.id)
                         {
-                            $scope.direction_category_list[i] = updatedRecorcd.data;
+                            $scope.directions_list[i] = updatedRecorcd.data;
                             $scope.closeThisDialog();
                             break;
                         }
                     }
-                    //$scope.direction_category_list.  push(newRecorcd.data);
+
 
                 }
             })
@@ -56,12 +56,12 @@ var editDirectionCategoryCtrl = function($scope,direction_category_service)
 
 
 
-var admin_direction_categoryCtrl = function($scope,$state,direction_category_service,ngDialog,sweetAlert,_) {
+var admin_directionsCtrl = function($scope,$state,tables,table_service,ngDialog,sweetAlert,_) {
 
-    $scope.direction_category = {};
+    $scope.directions = {};
 
     // get all direction_category
-    direction_category_service.selectAll()
+    table_service.query(tables.directions).selectAll()
         .then(function(list){
             if (list.error)
             {
@@ -69,18 +69,18 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
             }
             else
             {
-                $scope.direction_category_list = list.data;
+                $scope.directions_list = list.data;
             }
         })
         .catch(function(error){
             alert(error.message)
         });
 
-    $scope.addDirection_category = function()
+    $scope.addDirection = function()
     {
         $scope.addDialog = ngDialog.openConfirm({
-            template: 'app_parts/main/admin/direction_category/dialog/add.html',
-            controller: 'addDirectionCategoryCtrl',
+            template: 'app_parts/main/admin/directions/dialog/add.html',
+            controller: 'addDirectionsCtrl',
             className: 'ngdialog-theme-default custom-width-600',
             showClose: false,
             scope:$scope,
@@ -88,20 +88,20 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
             overlay: true
         });
     };
-    $scope.editDirection_category = function(direction_category)
+    $scope.editDirection = function(direction)
     {
         $scope.addDialog = ngDialog.openConfirm({
-            template: 'app_parts/main/admin/direction_category/dialog/edit.html',
-            controller: 'editDirectionCategoryCtrl',
+            template: 'app_parts/main/admin/directions/dialog/edit.html',
+            controller: 'editDirectionsCtrl',
             className: 'ngdialog-theme-default custom-width-600',
             showClose: false,
             scope:$scope,
-            data : angular.copy(direction_category),
+            data : angular.copy(direction),
             closeByDocument:false,
             overlay: true
         });
     };
-    $scope.deleteDirection_category = function(direction_category)
+    $scope.deleteDirection = function(direction)
     {
 
         sweetAlert.swal({
@@ -118,7 +118,7 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
             sweetAlert.swal({
                 title: 'Куда привязать элементы удаляемой дирекции' ,
                 input: 'select',
-                inputOptions: _.object(_.map(_.without($scope.direction_category_list,direction_category), _.values)),
+                inputOptions: _.object(_.map(_.without($scope.directions_list,directions), _.values)),
                 inputPlaceholder: 'Вибирите дирекцию',
                 showCancelButton: true,
                 cancelButtonText: 'Отмена',
@@ -137,9 +137,9 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
 
 
 
-                direction_category_service.delete(direction_category.id,result)
+                table_service.query(tables.directions).remove(direction.id,result)
                     .then(function () {
-                        $scope.direction_category_list.splice(R.findIndex(R.propEq('id', direction_category.id))($scope.direction_category_list),1);
+                        $scope.directions_list.splice(R.findIndex(R.propEq('id', direction.id))($scope.directions_list),1);
                         sweetAlert.swal(
                             {
                                 title: 'Успешно',
@@ -163,6 +163,6 @@ var admin_direction_categoryCtrl = function($scope,$state,direction_category_ser
 };
 
 
-kmkya_client.controller('admin_direction_categoryCtrl',admin_direction_categoryCtrl);
-kmkya_client.controller('addDirectionCategoryCtrl',addDirectionCategoryCtrl);
-kmkya_client.controller('editDirectionCategoryCtrl',editDirectionCategoryCtrl);
+kmkya_client.controller('admin_directionsCtrl',admin_directionsCtrl);
+kmkya_client.controller('addDirectionsCtrl',addDirectionsCtrl);
+kmkya_client.controller('editDirectionsCtrl',editDirectionsCtrl);

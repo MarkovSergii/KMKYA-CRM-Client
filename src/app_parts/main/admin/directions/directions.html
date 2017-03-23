@@ -3,7 +3,7 @@
        <h5>Категории (Дирекции)</h5>
         <div class="toolbar">
             <div class="btn-group">
-                <button class="btn btn-metis-2 btn-grad" ng-click="addDirection_category()">Добавить</button>
+                <button class="btn btn-metis-2 btn-grad" ng-click="addDirection()">Добавить</button>
             </div>
         </div>
     </header>
@@ -20,7 +20,7 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody ng-repeat="direction in direction_category_list">
+            <tbody ng-repeat="direction in directions_list">
             <tr>
                 <td>{{direction.id}}</td>
                 <td><img width="30px" height="30px" ng-src="{{UrlConfig.serverUrl+':'+UrlConfig.serverPort}}{{direction.logo}}"></td>
@@ -31,10 +31,10 @@
                 <td>
                     <div class="toolbar">
                         <div class="btn-group">
-                            <a class="btn btn-sm btn-default" ng-click="editDirection_category(direction)">
+                            <a class="btn btn-sm btn-default" ng-click="editDirection(direction)">
                                 <i class="fa fa-pencil-square-o"></i>
                             </a>
-                            <a class="btn btn-danger btn-sm" ng-click="deleteDirection_category(direction)">
+                            <a class="btn btn-danger btn-sm" ng-click="deleteDirection(direction)">
                                 <i class="fa fa-trash-o"></i>
                             </a>
                         </div>

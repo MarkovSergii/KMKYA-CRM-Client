@@ -1,11 +1,11 @@
 /**
  * Created by user on 03.08.2016.
  */
-var admin_exhibitionsCtrl = function($scope,exhibitions_service, $state) {
+var admin_exhibitionsCtrl = function($scope,table_service,tables, $state) {
     $scope.exhibitions = {};
 
     // get all direction_category
-    exhibitions_service.selectAll()
+    table_service.query(tables.exhibitions).selectAll()
         .then(function(list){
             if (list.error)
             {

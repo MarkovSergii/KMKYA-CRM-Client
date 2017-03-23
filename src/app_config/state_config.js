@@ -46,11 +46,11 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         controller: 'admin_seasonsCtrl'
     };
     var adminCategoryState = {
-        name: 'main.admin.direction_category',
-        url: '/direction_category',
+        name: 'main.admin.directions',
+        url: '/direction',
         cached:false,
-        templateUrl: 'app_parts/main/admin/direction_category/direction_category.html',
-        controller: 'admin_direction_categoryCtrl'
+        templateUrl: 'app_parts/main/admin/directions/directions.html',
+        controller: 'admin_directionsCtrl'
     };
     var adminExhibitionsState = {
         name: 'main.admin.exhibitions',

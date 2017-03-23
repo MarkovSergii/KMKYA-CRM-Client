@@ -5,7 +5,7 @@ var dashboardCtrl = function($scope,$state,$rootScope) {
     $rootScope.mainMenu = [
         {
             title:"Статистика",
-            link:"main.admin.direction_category",
+            link:"main.admin.directions",
             icon:"fa-dashboard"
         },
         {

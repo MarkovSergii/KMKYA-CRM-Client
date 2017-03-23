@@ -7,7 +7,7 @@ let VALIDATIONS ={
 };
 
 
-var addUserCtrl = function ($scope, user_service, direction_category_service) {
+var addUserCtrl = function ($scope, tables,table_service) {
     let check = function()
     {
 //        this.clearfields();
@@ -53,7 +53,7 @@ var addUserCtrl = function ($scope, user_service, direction_category_service) {
                 "directions": [1]
             };
 
-        user_service.add(data)
+            table_service.query(tables.user).add(data)
             .then(function (newRecord){
                 if (newRecord.error)
                 {
@@ -74,7 +74,7 @@ var addUserCtrl = function ($scope, user_service, direction_category_service) {
 
 };
 
-var editUserCtrl = function($scope,user_service,kmkya_utils)
+var editUserCtrl = function($scope,tables,table_service,kmkya_utils,directions_service)
 {
     $scope.exists = function (item, list) {
         return list.indexOf(item) > -1;
@@ -102,10 +102,8 @@ var editUserCtrl = function($scope,user_service,kmkya_utils)
             "directions": $scope.ngDialogData.directions
         };
 
-        console.log(data);
-        console.log('------------------');
 
-        user_service.update(data)
+        directions_service.query(tables.user).update(data)
             .then(function (updatedRecord){
                 if (updatedRecord.error)
                 {
@@ -113,24 +111,10 @@ var editUserCtrl = function($scope,user_service,kmkya_utils)
                 }
                 else
                 {
-                    // лутьше писать используя готовые функции чем сомому делать for-if
                     let userIndex = kmkya_utils.findIndexByField($scope.users_list,'id',data.id);
                     $scope.users_list[userIndex] = data;
                     $scope.users_list[userIndex].createdAt = $scope.ngDialogData.createdAt;
                     $scope.closeThisDialog();
-
-                    // найти в списке и перезаписать
-                    /*for (var i=0; i<$scope.users_list.length; i++)
-                    {
-                        if ($scope.users_list[i].id == data.id)
-                        {
-                            $scope.users_list[i] = data;
-                            $scope.users_list[i].createdAt = $scope.ngDialogData.createdAt;
-                            $scope.closeThisDialog();
-                            break;
-                        }
-                    }*/
-
                 }
             })
             .catch(function(error){
@@ -140,32 +124,18 @@ var editUserCtrl = function($scope,user_service,kmkya_utils)
 
 };
 
-var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils, direction_category_service) {
+var admin_usersCtrl = function($scope,tables,table_service, ngDialog, $state,kmkya_utils) {
     $scope.users_list = {};
     $scope.hidePass = false;
     $scope.typeUser = {};
     $scope.direction_list = {};
 
     unique = function(arr) {
-        let str = [];
-        nextInput:
 
-            // эта строчка делает то же что и весь код ниже    
-            $scope.typeUser = kmkya_utils.uniq(arr.map(item=>item.type));
-          /*  for (var i = 0; i < arr.length; i++) {
-                str[i] = arr[i].type; // для каждого элемента
-            }
-
-            str = kmkya_utils.uniq(str);
-
-            for (var i = 0; i < str.length; i++) {
-                $scope.typeUser[i] = str[i]; // для каждого элемента
-            }*/
-        console.log($scope.typeUser);
-
+        $scope.typeUser = kmkya_utils.uniq(arr.map(item=>item.type));
     };
 
-    direction_category_service.selectAll()
+    table_service.query(tables.directions).selectAll()
         .then(function(list){
             if (list.error)
             {
@@ -212,8 +182,8 @@ var admin_usersCtrl = function($scope,user_service, ngDialog, $state,kmkya_utils
         return true
 // TODO: проверка на наличие вводимого e-mail в cписке пользователей
     };
-    
-    user_service.selectAll()
+
+    table_service.query(tables.user).selectAll()
         .then(function (list) {
             if (list.error)
             {

@@ -3,7 +3,7 @@
  */
 'use strict';
 
-var addFirmsCtrl = function($scope,firms_service,tags,$state,$rootScope)
+var addFirmsCtrl = function($scope,tables,table_service,tags,$state,$rootScope)
 {
     $scope.firm={};
 
@@ -53,7 +53,7 @@ var addFirmsCtrl = function($scope,firms_service,tags,$state,$rootScope)
 
     $scope.addFirm = function()
     {
-        firms_service.add($scope.prepareFirmData($scope.firm))
+        table_service.query(tables.firms).add($scope.prepareFirmData($scope.firm))
             .then(function (newRecorcd){
                 if (newRecorcd.error)
                 {
@@ -71,7 +71,7 @@ var addFirmsCtrl = function($scope,firms_service,tags,$state,$rootScope)
     }
 };
 
-var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmkya_utils,Blob)
+var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmkya_utils,Blob,table_service,tables)
 {
 
     $scope.downloadFile = (id)=>{
@@ -85,7 +85,7 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmky
                 element.setAttribute('target', '_blank');
                 document.body.appendChild(element);
                 element.click();
-            }).error(function (data, status, headers, config) {
+            }).catch(function (data, status, headers, config) {
                 //upload failed
             });
     };
@@ -179,7 +179,7 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmky
     $scope.saveFirm = ()=>{
         console.log($scope.prepareFirmData($scope.firm));
 
-        firms_service.update($scope.prepareFirmData($scope.firm))
+        table_service.query(tables.firms).update($scope.prepareFirmData($scope.firm))
             .then(function (newRecorcd){
                 console.log(newRecorcd);
                 if (newRecorcd.error)
@@ -233,7 +233,7 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmky
 };
 
 
-var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,ngDialog,kmkya_utils) {
+var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,tables,table_service,ngDialog,kmkya_utils) {
 
     $scope.prepareFirmData = (data)=>{
         let newFirm = angular.copy(data);
@@ -284,7 +284,7 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
     };
 
 
-    firms_service.selectByDirectionId($state.params.direction_id)
+    table_service.query(tables.firms).selectBy('database_id',$state.params.direction_id)
         .then((data)=>{
             console.log(data);
             $scope.firmsList = data.data;
@@ -302,7 +302,7 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
             closeByDocument:false,
             overlay: true,
             resolve:{
-                tags : ()=>firms_service.selectAllTags($state.params.direction_id)
+                tags : ()=>table_service.query(tables.tags).selectBy('directions_id',$state.params.direction_id)
             }
 
         });
@@ -318,8 +318,8 @@ var firmsCtrl = function($scope,$state,$rootScope,uiGridConstants,firms_service,
             closeByDocument:false,
             overlay: true,
             resolve:{
-                tags : ()=>firms_service.selectAllTags($state.params.direction_id),
-                firmToEdit: ()=>firms_service.selectById(firmId)
+                tags : ()=>table_service.query(tables.tags).selectBy('directions_id',$state.params.direction_id),
+                firmToEdit: ()=>table_service.query(tables.firms).selectBy('id',firmId)
             }
         });
     }

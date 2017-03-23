@@ -1,9 +1,9 @@
-var addCataloguesCtrl = function($scope,catalogues_service)
+var addCataloguesCtrl = function($scope,table_service,tables)
 {
    $scope.addCatalogue = function()
     {
 
-        catalogues_service.add($scope.catalogue)
+        table_service.query(tables.catalogues).add($scope.catalogue)
             .then(function (newRecorcd){
                 if (newRecorcd.error)
                 {
@@ -22,16 +22,16 @@ var addCataloguesCtrl = function($scope,catalogues_service)
 };
 
 
-var editCataloguesContentCtrl = function($scope, catalogues_service)
+var editCataloguesContentCtrl = function($scope, table_service,tables)
 {
     // TODO insert add/edit questions it types and ansvers
 };
 
-var editCataloguesCtrl = function($scope, catalogues_service)
+var editCataloguesCtrl = function($scope, table_service,tables)
 {
     $scope.saveCatalogue = function(catalogue)
     {
-        catalogues_service.update(catalogue)
+        table_service.query(tables.catalogues).update(catalogue)
             .then(function (updatedRecorcd){
                 console.log(updatedRecorcd);
                 if (updatedRecorcd.error)
@@ -50,7 +50,7 @@ var editCataloguesCtrl = function($scope, catalogues_service)
                             break;
                         }
                     }
-                    //$scope.direction_category_list.  push(newRecorcd.data);
+
 
                 }
             })
@@ -60,7 +60,7 @@ var editCataloguesCtrl = function($scope, catalogues_service)
     }
 };
 
-var adminCataloguesCtrl = function($scope, ngDialog,catalogues_service)
+var adminCataloguesCtrl = function($scope, ngDialog,table_service,tables)
 {
 
     $scope.openAddCatalogueWindow = function()
@@ -106,7 +106,7 @@ var adminCataloguesCtrl = function($scope, ngDialog,catalogues_service)
         });
     };
 
-    catalogues_service.selectAll()
+    table_service.query(tables.catalogues).selectAll()
         .then(function(list){
             if (list.error)
             {

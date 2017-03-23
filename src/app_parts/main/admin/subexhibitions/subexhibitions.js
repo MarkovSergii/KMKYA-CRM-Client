@@ -2,12 +2,12 @@
  * Created by Марина on 17.03.2017.
  */
 
-var addSubexhibitionCtrl = function($scope,subexhibitions_service)
+var addSubexhibitionCtrl = function($scope,tables,table_service)
 {
    $scope.addSubexhibition = function()
     {
 
-        subexhibitions_service.add($scope.subexhibition)
+        table_service.query(tables.subexhibitions).add($scope.subexhibition)
             .then(function (newRecorcd){
                 if (newRecorcd.error)
                 {
@@ -26,11 +26,11 @@ var addSubexhibitionCtrl = function($scope,subexhibitions_service)
     }
 };
 
-var editSubexhibitionCtrl = function($scope, subexhibitions_service)
+var editSubexhibitionCtrl = function($scope, tables,table_service)
 {
     $scope.saveSubexhibition = function(subexhibition)
     {
-        subexhibitions_service.update(subexhibition)
+        table_service.query(tables.subexhibitions).update(subexhibition)
             .then(function (updatedRecorcd){
                 console.log(updatedRecorcd);
                 if (updatedRecorcd.error)
@@ -59,7 +59,7 @@ var editSubexhibitionCtrl = function($scope, subexhibitions_service)
     }
 };
 
-var adminSubexhibitionsCtrl = function($scope, ngDialog,subexhibitions_service)
+var adminSubexhibitionsCtrl = function($scope, ngDialog,tables,table_service)
 {
 
     $scope.openAddSubexhibitionWindow = function()
@@ -89,7 +89,7 @@ var adminSubexhibitionsCtrl = function($scope, ngDialog,subexhibitions_service)
         });
     };
 
-    subexhibitions_service.selectAll()
+    table_service.query(tables.subexhibitions).selectAll()
         .then(function(list){
             if (list.error)
             {

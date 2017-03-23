@@ -13,7 +13,7 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="input_name">Название</label>
                     <div class="col-md-8">
-                        <input id="input_name" name="input_name" type="text" placeholder="Название" class="form-control input-md" required="" ng-model="category.name">
+                        <input id="input_name" name="input_name" type="text" placeholder="Название" class="form-control input-md" required="" ng-model="direction.name">
 
                     </div>
                 </div>
@@ -23,11 +23,11 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label" for="btn_logo">Загрузить лого</label>
                     <div class="col-md-4">
-                        <button id="btn_logo" name="btn_logo" class="btn btn-primary" ng-model="category.logo" ngf-select>Выбрать файл</button>
+                        <button id="btn_logo" name="btn_logo" class="btn btn-primary" ng-model="direction.logo" ngf-select>Выбрать файл</button>
                     </div>
                     <div class="col-md-4">
-                        <img width="30" ngf-thumbnail="category.logo" class="thumb">
-                        <button class="btn btn-danger" ng-click="category.logo = null" ng-show="category.logo">Удалить</button>
+                        <img width="30" ngf-thumbnail="direction.logo" class="thumb">
+                        <button class="btn btn-danger" ng-click="direction.logo = null" ng-show="direction.logo">Удалить</button>
                     </div>
 
                 </div>
@@ -38,7 +38,7 @@
     </div>
     <div class="modal-footer">
         <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть </button>
-        <button class="btn btn-success"  ng-disabled="(!category.name) || (!category.logo)" ng-click="addCategory()"> Добавить </button>
+        <button class="btn btn-success"  ng-disabled="(!direction.name) || (!direction.logo)" ng-click="addDirection()"> Добавить </button>
     </div>
 </div><!-- /.modal-content -->
 

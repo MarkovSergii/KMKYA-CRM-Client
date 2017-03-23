@@ -1,5 +1,6 @@
-var admin_oblastCtrl = function($scope,$state,address_service) {
-    address_service.getOblast()
+var admin_oblastCtrl = function($scope,$state,tables,table_service) {
+    
+    table_service.query(tables.oblast).selectAll()
         .then(function(list){
             if (list.error)
             {

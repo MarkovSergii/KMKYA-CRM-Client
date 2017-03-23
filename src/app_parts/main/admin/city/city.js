@@ -1,5 +1,6 @@
-var admin_cityCtrl = function($scope,$state,address_service) {
-    address_service.getCities()
+var admin_cityCtrl = function($scope,$state,tables,table_service) {
+    
+    table_service.query(tables.city).selectAll()
         .then(function(list){
             if (list.error)
             {

@@ -2,12 +2,12 @@
  * Created by user on 03.08.2016.
  */
 
-var addSeasonCtrl = function($scope,season_service)
+var addSeasonCtrl = function($scope,table_service,tables)
 {
 
     $scope.add = function()
     {
-        season_service.add($scope.season)
+        table_service.query(tables.seasons).add($scope.season)
             .then(function (newRecorcd){
                 if (newRecorcd.error)
                 {
@@ -25,11 +25,11 @@ var addSeasonCtrl = function($scope,season_service)
     }
 };
 
-var editSeasonCtrl = function($scope,season_service)
+var editSeasonCtrl = function($scope,table_service,tables)
 {
     $scope.save = function(season)
     {
-        season_service.update(season)
+        table_service.query(tables.seasons).update(season)
             .then(function (updatedRecorcd){
                 if (updatedRecorcd.error)
                 {
@@ -56,9 +56,9 @@ var editSeasonCtrl = function($scope,season_service)
 };
 
 
-var admin_seasonsCtrl = function($scope,$state,season_service,ngDialog,sweetAlert) {
+var admin_seasonsCtrl = function($scope,$state,table_service,tables,ngDialog,sweetAlert) {
 
-    season_service.selectAll()
+    table_service.query(tables.seasons).selectAll()
         .then(function(list){
             if (list.error)
             {
