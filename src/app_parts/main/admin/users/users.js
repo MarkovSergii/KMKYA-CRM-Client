@@ -103,7 +103,7 @@ var editUserCtrl = function($scope,tables,table_service,kmkya_utils,directions_s
         };
 
 
-        directions_service.query(tables.user).update(data)
+        table_service.query(tables.user).update(data)
             .then(function (updatedRecord){
                 if (updatedRecord.error)
                 {

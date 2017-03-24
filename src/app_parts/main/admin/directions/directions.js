@@ -103,7 +103,7 @@ var admin_directionsCtrl = function($scope,$state,tables,table_service,ngDialog,
     };
     $scope.deleteDirection = function(direction)
     {
-
+        console.log(direction)
         sweetAlert.swal({
             title: 'Вы уверены?',
             text: "Востановить будет невозможно",
@@ -118,7 +118,7 @@ var admin_directionsCtrl = function($scope,$state,tables,table_service,ngDialog,
             sweetAlert.swal({
                 title: 'Куда привязать элементы удаляемой дирекции' ,
                 input: 'select',
-                inputOptions: _.object(_.map(_.without($scope.directions_list,directions), _.values)),
+                inputOptions: _.object(_.map(_.without($scope.directions_list,direction), _.values)),
                 inputPlaceholder: 'Вибирите дирекцию',
                 showCancelButton: true,
                 cancelButtonText: 'Отмена',
