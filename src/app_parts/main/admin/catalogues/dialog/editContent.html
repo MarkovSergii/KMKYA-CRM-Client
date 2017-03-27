@@ -9,16 +9,39 @@
         <form class="form-horizontal">
             <fieldset>
 
-                !!!!! НЕ ГОТОВО
-                <!-- Text input-->
-                <div class="form-group">
-                    <label class="col-md-4 control-label" for="input_name">Название</label>
-                    <div class="col-md-8">
-                        <input id="input_name" name="input_name" type="text" placeholder="Название" class="form-control input-md" required="" ng-model="ngDialogData.name">
 
+                <div class="row">
+                    <div class="col-md-12">
+                        <select
+                                ng-model="model"
+                                ng-options="obj as obj.text for obj in list track by obj.id"
+                                multiple
+                                bs-duallistbox
+                                filter-clear = "{{ settings.filterClear }}"
+                                filter="{{ settings.filter }}"
+                                filter-placeholder="{{ settings.filterPlaceholder }}"
+                                move-on-select="{{ settings.moveOnSelect }}"
+                                preserve-selection="{{ settings.preserveSelection }}"
+
+                                move-selected-label="{{ settings.moveSelectedLabel }}"
+                                move-all-label="{{ settings.moveAllLabel }}"
+                                remove-selected-label="{{ settings.removeSelectedLabel }}"
+                                remove-all-label="{{ settings.removeAllLabel }}"
+
+                                non-selected-list-label="{{ settings.nonSelectedListLabel }}"
+                                selected-list-label="{{ settings.selectedListLabel }}"
+
+                                postfix="{{ settings.postfix }}"
+                                select-min-height="{{ settings.selectMinHeight }}"
+
+
+                                info-all="{{ settings.infoAll }}"
+                                info-filtered="{{ settings.infoFiltered }}"
+                                info-empty="{{ settings.infoEmpty }}"
+                        >
+                        </select>
                     </div>
                 </div>
-
 
             </fieldset>
         </form>

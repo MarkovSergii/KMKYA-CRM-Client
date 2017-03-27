@@ -16,6 +16,7 @@ var kmkya_client = angular.module('kmkya_client',[
     'ngTagsInput',
     'ngPopover',
     'anLoader',
-    'ngFileSaver'
+    'ngFileSaver',
+    'frapontillo.bootstrap-duallistbox'
     ]);
 

@@ -16,6 +16,7 @@ kmkya_client.constant('tables', {
     squaretypes         :"Squaretypes",
     places              :"Places",
     questions           :"Questions",
-    answers             :"Answers"
-    
+    answers             :"Answers",
+    catalogue_questions :"CatalogueQuestions"
+
 });

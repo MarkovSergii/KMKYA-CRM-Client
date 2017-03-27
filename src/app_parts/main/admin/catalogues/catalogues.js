@@ -62,6 +62,59 @@ var editCataloguesCtrl = function($scope, table_service,tables)
 
 var adminCataloguesCtrl = function($scope, ngDialog,table_service,tables)
 {
+    var lastIndex = 3;
+    $scope.list = [];
+
+    var updateList = function() {
+        $scope.list.push({
+            'id': '_1',
+            'text': 'one'
+        },{
+            'id': '_2',
+            'text': 'two'
+        },{
+            'id': '_3',
+            'text': 'three'
+        },{
+            'id': '_4',
+            'text': 'four'
+        });
+    };
+
+    $scope.reset = function() {
+        $scope.model = [];
+    };
+
+    $scope.add = function() {
+        lastIndex++;
+        updateList();
+    };
+
+    updateList();
+
+    $scope.settings = {
+
+
+        filterClear:"Очистить",
+        filterPlaceholder:"фильтр",
+        moveSelectedLabel: 'Переместить выбраное',
+        moveAllLabel: 'Переместить все',
+        removeSelectedLabel: 'Удалить выбраное',
+        removeAllLabel: 'Удалить все',
+        moveOnSelect: false,
+        preserveSelection: 'false',
+        selectedListLabel: 'Вопросы для этого каталога',
+        nonSelectedListLabel: 'Список доступных вопросов',
+        postfix: '_helperz',
+        selectMinHeight: 130,
+        filter: true,
+        filterNonSelected: '1',
+        filterSelected: '4',
+        infoAll: 'Показано {0}',
+        infoFiltered: '<span class="label label-warning">Показано</span> {0} из {1}!',
+        infoEmpty: 'Пустой список',
+        filterValues: true
+    };
 
     $scope.openAddCatalogueWindow = function()
     {
@@ -83,7 +136,7 @@ var adminCataloguesCtrl = function($scope, ngDialog,table_service,tables)
         $scope.addDialog = ngDialog.openConfirm({
             template: 'app_parts/main/admin/catalogues/dialog/editContent.html',
             controller: 'editCataloguesContentCtrl',
-            className: 'ngdialog-theme-default custom-width-600',
+            className: 'ngdialog-theme-default custom-width-800',
             showClose: false,
             scope:$scope,
             data: angular.copy(catalogue),
