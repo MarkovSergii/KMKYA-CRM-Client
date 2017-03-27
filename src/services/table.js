@@ -8,8 +8,6 @@ kmkya_client.service('table_service', function ($http,UrlConfig,$q,tables) {
         this.table = tableName;
         let self = this;
 
-        if  (!tables[tableName]) console.error('НЕТ ТАКОЙ ТАБЛИЦЫ ',tableName)
-        
         let add =(object)=>
             $q(function(resolve, reject) {
                 $http.post(UrlConfig.serverUrl+':'+UrlConfig.serverPort+'/api/dictionary/'+self.table+'/insert',object)

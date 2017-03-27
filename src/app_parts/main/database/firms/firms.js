@@ -201,7 +201,7 @@ var editFirmCtrl = function($scope,firms_service,firmToEdit,tags,sweetAlert,kmky
 
     $scope.firm = firmToEdit.data[0];
 
-    $scope.firm.files = JSON.parse(firmToEdit.data[0].files);
+    $scope.firm.files = firmToEdit.data[0].files ? JSON.parse(firmToEdit.data[0].files) : {};
 
     $scope.firm.tags = ($scope.firm.tags) ?  JSON.parse($scope.firm.tags) : []
 

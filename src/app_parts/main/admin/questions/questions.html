@@ -1,0 +1,54 @@
+<div class="box ui-sortable-handle">
+    <header>
+        <h5>Все вопросы</h5>
+        <div class="toolbar">
+            <div class="btn-group">
+                <button class="btn btn-metis-2 btn-grad" ng-click="openAddQuestionsWindow()">Добавить</button>
+            </div>
+        </div>
+    </header>
+    <div id="stripedTable" class="body collapse in">
+        <table class="table table-striped responsive-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Вопрос</th>
+                <th>Название UKR</th>
+                <th>Название EN</th>
+                <th>Дата создания</th>
+                <th>Дата редактирования</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="question in questions_list">
+            <tr>
+                <td>{{question.id}}</td>
+                <td>{{question.name}}</td>
+                <td>{{question.title_ukr}}</td>
+                <td>{{question.title_en}}</td>
+                <td>{{question.createdAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>{{question.updatedAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td style="width: 50px">
+                    <div class="toolbar">
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-default" ng-click="editQuestion(question)">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td style="width: 50px">
+                    <div class="toolbar">
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-default" ng-click="editQuestionContent(question)">
+                                <i class="fa fa-question-circle "></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -6,69 +6,83 @@ var adminCtrl = function($scope,$state,$rootScope) {
         {
             title:"Дирекции (Категории)",
             link:"main.admin.directions",
-            icon:"fa-dashboard"
+            icon:"fa-university"
         },
         {
             title:"Сезоны",
             link:"main.admin.seasons",
-            icon:"fa-dashboard"
+            icon:"fa-calendar"
         },
         {
             title:"Выставки",
             link:"main.admin.exhibitions",
-            icon:"fa-dashboard"
+            icon:"fa-handshake-o"
         },
         {
             title:"Подвыставки",
             link:"main.admin.subexhibitions",
-            icon:"fa-dashboard"
+            icon:"fa-list"
         },
         {
             title:"Типы застройки",
             link:"main.admin.squaretypes",
-            icon:"fa-dashboard"
+            icon:"fa-cubes"
         },
         {
             title:"Место положение",
             link:"main.admin.places",
-            icon:"fa-dashboard"
+            icon:"fa-map-marker"
         },
         {
-            title:"Каталоги",
-            link:"main.admin.catalogues",
-            icon:"fa-dashboard"
+            title: "Каталоги",
+            link: "main.admin.catalogues-list",
+            icon: "fa-book",
+            noimg: true,
+            have_subitems: true,
+            subitems: [
+                {
+                    title:"Список каталогов",
+                    link:"main.admin.catalogues",
+                    icon:"fa-list-alt"
+                },
+                {
+                    title:"Вопросы",
+                    link:"main.admin.questions",
+                    icon:"fa-question"
+                }
+            ]
         },
         {
             title:"Виды доступа",
             link:"main.admin.access_type",
-            icon:"fa-dashboard"
+            icon:"fa-key"
         },
         {
             title:"Пользователи",
             link:"main.admin.users",
-            icon:"fa-dashboard"
+            icon:"fa-users"
         },
         {
             title: "Адреса",
             link: "main.admin.address",
-            icon: "fa-dashboard",
+            icon: "fa-globe",
             noimg: true,
             have_subitems: true,
             subitems: [
                 {
                     title:"Страны",
                     link:"main.admin.country",
-                    icon:"fa-dashboard"
+                    icon:"fa-list-ul"
                 },
                 {
                     title:"Области",
                     link:"main.admin.oblast",
-                    icon:"fa-dashboard"
+                    icon:"fa-list-ul"
                 },
                 {
                     title:"Города",
                     link:"main.admin.city",
-                    icon:"fa-dashboard"
+                    icon:"fa-list-ul"
                 }
             ]
         },

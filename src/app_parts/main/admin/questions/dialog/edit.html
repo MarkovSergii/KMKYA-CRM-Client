@@ -1,0 +1,44 @@
+
+
+<div style="background-color: white">
+    <div class="modal-header">
+
+        <h4 class="modal-title">Редактирование вопроса</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <fieldset>
+
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="input_name">Название</label>
+                    <div class="col-md-8">
+                        <input id="input_name" name="input_name" type="text" placeholder="Название" class="form-control input-md" required="" ng-model="ngDialogData.name">
+
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="input_title_ukr">Название для каталога на UKR</label>
+                    <div class="col-md-8">
+                        <input id="input_title_ukr" name="input_name" type="text" placeholder="на УКР" class="form-control input-md" required="" ng-model="ngDialogData.title_ukr">
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="input_title_en">Название для каталога на EN</label>
+                    <div class="col-md-8">
+                        <input id="input_title_en" name="input_name" type="text" placeholder="на АНГ" class="form-control input-md" required="" ng-model="ngDialogData.title_en">
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть </button>
+        <button class="btn btn-success" ng-disabled="((!ngDialogData.name) || (!ngDialogData.title_ukr) || (!ngDialogData.title_en))" ng-click="saveQuestion(ngDialogData)"> Сохранить </button>
+    </div>
+</div><!-- /.modal-content -->
