@@ -1,0 +1,40 @@
+<div class="box ui-sortable-handle">
+    <header>
+        <h5>Сезоны</h5>
+        <div class="toolbar">
+            <div class="btn-group">
+                <button class="btn btn-success" ng-click="addPlace()">Добавить</button>
+            </div>
+        </div>
+    </header>
+    <div id="stripedTable" class="body collapse in">
+        <table style="height: 90%;" class="table table-striped responsive-table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th>Дата создания</th>
+                <th>Дата редактирования</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody ng-repeat="place in places_list">
+            <tr>
+                <td>{{place.id}}</td>
+                <td>{{place.name}}</td>
+                <td>{{place.createdAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>{{place.updatedAt | date :  "dd.MM.yyyy HH:mm:ss" }}</td>
+                <td>
+                    <div class="toolbar">
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-default" ng-click="editPlace(place)">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

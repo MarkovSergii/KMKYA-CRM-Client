@@ -13,6 +13,7 @@ kmkya_client.constant('tables', {
     subexhibitions      :"subexhibitions",
     user                :"user",
     tags                :"tags",
-    squaretypes          :"squaretypes"
+    squaretypes         :"squaretypes",
+    places              :"places"
     
 });

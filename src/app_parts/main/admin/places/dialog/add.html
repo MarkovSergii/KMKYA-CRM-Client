@@ -1,0 +1,29 @@
+<div style="background-color: white">
+    <div class="modal-header">
+
+        <h4 class="modal-title">Добавления места расположения</h4>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <fieldset>
+
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="input_name">Название</label>
+                    <div class="col-md-8">
+                        <input id="input_name" name="input_name" type="text" placeholder="Название" class="form-control input-md" required="" ng-model="place.name">
+
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" ng-click="closeThisDialog()"> Закрыть </button>
+        <button class="btn btn-success"  ng-disabled="(!place.name)" ng-click="add()"> Добавить </button>
+    </div>
+</div><!-- /.modal-content -->
+

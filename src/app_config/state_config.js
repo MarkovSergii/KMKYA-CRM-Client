@@ -120,6 +120,14 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
         controller: 'admin_oblastCtrl'
     };
 
+    var adminPlaces = {
+        name: 'main.admin.places',
+        url: '/places',
+        cached:false,
+        templateUrl: 'app_parts/main/admin/places/places.html',
+        controller: 'adminPlacesCtrl'
+    };
+
     var adminSquareTypes = {
         name: 'main.admin.squaretypes',
         url: '/squaretypes',
@@ -217,7 +225,8 @@ kmkya_client.config(function($stateProvider,$urlRouterProvider) {
     $stateProvider.state(adminDatabasesState);
     $stateProvider.state(adminOblastState);
     $stateProvider.state(adminSquareTypes);
- 
+    $stateProvider.state(adminPlaces);
+
 //-------------------------------------------------------------------------------
     $stateProvider.state(databaseState);
     $stateProvider.state(databaseFirmsState);
