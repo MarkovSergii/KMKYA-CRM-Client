@@ -24,6 +24,11 @@ var adminCtrl = function($scope,$state,$rootScope) {
             icon:"fa-dashboard"
         },
         {
+            title:"Типы застройки",
+            link:"main.admin.squaretypes",
+            icon:"fa-dashboard"
+        },
+        {
             title:"Каталоги",
             link:"main.admin.catalogues",
             icon:"fa-dashboard"
